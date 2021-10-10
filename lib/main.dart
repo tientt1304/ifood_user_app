@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:ifood_user_app/pages/sign_in/sign_in_screen.dart';
+import 'package:ifood_user_app/pages/walkthrough/walkthrough_screen.dart';
+import 'package:ifood_user_app/routes.dart';
+import 'package:ifood_user_app/theme.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(IFood());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class IFood extends StatelessWidget {
+  const IFood({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-          appBar: AppBar(
-            title: Text('Demo'),
-          ),
-          body: SafeArea(
-            child: Text('Truong Thao Tien',
-                style: TextStyle(fontFamily: 'FSSBold')),
-          )),
+        debugShowCheckedModeBanner: false,
+        title: 'iFood',
+        theme: theme(),
+        routes: routes,
+        home: SignInScreen(),
+        //initialRoute: GetStartedScreen.routeName
     );
   }
 }
+
+// GestureDetector(
+//       onTap: () {
+//         FocusScopeNode currentFocus = FocusScope.of(context);
+//         if (!currentFocus.hasPrimaryFocus &&
+//             currentFocus.focusedChild != null) {
+//           FocusManager.instance.primaryFocus!.unfocus();
+//         }
+//       },
+//       child: 
