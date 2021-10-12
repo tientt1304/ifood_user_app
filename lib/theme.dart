@@ -46,12 +46,12 @@ AppBarTheme appBarTheme() {
       elevation: 0,
       systemOverlayStyle: SystemUiOverlayStyle.light,
       iconTheme: IconThemeData(color: Colors.black),
-      toolbarTextStyle: TextStyle(color: Colors.black, fontSize: 18),
+      toolbarTextStyle: TextStyle(color: Colors.black, fontSize: 15),
       titleTextStyle: TextStyle(
-          color: Colors.black,
+          color: kTitleColor,
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          fontFamily: 'FSSemibold'));
+          fontFamily: 'FSSemiBold'));
 }
 
 TextTheme textTheme() {

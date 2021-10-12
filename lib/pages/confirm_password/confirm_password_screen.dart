@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'components/body_sign_in.dart';
+import 'components/body_confirm_password.dart';
 
-class SignInScreen extends StatelessWidget {
-  static String routeName = '/signin';
-  const SignInScreen({Key? key}) : super(key: key);
+class ConfirmPasswordScreen extends StatelessWidget {
+  static String routeName = '/confirmppassword';
+  const ConfirmPasswordScreen({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +15,10 @@ class SignInScreen extends StatelessWidget {
           iconSize: 21,
           onPressed: () => Navigator.of(context).pop(),
           ),
-        title: Text('Sign In'),
+        title: Text('Forgot Password'),
         centerTitle: true,
       ),
-      body: BodySignIn(),
+      body: BodyConfirmPassword(),
     );
   }
 }

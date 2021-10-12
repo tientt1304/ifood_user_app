@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
-import 'package:ifood_user_app/pages/sign_in/sign_in_screen.dart';
 import 'package:ifood_user_app/routes.dart';
 import 'package:ifood_user_app/theme.dart';
 

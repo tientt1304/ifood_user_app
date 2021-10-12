@@ -10,6 +10,9 @@ const kred = Color(0xFFFF4B4B);
 const kgrey = Color(0xFFE9E9E9);
 const kWarningColor = Color(0xFFFF4848);
 const kTextColor = Color(0xFF757575);
+const kTitleColor = Color(0xFF313131);
+final mainGradient =  LinearGradient(colors: [mainColor.withOpacity(0.77), mainColor]);
+
 const kAnimationDuration = Duration(milliseconds: 300);
 
 final otpInputDecoration = InputDecoration(
