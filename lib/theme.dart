@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ifood_user_app/constants.dart';
 
+
 ThemeData theme() {
   return ThemeData(
-    scaffoldBackgroundColor: Colors.white,
-    fontFamily: 'FSRegular',
-    appBarTheme: appBarTheme(),
-    textTheme: textTheme(),
-    inputDecorationTheme: inputDecorationTheme(),
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-  );
+      scaffoldBackgroundColor: Colors.white,
+      fontFamily: 'FSRegular',
+      appBarTheme: appBarTheme(),
+      textTheme: textTheme(),
+      inputDecorationTheme: inputDecorationTheme(),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      textSelectionTheme:
+          TextSelectionThemeData(cursorColor: mainColor),
+      colorScheme: ThemeData().colorScheme.copyWith(
+        secondary: mainColor
+      ));        
 }
 
 InputDecorationTheme inputDecorationTheme() {
-  OutlineInputBorder outlineInputBorder({Color borderColor = mainColor}) =>
+  OutlineInputBorder outlineInputBorder({Color borderColor = secondaryColor}) =>
       OutlineInputBorder(
         borderRadius: BorderRadius.circular(28),
         borderSide: BorderSide(color: borderColor),
@@ -51,6 +56,6 @@ AppBarTheme appBarTheme() {
 
 TextTheme textTheme() {
   return TextTheme(
-    bodyText1: TextStyle(color: Colors.black),
+    bodyText1: TextStyle(color: secondaryColor),
   );
 }

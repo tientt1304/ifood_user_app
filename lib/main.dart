@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
 import 'package:ifood_user_app/pages/sign_in/sign_in_screen.dart';
-import 'package:ifood_user_app/pages/walkthrough/walkthrough_screen.dart';
 import 'package:ifood_user_app/routes.dart';
 import 'package:ifood_user_app/theme.dart';
 
@@ -18,7 +18,7 @@ class IFood extends StatelessWidget {
         title: 'iFood',
         theme: theme(),
         routes: routes,
-        home: SignInScreen(),
+        home: GetStartedScreen(),
         //initialRoute: GetStartedScreen.routeName
     );
   }

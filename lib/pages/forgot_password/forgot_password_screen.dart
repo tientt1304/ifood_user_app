@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'components/body_sign_in.dart';
+import 'components/body_forgot_password.dart';
 
-class SignInScreen extends StatelessWidget {
-  static String routeName = '/signin';
-  const SignInScreen({Key? key}) : super(key: key);
+class ForgotPasswordScreen extends StatelessWidget {
+  static String routeName = '/forgotPassword';
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +14,10 @@ class SignInScreen extends StatelessWidget {
           icon: Icon(Icons.arrow_back_ios_new_rounded),
           onPressed: () => Navigator.of(context).pop(),
           ),
-        title: Text('Sign In'),
+        title: Text('Forgot Password'),
         centerTitle: true,
       ),
-      body: BodySignIn(),
+      body: BodyForgotPassword(),
     );
   }
 }

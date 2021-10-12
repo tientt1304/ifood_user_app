@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ifood_user_app/pages/forgot_password/forgot_password_screen.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
 import 'package:ifood_user_app/pages/sign_in/sign_in_screen.dart';
 import 'package:ifood_user_app/pages/walkthrough/components/body_walkthrough.dart';
@@ -11,4 +12,5 @@ final routes = <String, WidgetBuilder>{
   BodyWalkthrough.routeName: (context) => BodyWalkthrough(),
   GetStartedScreen.routeName: (context) => GetStartedScreen(),  
   SignInScreen.routeName: (context) => SignInScreen(),
+  ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
 };
