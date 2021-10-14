@@ -10,7 +10,7 @@ class TitleContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: SizeConfig.screenHeight!*0.07),
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.screenHeight!*0.06),
       child: Column(
         children: <Widget>[
           Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/pages/forgot_password/components/forgot_password_form.dart';
+import 'package:ifood_user_app/pages/register/register_screen.dart';
 import 'package:ifood_user_app/widgets/contents/title_content.dart';
 
 import '../../../SizeConfig.dart';
@@ -32,7 +33,9 @@ class BodyForgotPassword extends StatelessWidget {
                       fontSize: 16,
                     ),),
                   GestureDetector(
-                    onTap: (){},
+                    onTap: (){
+                      Navigator.pushReplacementNamed(context, RegisterScreen.routeName);
+                    },
                     child: Text('Sign up', style: TextStyle(
                       fontSize: 16,
                       color: mainColor,

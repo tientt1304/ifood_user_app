@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 
-class BodyLoginSuccess extends StatelessWidget {
-  const BodyLoginSuccess({Key? key}) : super(key: key);
+class SuccessScreen extends StatelessWidget {
+  const SuccessScreen({Key? key, required this.text, required this.onPress}) : super(key: key);
+  final String text;
+  final Function() onPress;
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SvgPicture.asset(
-          'assets/images/success.svg',
-          width: double.infinity,
+        Image.asset(
+          'assets/images/Success.png',
+          width: SizeConfig.screenWidth!,
+        ),
+        SizedBox(
+          height: SizeConfig.screenHeight!*0.01,
         ),
         Text('Congrats!',
             style: TextStyle(
@@ -23,7 +28,7 @@ class BodyLoginSuccess extends StatelessWidget {
               fontSize: 30,
               color: mainColor,
             )),
-        Text('Login successful',
+        Text(text,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontFamily: 'FSSemiBold',
@@ -33,7 +38,7 @@ class BodyLoginSuccess extends StatelessWidget {
         SizedBox(
           height: SizeConfig.screenHeight! * 0.1,
         ),
-        MainButton(title: 'Back to Home', onPress: () {})
+        MainButton(title: 'Back to Home', onPress:onPress)
       ],
     );
   }

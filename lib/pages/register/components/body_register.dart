@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/SizeConfig.dart';
-import 'package:ifood_user_app/constants.dart';
-import 'package:ifood_user_app/pages/register/register_screen.dart';
-import 'package:ifood_user_app/pages/sign_in/components/sign_in_form.dart';
+import 'package:ifood_user_app/pages/register/components/register_form.dart';
+import 'package:ifood_user_app/pages/sign_in/sign_in_screen.dart';
 import 'package:ifood_user_app/widgets/buttons/social_card.dart';
 import 'package:ifood_user_app/widgets/contents/title_content.dart';
 
-class BodySignIn extends StatelessWidget {
-  const BodySignIn({Key? key}) : super(key: key);
+import '../../../SizeConfig.dart';
+import '../../../constants.dart';
+
+class BodyRegister extends StatelessWidget {
+  const BodyRegister({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +19,10 @@ class BodySignIn extends StatelessWidget {
           child: Column(
             children: [
               TitleContent(
-                title: 'Welcome Back',
-                content:
-                    'Sign in with your email and password \nor continue with social media',
+                title: 'Register Account',
+                content: 'Complete your details \nor continue with social media',
               ),
-              SignInForm(),
-              SizedBox(
-                height: SizeConfig.screenHeight! * 0.04,
-              ),
+              RegisterForm(),
               Text(
                 'Or continue with',
                 style: TextStyle(color: kTextColor, fontSize: 16),
@@ -57,9 +54,9 @@ class BodySignIn extends StatelessWidget {
                     ),),
                   GestureDetector(
                     onTap: (){
-                      Navigator.pushReplacementNamed(context, RegisterScreen.routeName);
+                      Navigator.pushReplacementNamed(context, SignInScreen.routeName);
                     },
-                    child: Text('Sign up', style: TextStyle(
+                    child: Text('Sign in', style: TextStyle(
                       fontSize: 16,
                       color: mainColor,
                       fontWeight: FontWeight.bold

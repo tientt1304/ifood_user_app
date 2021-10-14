@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/pages/login_success/login_success_screen.dart';
+import 'package:ifood_user_app/pages/success_screens/login_success_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/custom_suffix_icon.dart';

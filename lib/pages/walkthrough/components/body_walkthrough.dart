@@ -84,8 +84,7 @@ class _BodyWalkthroughState extends State<BodyWalkthrough> {
                             }
                             if (currentPage > 2) {
                               currentPage = 2;
-                              Navigator.pushNamed(
-                                  context, GetStartedScreen.routeName);
+                              Navigator.pushNamedAndRemoveUntil(context, GetStartedScreen.routeName, (Route<dynamic> route) => false);
                             }
                           });
                         })

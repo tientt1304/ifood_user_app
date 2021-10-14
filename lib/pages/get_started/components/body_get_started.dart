@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
+import 'package:ifood_user_app/pages/register/register_screen.dart';
 import 'package:ifood_user_app/pages/sign_in/sign_in_screen.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/buttons/primary_button.dart';
@@ -43,7 +44,9 @@ class BodyGetStarted extends StatelessWidget {
               MainButton(title: 'Login', onPress: () {
                 Navigator.pushNamed(context, SignInScreen.routeName);
               }),
-              PrimaryButton(title: 'Create an account', onPress: () {})
+              PrimaryButton(title: 'Create an account', onPress: () {
+                Navigator.pushNamed(context, RegisterScreen.routeName);
+              })
             ],
           ),
         )
