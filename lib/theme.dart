@@ -32,6 +32,9 @@ InputDecorationTheme inputDecorationTheme() {
     floatingLabelStyle: const TextStyle(
       color: mainColor,
     ),
+    // labelStyle: const TextStyle(
+    //   color:  mainColor,
+    // ),
     contentPadding: const EdgeInsets.symmetric(horizontal: 42, vertical: 20),
     enabledBorder: outlineInputBorder(),
     focusedBorder: outlineInputBorder(borderColor: mainColor),
