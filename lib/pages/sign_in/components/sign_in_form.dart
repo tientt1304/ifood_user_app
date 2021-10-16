@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/pages/forgot_password/forgot_password_screen.dart';
-import 'package:ifood_user_app/pages/home/home_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
+import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/custom_suffix_icon.dart';
 
@@ -101,7 +101,7 @@ class _SignInFormState extends State<SignInForm> {
             MainButton(
                 title: 'Continue',
                 onPress: () {
-                  Navigator.pushNamed(context, HomeScreen.routeName);
+                  Navigator.pushNamed(context, BottomBar.routeName);
                 })
           ],
         ),

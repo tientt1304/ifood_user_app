@@ -15,6 +15,7 @@ import 'package:ifood_user_app/pages/success_screens/register_success_screen.dar
 import 'package:ifood_user_app/pages/success_screens/reset_password_sreen.dart';
 import 'package:ifood_user_app/pages/walkthrough/components/body_walkthrough.dart';
 import 'package:ifood_user_app/pages/walkthrough/walkthrough_screen.dart';
+import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
 import 'pages/walkthrough/components/splash_screen.dart';
 
 final routes = <String, WidgetBuilder>{
@@ -35,5 +36,6 @@ final routes = <String, WidgetBuilder>{
   HomeScreen.routeName: (context) => HomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   NotificationScreen.routeName: (context) => NotificationScreen(),
-  ProfileScreen.routeName: (context) => ProfileScreen()
+  ProfileScreen.routeName: (context) => ProfileScreen(),
+  BottomBar.routeName: (context) => BottomBar(),
 };
