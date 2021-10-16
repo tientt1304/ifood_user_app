@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class BodyHome extends StatelessWidget {
-  const BodyHome({Key? key}) : super(key: key);
+class BodyCart extends StatelessWidget {
+  const BodyCart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Text('Home'),
+      child: Text('Cart'),
     );
   }
 }

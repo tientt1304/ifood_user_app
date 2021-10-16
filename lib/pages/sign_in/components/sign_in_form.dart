@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/pages/forgot_password/forgot_password_screen.dart';
+import 'package:ifood_user_app/pages/home/home_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/custom_suffix_icon.dart';
@@ -35,13 +36,15 @@ class _SignInFormState extends State<SignInForm> {
       });
     }
   }
-  void _onSignIn(){
-    if(_formKey.currentState!.validate()){
-      _formKey.currentState!.save();
-      //FocusScope.of(context.requestFocus(FocusNode()));
-      //Navigator.of(context).restorablePush(dialogBuilder);      
-    }
-  }
+
+  // void _onSignIn() {
+  //   if (_formKey.currentState!.validate()) {
+  //     _formKey.currentState!.save();
+  //     //FocusScope.of(context.requestFocus(FocusNode()));
+  //     //Navigator.of(context).restorablePush(dialogBuilder);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -73,22 +76,33 @@ class _SignInFormState extends State<SignInForm> {
                         remember = value!;
                       });
                     }),
-                Text('Remember me', style: TextStyle(color: kTextColor),),
+                Text(
+                  'Remember me',
+                  style: TextStyle(color: kTextColor),
+                ),
                 SizedBox(
-                  width: SizeConfig.screenWidth!*0.25,
+                  width: SizeConfig.screenWidth! * 0.25,
                 ),
                 GestureDetector(
-                  child: Text('Forgot Password', style: TextStyle(color: kTextColor),),
-                  onTap: (){
-                    Navigator.pushNamed(context, ForgotPasswordScreen.routeName);
+                  child: Text(
+                    'Forgot Password',
+                    style: TextStyle(color: kTextColor),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, ForgotPasswordScreen.routeName);
                   },
                 ),
               ],
             ),
             SizedBox(
-              height: SizeConfig.screenHeight!*0.02,
+              height: SizeConfig.screenHeight! * 0.02,
             ),
-            MainButton(title: 'Continue', onPress: _onSignIn)
+            MainButton(
+                title: 'Continue',
+                onPress: () {
+                  Navigator.pushNamed(context, HomeScreen.routeName);
+                })
           ],
         ),
       ),

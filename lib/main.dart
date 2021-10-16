@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/pages/walkthrough/components/splash_screen.dart';
+import 'package:ifood_user_app/pages/home/home_screen.dart';
 import 'package:ifood_user_app/routes.dart';
 import 'package:ifood_user_app/theme.dart';
 
@@ -13,12 +13,12 @@ class IFood extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'iFood',
-        theme: theme(),
-        routes: routes,
-        home: SplashScreen(),
-        //initialRoute: GetStartedScreen.routeName
+      debugShowCheckedModeBanner: false,
+      title: 'iFood',
+      theme: theme(),
+      routes: routes,
+      home: HomeScreen(),
+      //initialRoute: GetStartedScreen.routeName
     );
   }
 }
