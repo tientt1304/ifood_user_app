@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/pages/forgot_password/forgot_password_screen.dart';
+import 'package:ifood_user_app/pages/success_screens/login_success_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
-import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/custom_suffix_icon.dart';
 
@@ -16,34 +18,12 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   final _formKey = GlobalKey<FormState>();
-  String? email, password;
+  final _auth = FirebaseAuth.instance;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  String? err;
   bool remember = false;
-
-  final List<String> errors = [];
-
-  void addError({String? error}) {
-    if (!errors.contains(error)) {
-      setState(() {
-        errors.add(error!);
-      });
-    }
-  }
-
-  void removeError({String? error}) {
-    if (errors.contains(error)) {
-      setState(() {
-        errors.remove(error);
-      });
-    }
-  }
-
-  // void _onSignIn() {
-  //   if (_formKey.currentState!.validate()) {
-  //     _formKey.currentState!.save();
-  //     //FocusScope.of(context.requestFocus(FocusNode()));
-  //     //Navigator.of(context).restorablePush(dialogBuilder);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +81,7 @@ class _SignInFormState extends State<SignInForm> {
             MainButton(
                 title: 'Continue',
                 onPress: () {
-                  Navigator.pushNamed(context, BottomBar.routeName);
+                  _onSignIn(_emailController.text, _passwordController.text);
                 })
           ],
         ),
@@ -110,33 +90,19 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   TextFormField buildEmailTextField() => TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (newvalue) => email = newvalue,
-      onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-          removeError(error: kEmailNullError);
-        } else if (emailValidatorRegExp.hasMatch(value) &&
-            errors.contains(kInvalidEmailError)) {
-          removeError(error: kInvalidEmailError);
-        }
-      },
+      controller: _emailController,
       validator: (value) {
-        if ((value == null || value.isEmpty) &&
-            !errors.contains(kEmailNullError)) {
-          addError(error: kEmailNullError);
-          return '';
-        } else if (value != null &&
-            !emailValidatorRegExp.hasMatch(value) &&
-            !errors.contains(kInvalidEmailError) &&
-            !errors.contains(kEmailNullError)) {
-          addError(error: kInvalidEmailError);
-          return '';
-        } else if (errors.contains(kEmailNullError) ||
-            errors.contains(kInvalidEmailError)) {
-          return '';
+        if (value == null || value.isEmpty) {
+          return kEmailNullError;
+        } else if (!emailValidatorRegExp.hasMatch(value)) {
+          return kInvalidEmailError;
         }
         return null;
       },
+      onSaved: (value) {
+        _emailController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         hintText: 'Enter your email',
         labelText: 'Email',
@@ -144,36 +110,59 @@ class _SignInFormState extends State<SignInForm> {
       ));
 
   TextFormField buildPasswordTextField() => TextFormField(
-        onSaved: (newValue) => password = newValue,
-        onChanged: (value) {
-          if (value.isNotEmpty && errors.contains(kPassNullError)) {
-            removeError(error: kPassNullError);
-          } else if (value.length >= 8 && errors.contains(kShortPassError)) {
-            removeError(error: kShortPassError);
-          }
-        },
+        controller: _passwordController,
         validator: (value) {
-          if ((value == null || value.isEmpty) &&
-              !errors.contains(kPassNullError)) {
-            addError(error: kPassNullError);
-            return '';
-          } else if (value != null &&
-              value.length < 8 &&
-              !errors.contains(kRePassNullError) &&
-              !errors.contains(kShortPassError)) {
-            addError(error: kShortPassError);
-            return '';
-          } else if (errors.contains(kPassNullError) ||
-              errors.contains(kShortPassError)) {
-            return '';
+          if (value == null || value.isEmpty) {
+            return kPassNullError;
+          } else if (value.length < 6) {
+            return kShortPassError;
           }
           return null;
         },
         obscureText: true,
+        textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           hintText: 'Enter your password',
           labelText: 'Password',
           suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/lock.svg'),
         ),
       );
+
+  void _onSignIn(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((uid) => {
+                  Fluttertoast.showToast(msg: "Login Successful"),
+                  Navigator.pushNamed(context, LoginSuccessScreen.routeName),
+                });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            err = "Your email address appears to be malformed.";
+            break;
+          case "wrong-password":
+            err = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            err = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            err = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            err = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            err = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            err = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: err!);
+        print(error.code);
+      }
+    }
+  }
 }

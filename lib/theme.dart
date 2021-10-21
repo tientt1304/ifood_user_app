@@ -23,14 +23,7 @@ InputDecorationTheme inputDecorationTheme() {
       );
 
   return InputDecorationTheme(
-    errorStyle: const TextStyle(height: 0),
     floatingLabelBehavior: FloatingLabelBehavior.always,
-    // floatingLabelStyle: const TextStyle(
-    //   color: mainColor,
-    // ),
-    labelStyle: const TextStyle(
-      color: mainColor,
-    ),
     contentPadding: const EdgeInsets.symmetric(horizontal: 42, vertical: 20),
     enabledBorder: outlineInputBorder(),
     focusedBorder: outlineInputBorder(borderColor: mainColor),

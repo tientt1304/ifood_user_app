@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ifood_user_app/models/user_model.dart';
 import 'package:ifood_user_app/pages/otp_verify/otp_verify_screen.dart';
+import 'package:ifood_user_app/pages/success_screens/register_success_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/custom_suffix_icon.dart';
@@ -14,25 +19,13 @@ class CompleteProfileForm extends StatefulWidget {
 }
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
+  final _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
-  String? fName, lName, phone;
-  final List<String> errors = [];
+  final _fNameController = new TextEditingController();
+  final _lNameController = new TextEditingController();
+  final _phoneNumberController = new TextEditingController();
 
-  void addError({String? error}) {
-    if (!errors.contains(error)) {
-      setState(() {
-        errors.add(error!);
-      });
-    }
-  }
-
-  void removeError({String? error}) {
-    if (errors.contains(error)) {
-      setState(() {
-        errors.remove(error);
-      });
-    }
-  }
+  String? err;
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +52,15 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   vertical: SizeConfig.screenHeight! * 0.01),
               child: buildPhoneNumberTextField(),
             ),
-            SizedBox(height: SizeConfig.screenHeight!*0.02,),
-            MainButton(title: 'Continue', onPress: (){
-              Navigator.pushNamed(context, OTPVerifyScreen.routeName);
-            })
+            SizedBox(
+              height: SizeConfig.screenHeight! * 0.02,
+            ),
+            MainButton(
+                title: 'Continue',
+                onPress: () {
+                  _onCompleteProfile(_fNameController.text,
+                      _lNameController.text, _phoneNumberController.text);
+                })
           ],
         ),
       ),
@@ -70,47 +68,30 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   }
 
   TextFormField buildPhoneNumberTextField() => TextFormField(
-        onSaved: (newValue) => phone = newValue,
-        onChanged: (value) {
-          if (value.isNotEmpty && errors.contains(kPhoneNumberNullError)) {
-            removeError(error: kPhoneNumberNullError);
-          }
-        },
+        onSaved: (newValue) => _phoneNumberController.text = newValue!,
         validator: (value) {
-          if ((value == null || value.isEmpty) &&
-              !errors.contains(kPhoneNumberNullError)) {
-            addError(error: kPhoneNumberNullError);
-
-            return '';
-          } else if (errors.contains(kPhoneNumberNullError)) {
-            return '';
+          if (value == null || value.isEmpty) {
+            return kPhoneNumberNullError;
           }
           return null;
         },
+        textInputAction: TextInputAction.done,
         decoration: const InputDecoration(
           hintText: 'Enter your phone number',
           labelText: 'Phone Number',
-          suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/phone_android.svg'),
+          suffixIcon:
+              CustomSuffixIcon(svgIconSrc: 'assets/icons/phone_android.svg'),
         ),
       );
   TextFormField buildLastNameTextField() => TextFormField(
-        onSaved: (newValue) => lName = newValue,
-        onChanged: (value) {
-          if (value.isNotEmpty && errors.contains(kNamelNullError)) {
-            removeError(error: kNamelNullError);
-          }
-        },
+        onSaved: (newValue) => _lNameController.text = newValue!,
         validator: (value) {
-          if ((value == null || value.isEmpty) &&
-              !errors.contains(kNamelNullError)) {
-            addError(error: kNamelNullError);
-
-            return '';
-          } else if (errors.contains(kNamelNullError)) {
-            return '';
+          if (value == null || value.isEmpty) {
+            return kNamelNullError;
           }
           return null;
         },
+        textInputAction: TextInputAction.next,
         decoration: const InputDecoration(
           hintText: 'Enter your last name',
           labelText: 'Last Name',
@@ -118,27 +99,41 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         ),
       );
   TextFormField buildFirstNameTextField() => TextFormField(
-        onSaved: (newValue) => fName = newValue,
-        onChanged: (value) {
-          if (value.isNotEmpty && errors.contains(kNamelNullError)) {
-            removeError(error: kNamelNullError);
-          }
-        },
+        onSaved: (newValue) => _fNameController.text = newValue!,
         validator: (value) {
-          if ((value == null || value.isEmpty) &&
-              !errors.contains(kNamelNullError)) {
-            addError(error: kNamelNullError);
-
-            return '';
-          } else if (errors.contains(kNamelNullError)) {
-            return '';
+          if (value == null || value.isEmpty) {
+            return kNamelNullError;
           }
           return null;
         },
+        textInputAction: TextInputAction.next,
         decoration: const InputDecoration(
           hintText: 'Enter your first name',
           labelText: 'First Name',
           suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/person.svg'),
         ),
       );
+  void _onCompleteProfile(String fName, String lName, String phoneNumber) {
+    if (_formKey.currentState!.validate()) {
+      try {} on FirebaseException catch (error) {}
+    }
+  }
+
+  postSignUpToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel();
+
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
+
+    await firebaseFirestore
+        .collection('users')
+        .doc(user.uid)
+        .set(userModel.toMap());
+    Fluttertoast.showToast(msg: "Update profile successfully :) ");
+
+    Navigator.pushNamed(context, RegisterSuccessScreen.routeName);
+  }
 }

@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ifood_user_app/models/user_model.dart';
 import 'package:ifood_user_app/pages/complete_profile/complete_profile_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
@@ -16,26 +21,13 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
-  String? email, password, repassword;
+  final _auth = FirebaseAuth.instance;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  String? err;
   bool agree = false;
-
-  final List<String> errors = [];
-
-  void addError({String? error}) {
-    if (!errors.contains(error)) {
-      setState(() {
-        errors.add(error!);
-      });
-    }
-  }
-
-  void removeError({String? error}) {
-    if (errors.contains(error)) {
-      setState(() {
-        errors.remove(error);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +47,12 @@ class _RegisterFormState extends State<RegisterForm> {
             Padding(
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.screenHeight! * 0.01),
-              child: buildPasswordTextField(hint: 'Enter your password'),
+              child: buildPasswordTextField(),
             ),
             Padding(
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.screenHeight! * 0.01),
-              child: buildPasswordTextField(hint: 'Re-enter your password'),
+              child: buildConfirmPasswordTextField(),
             ),
             Row(
               children: [
@@ -76,9 +68,12 @@ class _RegisterFormState extends State<RegisterForm> {
                 Text('You agree with our Term and Condition'),
               ],
             ),
-            MainButton(title: 'Continue', onPress: (){
-              Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-            })
+            MainButton(
+                title: 'Continue',
+                onPress: () {
+                  _onSignUp(_emailController.text, _passwordController.text);
+                  // Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                })
           ],
         ),
       ),
@@ -86,70 +81,111 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   TextFormField buildEmailTextField() => TextFormField(
+      controller: _emailController,
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newvalue) => email = newvalue,
-      onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-          removeError(error: kEmailNullError);
-        } else if (emailValidatorRegExp.hasMatch(value) &&
-            errors.contains(kInvalidEmailError)) {
-          removeError(error: kInvalidEmailError);
-        }
-      },
+      onSaved: (newvalue) => _emailController.text = newvalue!,
       validator: (value) {
-        if ((value == null || value.isEmpty) &&
-            !errors.contains(kEmailNullError)) {
-          addError(error: kEmailNullError);
-          return '';
-        } else if (value != null &&
-            !emailValidatorRegExp.hasMatch(value) &&
-            !errors.contains(kInvalidEmailError) &&
-            !errors.contains(kEmailNullError)) {
-          addError(error: kInvalidEmailError);
-          return '';
-        } else if (errors.contains(kEmailNullError) ||
-            errors.contains(kInvalidEmailError)) {
-          return '';
+        if (value == null || value.isEmpty) {
+          return kEmailNullError;
+        } else if (!emailValidatorRegExp.hasMatch(value)) {
+          return 'kInvalidEmailError';
         }
         return null;
       },
+      textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         hintText: 'Enter your email',
         labelText: 'Email',
         suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/email.svg'),
       ));
 
-  TextFormField buildPasswordTextField({String? hint}) => TextFormField(
-        onSaved: (newValue) => password = newValue,
-        onChanged: (value) {
-          if (value.isNotEmpty && errors.contains(kPassNullError)) {
-            removeError(error: kPassNullError);
-          } else if (value.length >= 8 && errors.contains(kShortPassError)) {
-            removeError(error: kShortPassError);
-          }
-        },
+  TextFormField buildPasswordTextField() => TextFormField(
+        controller: _passwordController,
         validator: (value) {
-          if ((value == null || value.isEmpty) &&
-              !errors.contains(kPassNullError)) {
-            addError(error: kPassNullError);
-            return '';
-          } else if (value != null &&
-              value.length < 8 &&
-              !errors.contains(kRePassNullError) &&
-              !errors.contains(kShortPassError)) {
-            addError(error: kShortPassError);
-            return '';
-          } else if (errors.contains(kPassNullError) ||
-              errors.contains(kShortPassError)) {
-            return '';
+          if (value == null || value.isEmpty) {
+            return kPassNullError;
+          } else if (value.length < 6) {
+            return kShortPassError;
           }
           return null;
         },
         obscureText: true,
+        textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          hintText: hint,
+          hintText: 'Enter your password',
           labelText: 'Password',
           suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/lock.svg'),
         ),
       );
+  TextFormField buildConfirmPasswordTextField() => TextFormField(
+        controller: _confirmPasswordController,
+        validator: (value) {
+          if (_confirmPasswordController.text != _passwordController.text) {
+            return "Password don't match";
+          }
+          return null;
+        },
+        obscureText: true,
+        textInputAction: TextInputAction.done,
+        decoration: InputDecoration(
+          hintText: 'Confirm your password',
+          labelText: 'Re-password',
+          suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/lock.svg'),
+        ),
+      );
+  void _onSignUp(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((value) => {postSignUpToFirestore()})
+            .catchError((e) {
+          Fluttertoast.showToast(msg: e!.message);
+        });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            err = "Your email address appears to be malformed.";
+            break;
+          case "wrong-password":
+            err = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            err = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            err = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            err = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            err = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            err = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: err!);
+        print(error.code);
+      }
+    }
+  }
+
+  postSignUpToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel();
+
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
+
+    await firebaseFirestore
+        .collection('users')
+        .doc(user.uid)
+        .set(userModel.toMap());
+    Fluttertoast.showToast(msg: "Account created successfully :) ");
+
+    Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+  }
 }
