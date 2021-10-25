@@ -12,6 +12,7 @@ import 'package:ifood_user_app/pages/success_screens/login_success_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/register_success_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/reset_password_sreen.dart';
 import 'package:ifood_user_app/pages/updateProfile/update_profile_screen.dart';
+import 'package:ifood_user_app/pages/update_avt/update_avt_screen.dart';
 import 'package:ifood_user_app/pages/walkthrough/components/body_walkthrough.dart';
 import 'package:ifood_user_app/pages/walkthrough/walkthrough_screen.dart';
 import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
@@ -30,11 +31,11 @@ final routes = <String, WidgetBuilder>{
   ResetPasswordSuccessScreen.routeName: (context) =>
       ResetPasswordSuccessScreen(),
   UpdateProfileScreen.routeName: (context) => UpdateProfileScreen(),
-
   HomeScreen.routeName: (context) => HomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   NotificationScreen.routeName: (context) => NotificationScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
   BottomBar.routeName: (context) => BottomBar(),
   RegisterScreen.routeName: (context) => RegisterScreen(),
+  UpdateAvtScreen.routeName: (context) => UpdateAvtScreen(),
 };

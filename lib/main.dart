@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
+import 'package:ifood_user_app/pages/update_avt/update_avt_screen.dart';
 import 'package:ifood_user_app/routes.dart';
 import 'package:ifood_user_app/theme.dart';
 
@@ -37,13 +37,13 @@ class _IFoodState extends State<IFood> {
           }
         },
         child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'iFood',
-          theme: theme(),
-          routes: routes,
-          //home: OTPVerifyScreen()
-          initialRoute: GetStartedScreen.routeName,
-        ),
+            debugShowCheckedModeBanner: false,
+            title: 'iFood',
+            theme: theme(),
+            routes: routes,
+            home: UpdateAvtScreen()
+            //initialRoute: GetStartedScreen.routeName,
+            ),
       );
 }
 // GestureDetector(

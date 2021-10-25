@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/pages/sign_in/sign_in_screen.dart';
 import 'package:ifood_user_app/pages/updateProfile/components/update_profile_form.dart';
 import 'package:ifood_user_app/widgets/contents/title_content.dart';
 
 import '../../../SizeConfig.dart';
-import '../../../constants.dart';
 
 class BodyUpdateProfile extends StatelessWidget {
   const BodyUpdateProfile({Key? key}) : super(key: key);
@@ -25,30 +23,6 @@ class BodyUpdateProfile extends StatelessWidget {
               UpdateProfileForm(),
               SizedBox(
                 height: SizeConfig.screenHeight! * 0.02,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Don\'t have an account? ',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacementNamed(
-                          context, SignInScreen.routeName);
-                    },
-                    child: Text(
-                      'Sign in',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: mainColor,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
               ),
               SizedBox(
                 height: SizeConfig.screenHeight! * 0.05,

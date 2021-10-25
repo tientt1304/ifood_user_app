@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,9 +21,6 @@ class UpdateProfileForm extends StatefulWidget {
 
 class _UpdateProfileFormState extends State<UpdateProfileForm> {
   final _formKey = GlobalKey<FormState>();
-  // final _auth = FirebaseAuth.instance;
-  final TextEditingController _phoneNumberController =
-      new TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -44,11 +40,6 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
         ),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.screenHeight! * 0.01),
-              child: buildPhoneNumberTextField(),
-            ),
             Padding(
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.screenHeight! * 0.01),
@@ -136,25 +127,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/lock.svg'),
         ),
       );
-  TextFormField buildPhoneNumberTextField() => TextFormField(
-        onSaved: (value) {
-          _phoneNumberController.text = value!;
-        },
-        keyboardType: TextInputType.number,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return kPhoneNumberNullError;
-          }
-          return null;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: const InputDecoration(
-          hintText: 'Enter your phone number',
-          labelText: 'Phone Number',
-          suffixIcon:
-              CustomSuffixIcon(svgIconSrc: 'assets/icons/phone_android.svg'),
-        ),
-      );
+
   TextFormField buildLastNameTextField() => TextFormField(
         onSaved: (value) {
           _lNameController.text = value!;
@@ -202,12 +175,15 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
     User? user = _auth.currentUser;
 
     UserModel userModel = UserModel();
-
+    userModel.uid = user!.uid;
+    userModel.password = _passwordController.text;
     userModel.fName = _fNameController.text;
     userModel.lName = _lNameController.text;
-    userModel.phoneNumber = _phoneNumberController.text;
 
-    await firebaseFirestore.collection('users');
+    await firebaseFirestore
+        .collection('users')
+        .doc(userModel.uid)
+        .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
     Navigator.pushNamedAndRemoveUntil(
         context, BottomBar.routeName, (route) => false);
