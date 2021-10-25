@@ -41,12 +41,16 @@ class BodyGetStarted extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              MainButton(title: 'Login', onPress: () {
-                Navigator.pushNamed(context, SignInScreen.routeName);
-              }),
-              PrimaryButton(title: 'Create an account', onPress: () {
-                Navigator.pushNamed(context, RegisterScreen.routeName);
-              })
+              MainButton(
+                  title: 'Login',
+                  onPress: () {
+                    Navigator.pushNamed(context, SignInScreen.routeName);
+                  }),
+              PrimaryButton(
+                  title: 'Create an account',
+                  onPress: () {
+                    Navigator.pushNamed(context, RegisterScreen.routeName);
+                  })
             ],
           ),
         )

@@ -1,7 +1,6 @@
 class UserModel {
   String? uid;
   String? email;
-  String? password;
   String? fName;
   String? lName;
   String? phoneNumber;
@@ -9,7 +8,6 @@ class UserModel {
   UserModel(
       {this.uid,
       this.email,
-      this.password,
       this.fName,
       this.lName,
       this.phoneNumber,

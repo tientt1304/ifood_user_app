@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
 import 'components/body_sign_in.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -14,8 +15,15 @@ class SignInScreen extends StatelessWidget {
           icon: Icon(Icons.arrow_back_ios_new_rounded),
           iconSize: 21,
           onPressed: () => Navigator.of(context).pop(),
-          ),
-        title: Text('Sign In'),
+        ),
+        title: Text(
+          'Sign In',
+          style: TextStyle(
+              color: kTitleColor,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'FSSemiBold'),
+        ),
         centerTitle: true,
       ),
       body: BodySignIn(),

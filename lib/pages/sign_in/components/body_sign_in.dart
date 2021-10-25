@@ -52,18 +52,24 @@ class BodySignIn extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Don\'t have an account? ', style: TextStyle(
+                  Text(
+                    'Don\'t have an account? ',
+                    style: TextStyle(
                       fontSize: 16,
-                    ),),
+                    ),
+                  ),
                   GestureDetector(
-                    onTap: (){
-                      Navigator.pushReplacementNamed(context, RegisterScreen.routeName);
+                    onTap: () {
+                      Navigator.pushReplacementNamed(
+                          context, RegisterScreen.routeName);
                     },
-                    child: Text('Sign up', style: TextStyle(
-                      fontSize: 16,
-                      color: mainColor,
-                      fontWeight: FontWeight.bold
-                    ),),
+                    child: Text(
+                      'Sign up',
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: mainColor,
+                          fontWeight: FontWeight.bold),
+                    ),
                   )
                 ],
               ),

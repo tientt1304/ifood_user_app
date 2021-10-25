@@ -41,6 +41,7 @@ class _IFoodState extends State<IFood> {
           title: 'iFood',
           theme: theme(),
           routes: routes,
+          //home: OTPVerifyScreen()
           initialRoute: GetStartedScreen.routeName,
         ),
       );
