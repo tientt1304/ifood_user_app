@@ -4,23 +4,23 @@ import 'package:ifood_user_app/firebase/firebaseAuth.dart';
 
 class AuthBloc {
   var _fbaseAuth = FbaseAuth();
-  StreamController _emailController = new StreamController();
+  StreamController _phoneNumberController = new StreamController();
   StreamController _passwordController = new StreamController();
 
-  Stream? get emailStream => _emailController.stream;
+  Stream? get phoneNumberStream => _phoneNumberController.stream;
   Stream? get passwordStream => _passwordController.stream;
 
-  void signIn(String email, String password, Function onSuccess,
+  void signIn(String phoneNumber, String password, Function onSuccess,
       Function(String) onError) {
-    _fbaseAuth.signIn(email, password, onSuccess, onError);
+    _fbaseAuth.signIn(phoneNumber, password, onSuccess, onError);
   }
 
-  bool checkSignIn(String? email, String? password) {
-    if (email == null || email.length == 0) {
-      _emailController.sink.addError('Enter your email');
+  bool checkSignIn(String? phoneNumber, String? password) {
+    if (phoneNumber == null || phoneNumber.length == 0) {
+      _phoneNumberController.sink.addError('Enter your phone number');
       return false;
     }
-    _emailController.sink.add('');
+    _phoneNumberController.sink.add('');
 
     if (password == null || password.length == 0) {
       _passwordController.sink.addError('Enter your password');
@@ -38,7 +38,7 @@ class AuthBloc {
   }
 
   void dispose() {
-    _emailController.close();
+    _phoneNumberController.close();
     _passwordController.close();
   }
 }

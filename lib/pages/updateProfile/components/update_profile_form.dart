@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/models/user_model.dart';
+import 'package:ifood_user_app/pages/update_avt/update_avt_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
-import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/custom_suffix_icon.dart';
 
@@ -21,9 +21,6 @@ class UpdateProfileForm extends StatefulWidget {
 
 class _UpdateProfileFormState extends State<UpdateProfileForm> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
   final TextEditingController _fNameController = new TextEditingController();
   final TextEditingController _lNameController = new TextEditingController();
   String? err;
@@ -40,16 +37,6 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
         ),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.screenHeight! * 0.01),
-              child: buildPasswordTextField(),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.screenHeight! * 0.01),
-              child: buildConfirmPasswordTextField(),
-            ),
             Padding(
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.screenHeight! * 0.01),
@@ -77,7 +64,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
             MainButton(
                 title: 'Continue',
                 onPress: () {
-                  _onUpdateProfile();
+                  _onUpdateProfile(
+                      _fNameController.text, _lNameController.text);
                 })
           ],
         ),
@@ -85,52 +73,10 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
     );
   }
 
-  TextFormField buildPasswordTextField() => TextFormField(
-        controller: _passwordController,
-        onSaved: (value) {
-          _passwordController.text = value!;
-        },
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return kPassNullError;
-          } else if (value.length < 6) {
-            return kShortPassError;
-          }
-          return null;
-        },
-        obscureText: true,
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          hintText: 'Enter your password',
-          labelText: 'Password',
-          suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/lock.svg'),
-        ),
-      );
-  TextFormField buildConfirmPasswordTextField() => TextFormField(
-        controller: _confirmPasswordController,
-        onSaved: (value) {
-          _confirmPasswordController.text = value!;
-        },
-        validator: (value) {
-          if (value != _passwordController.text) {
-            return "Password don't match";
-          } else if (value == null || value.isEmpty) {
-            return 'Please re-enter your password';
-          }
-          return null;
-        },
-        obscureText: true,
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          hintText: 'Confirm your password',
-          labelText: 'Re-password',
-          suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/lock.svg'),
-        ),
-      );
-
   TextFormField buildLastNameTextField() => TextFormField(
+        controller: _lNameController,
         onSaved: (value) {
-          _lNameController.text = value!;
+          _lNameController.text = value.toString();
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -146,8 +92,9 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
         ),
       );
   TextFormField buildFirstNameTextField() => TextFormField(
+        controller: _fNameController,
         onSaved: (value) {
-          _fNameController.text = value!;
+          _fNameController.text = value.toString();
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -162,10 +109,19 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/person.svg'),
         ),
       );
-  void _onUpdateProfile() async {
+
+  void _onUpdateProfile(String fName, String lName) async {
     if (_formKey.currentState!.validate() && agree == true) {
-      try {} on FirebaseAuthException catch (e) {
-        Fluttertoast.showToast(msg: e.message!);
+      try {
+        var user = FirebaseAuth.instance.currentUser;
+        user!.updateDisplayName(fName + lName).then((value) {
+          postDetailsToFirestore();
+          print("Profile has been changed successfully");
+          //DO Other compilation here if you want to like setting the state of the app
+        });
+      } on FirebaseAuthException catch (error) {
+        Fluttertoast.showToast(msg: err!);
+        print(error.code);
       }
     }
   }
@@ -173,12 +129,12 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
   postDetailsToFirestore() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
-
     UserModel userModel = UserModel();
-    userModel.uid = user!.uid;
-    userModel.password = _passwordController.text;
+
+    userModel.phoneNumber = user!.phoneNumber;
     userModel.fName = _fNameController.text;
     userModel.lName = _lNameController.text;
+    userModel.uid = user.uid;
 
     await firebaseFirestore
         .collection('users')
@@ -186,6 +142,6 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
     Navigator.pushNamedAndRemoveUntil(
-        context, BottomBar.routeName, (route) => false);
+        context, UpdateAvtScreen.routeName, (route) => false);
   }
 }

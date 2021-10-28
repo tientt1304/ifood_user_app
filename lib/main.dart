@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ifood_user_app/pages/update_avt/update_avt_screen.dart';
 import 'package:ifood_user_app/routes.dart';
 import 'package:ifood_user_app/theme.dart';
+
+import 'pages/get_started/get_started_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,20 +38,12 @@ class _IFoodState extends State<IFood> {
           }
         },
         child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'iFood',
-            theme: theme(),
-            routes: routes,
-            home: UpdateAvtScreen()
-            //initialRoute: GetStartedScreen.routeName,
-            ),
+          debugShowCheckedModeBanner: false,
+          title: 'iFood',
+          theme: theme(),
+          routes: routes,
+          //home: UpdateAvtScreen()
+          initialRoute: GetStartedScreen.routeName,
+        ),
       );
 }
-// GestureDetector(
-//         onTap: () {
-//           FocusScopeNode currentFocus = FocusScope.of(context);
-//           if (!currentFocus.hasPrimaryFocus &&
-//               currentFocus.focusedChild != null) {
-//             FocusManager.instance.primaryFocus!.unfocus();
-//           }
-//         },

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/pages/update_avt/components/body_update_avt.dart';
+import 'package:ifood_user_app/constants.dart';
+import 'package:ifood_user_app/pages/update_location/components/body_update_location.dart';
 
-import '../../constants.dart';
-
-class UpdateAvtScreen extends StatelessWidget {
-  static String routeName = '/updateavt';
-  const UpdateAvtScreen({Key? key}) : super(key: key);
+class UpdateLocationScreen extends StatelessWidget {
+  static String routeName = '/updatelocation';
+  const UpdateLocationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class UpdateAvtScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'Upload Photo',
+          'Set Location',
           style: TextStyle(
               color: kTitleColor,
               fontSize: 18,
@@ -26,7 +25,7 @@ class UpdateAvtScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: BodyUpdateAvt(),
+      body: BodyUpdateLocation(),
     );
   }
 }

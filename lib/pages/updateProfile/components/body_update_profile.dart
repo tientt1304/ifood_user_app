@@ -16,14 +16,11 @@ class BodyUpdateProfile extends StatelessWidget {
           child: Column(
             children: [
               TitleContent(
-                title: 'UpdateProflie Account',
+                title: 'Update Profile Account',
                 content:
                     'Complete your details \nor continue with social media',
               ),
               UpdateProfileForm(),
-              SizedBox(
-                height: SizeConfig.screenHeight! * 0.02,
-              ),
               SizedBox(
                 height: SizeConfig.screenHeight! * 0.05,
               ),

@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 
-class MainButton extends StatelessWidget {
+class MainButton extends StatefulWidget {
   const MainButton({Key? key, required this.title, required this.onPress})
       : super(key: key);
   final String title;
   final Function() onPress;
 
+  @override
+  _MainButtonState createState() => _MainButtonState();
+}
+
+class _MainButtonState extends State<MainButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,9 +29,9 @@ class MainButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(25),
         ),
         child: ElevatedButton(
-          onPressed: onPress,
+          onPressed: widget.onPress,
           child: Text(
-            title,
+            widget.title,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'FSSemiBold',

@@ -65,7 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: buildPhoneNumberTextField(),
         ),
         SizedBox(
-          height: SizeConfig.screenHeight! * 0.02,
+          height: SizeConfig.screenHeight! * 0.04,
         ),
         MainButton(
             title: 'Continue',
@@ -185,7 +185,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ? getMobileFormWidget(context)
                             : getOtpFormWidget(context)),
                 SizedBox(
-                  height: SizeConfig.screenHeight! * 0.02,
+                  height: SizeConfig.screenHeight! * 0.05,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -228,7 +228,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         },
         controller: _phoneNumberController,
         validator: (value) {
-          if (value == null || value.isEmpty) {
+          if (value != null && !phoneNumberValidatorRegExp.hasMatch(value)) {
+            return kInvalidPhoneNummberError;
+          } else if (value == null || value.isEmpty) {
             return kPhoneNumberNullError;
           }
           return null;
