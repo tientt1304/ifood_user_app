@@ -11,11 +11,6 @@ class UpdateAvtScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded),
-          iconSize: 21,
-          onPressed: () => Navigator.of(context).pop(),
-        ),
         title: Text(
           'Upload Photo',
           style: TextStyle(

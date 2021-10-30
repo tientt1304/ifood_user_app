@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/pages/cart/cart_screen.dart';
+import 'package:ifood_user_app/pages/forgot_password/forgot_password_screen.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
 import 'package:ifood_user_app/pages/home/home_screen.dart';
 import 'package:ifood_user_app/pages/notification/notification_screen.dart';
@@ -34,5 +35,6 @@ final routes = <String, WidgetBuilder>{
   RegisterScreen.routeName: (context) => RegisterScreen(),
   UpdateAvtScreen.routeName: (context) => UpdateAvtScreen(),
   UpdateLocationScreen.routeName: (context) => UpdateLocationScreen(),
-  SelectLocationScreen.routeName: (context) => SelectLocationScreen()
+  SelectLocationScreen.routeName: (context) => SelectLocationScreen(),
+  ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen()
 };

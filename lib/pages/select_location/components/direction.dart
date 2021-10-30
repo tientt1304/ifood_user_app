@@ -16,7 +16,7 @@ class _DirectionState extends State<Direction> {
   GoogleMapController? _googleMapController;
   Marker? _origin;
   Marker? _destination;
-  Direction? _info;
+  //Direction? _info;
   @override
   void dispose() {
     _googleMapController!.dispose();
@@ -102,7 +102,7 @@ class _DirectionState extends State<Direction> {
           position: pos,
         );
         _destination = null;
-        _info = null;
+        //_info = null;
       });
     } else {
       setState(() {

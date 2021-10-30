@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'components/body_register.dart';
+import 'components/body_forgot_password.dart';
 
-class RegisterScreen extends StatelessWidget {
-  static String routeName = '/register';
-  const RegisterScreen({Key? key}) : super(key: key);
+class ForgotPasswordScreen extends StatelessWidget {
+  static String routeName = '/forgotPassword';
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +12,12 @@ class RegisterScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new_rounded),
-          iconSize: 21,
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text('Sign Up'),
+        title: Text('Forgot Password'),
         centerTitle: true,
       ),
-      body: BodyRegister(),
+      body: BodyForgotPassword(),
     );
   }
 }
