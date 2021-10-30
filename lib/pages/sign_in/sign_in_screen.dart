@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/pages/register/register_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/login_success_screen.dart';
-import 'package:ifood_user_app/pages/updateProfile/update_profile_screen.dart';
+
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/contents/title_content.dart';
@@ -203,7 +203,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             context, RegisterScreen.routeName);
                       },
                       child: Text(
-                        'Sign in',
+                        'Sign up',
                         style: TextStyle(
                             fontSize: 16,
                             color: mainColor,

@@ -5,12 +5,13 @@ import 'package:ifood_user_app/pages/home/home_screen.dart';
 import 'package:ifood_user_app/pages/notification/notification_screen.dart';
 import 'package:ifood_user_app/pages/profile/profile_screen.dart';
 import 'package:ifood_user_app/pages/register/register_screen.dart';
+import 'package:ifood_user_app/pages/select_location/select_location_screen.dart';
 import 'package:ifood_user_app/pages/sign_in/sign_in_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/login_success_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/register_success_screen.dart';
-import 'package:ifood_user_app/pages/updateProfile/update_profile_screen.dart';
 import 'package:ifood_user_app/pages/update_avt/update_avt_screen.dart';
 import 'package:ifood_user_app/pages/update_location/update_location_screen.dart';
+import 'package:ifood_user_app/pages/update_profile/update_profile_screen.dart';
 import 'package:ifood_user_app/pages/walkthrough/components/body_walkthrough.dart';
 import 'package:ifood_user_app/pages/walkthrough/walkthrough_screen.dart';
 import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
@@ -32,5 +33,6 @@ final routes = <String, WidgetBuilder>{
   BottomBar.routeName: (context) => BottomBar(),
   RegisterScreen.routeName: (context) => RegisterScreen(),
   UpdateAvtScreen.routeName: (context) => UpdateAvtScreen(),
-  UpdateLocationScreen.routeName: (context) => UpdateLocationScreen()
+  UpdateLocationScreen.routeName: (context) => UpdateLocationScreen(),
+  SelectLocationScreen.routeName: (context) => SelectLocationScreen()
 };

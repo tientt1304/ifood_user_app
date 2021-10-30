@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/pages/sign_in/sign_in_screen.dart';
-import 'package:ifood_user_app/pages/updateProfile/update_profile_screen.dart';
+import 'package:ifood_user_app/pages/update_profile/update_profile_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/contents/title_content.dart';

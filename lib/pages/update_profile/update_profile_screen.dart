@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/pages/updateProfile/components/body_update_profile.dart';
 import '../../constants.dart';
+import 'components/body_update_profile.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
   static String routeName = '/updateprofile';

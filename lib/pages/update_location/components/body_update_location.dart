@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ifood_user_app/pages/select_location/select_location_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/register_success_screen.dart';
 import 'package:ifood_user_app/pages/update_location/components/button_location_card.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
@@ -25,12 +26,15 @@ class BodyUpdateLocation extends StatelessWidget {
                 children: [
                   ButtonLocationCard(
                     location: 'Vinh Thanh, Binh Dinh',
-                    onPress: () {},
+                    onPress: () {
+                      Navigator.pushNamed(
+                          context, SelectLocationScreen.routeName);
+                    },
                   )
                 ],
               ),
               SizedBox(
-                height: SizeConfig.screenHeight! * 0.3,
+                height: SizeConfig.screenHeight! * 0.25,
               ),
               MainButton(
                   title: 'Continue',

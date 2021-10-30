@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/pages/updateProfile/components/update_profile_form.dart';
+import 'package:ifood_user_app/pages/update_profile/components/update_profile_form.dart';
+
 import 'package:ifood_user_app/widgets/contents/title_content.dart';
 
 import '../../../SizeConfig.dart';

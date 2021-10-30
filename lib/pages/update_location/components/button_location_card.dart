@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
@@ -14,7 +15,7 @@ class ButtonLocationCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPress,
       child: Container(
-          height: SizeConfig.screenHeight! * 0.2,
+          height: SizeConfig.screenHeight! * 0.25,
           margin: EdgeInsets.symmetric(horizontal: 20),
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
@@ -29,33 +30,43 @@ class ButtonLocationCard extends StatelessWidget {
               ]),
           width: double.infinity,
           child: Material(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    'Your Location',
-                    style: TextStyle(
-                        fontFamily: 'FSBold',
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Row(
-                  children: [
-                    SvgPicture.asset('assets/icons/PinLogo.svg'),
-                    Text(
-                      location,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Your Location',
                       style: TextStyle(
-                        fontFamily: 'FSREgular',
-                        fontSize: 15,
-                      ),
-                    )
-                  ],
-                ),
-                MainButton(title: 'Set Location', onPress: () {})
-              ],
+                          fontFamily: 'FSBold',
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset('assets/icons/PinLogo.svg'),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            location,
+                            style: TextStyle(
+                              fontFamily: 'FSREgular',
+                              fontSize: 15,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  MainButton(title: 'Set Location', onPress: onPress)
+                ],
+              ),
             ),
           )),
     );
