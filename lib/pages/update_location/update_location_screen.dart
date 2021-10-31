@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/pages/update_location/components/body_update_location.dart';
 
-class UpdateLocationScreen extends StatelessWidget {
+class UpdateLocationScreen extends StatefulWidget {
   static String routeName = '/updatelocation';
   const UpdateLocationScreen({Key? key}) : super(key: key);
 
+  @override
+  State<UpdateLocationScreen> createState() => _UpdateLocationScreenState();
+}
+
+class _UpdateLocationScreenState extends State<UpdateLocationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
