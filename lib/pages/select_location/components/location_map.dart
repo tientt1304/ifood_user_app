@@ -18,10 +18,8 @@ class _LocationMapState extends State<LocationMap> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: googleMapUI(),
-      ),
+    return Scaffold(
+      body: googleMapUI(),
     );
   }
 
@@ -47,7 +45,7 @@ class _LocationMapState extends State<LocationMap> {
           ),
           ButtonLocationCard(
             location: 'Vinh Thanh, Binh Dinh',
-            onPress: () {
+            onPress: () async {
               Navigator.pop(context);
             },
           )

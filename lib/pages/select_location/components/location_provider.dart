@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ifood_user_app/models/user_model.dart';
 import 'package:location/location.dart';
 
 class LocationProvider with ChangeNotifier {
+  FirebaseAuth _auth = FirebaseAuth.instance;
   BitmapDescriptor? _pinLocationIcon;
   Map<MarkerId, Marker>? _markers;
   Map<MarkerId, Marker> get markers => _markers!;
@@ -21,14 +25,8 @@ class LocationProvider with ChangeNotifier {
   bool locationServiceActive = true;
 
   LocationProvider() {
-    if (_markers != null &&
-        _pinLocationIcon != null &&
-        _mapController != null &&
-        _location != null &&
-        _locationPosition != null) {
-      _location = new Location();
-      _markers = <MarkerId, Marker>{};
-    }
+    _location = new Location();
+    _markers = <MarkerId, Marker>{};
   }
 
   initialization() async {
@@ -62,7 +60,15 @@ class LocationProvider with ChangeNotifier {
         );
 
         print(_locationPosition);
-
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+        User? user = _auth.currentUser;
+        UserModel userModel = UserModel();
+        userModel.latitude = _locationPosition!.latitude.toString();
+        userModel.longitude = _locationPosition!.longitude.toString();
+        firebaseFirestore
+            .collection('users')
+            .doc(user!.uid)
+            .update(userModel.locationToJSON());
         _markers!.clear();
 
         Marker marker = Marker(

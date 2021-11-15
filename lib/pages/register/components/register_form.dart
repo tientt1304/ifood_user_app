@@ -263,7 +263,7 @@ class _RegisterFormState extends State<RegisterForm> {
     await firebaseFirestore
         .collection('users')
         .doc(userModel.uid)
-        .set(userModel.toMap());
+        .set(userModel.toJSON());
     Navigator.pushNamedAndRemoveUntil(
         context, UpdateAvtScreen.routeName, (route) => false);
   }

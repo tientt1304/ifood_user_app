@@ -1,15 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/pages/select_location/set_location_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ifood_user_app/models/user_model.dart';
 import 'package:ifood_user_app/pages/success_screens/register_success_screen.dart';
 import 'package:ifood_user_app/pages/update_location/components/button_location_card.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/contents/title_content.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../../SizeConfig.dart';
 
-class BodyUpdateLocation extends StatelessWidget {
-  const BodyUpdateLocation({Key? key}) : super(key: key);
+class BodyUpdateLocation extends StatefulWidget {
+  @override
+  State<BodyUpdateLocation> createState() => _BodyUpdateLocationState();
+}
 
+class _BodyUpdateLocationState extends State<BodyUpdateLocation> {
+  var current;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,9 +33,11 @@ class BodyUpdateLocation extends StatelessWidget {
               Column(
                 children: [
                   ButtonLocationCard(
-                    location: 'Vinh Thanh, Binh Dinh',
+                    location:
+                        current == null ? 'No location selected' : current,
                     onPress: () {
-                      Navigator.pushNamed(context, SetLocationScreen.routeName);
+                      setLocation();
+                      // Navigator.pushNamed(context, SetLocationScreen.routeName);
                     },
                   )
                 ],
@@ -46,5 +56,34 @@ class BodyUpdateLocation extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void setLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      Fluttertoast.showToast(msg: 'Permission not given');
+      // LocationPermission asked = await Geolocator.requestPermission();
+    } else {
+      Position currentPositon = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.best);
+      setState(() {
+        current = '(' +
+            currentPositon.latitude.toString() +
+            ', ' +
+            currentPositon.longitude.toString() +
+            ')';
+      });
+      FirebaseAuth _auth = FirebaseAuth.instance;
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      User? user = _auth.currentUser;
+      UserModel userModel = UserModel();
+      userModel.latitude = currentPositon.latitude.toString();
+      userModel.longitude = currentPositon.longitude.toString();
+      firebaseFirestore
+          .collection('users')
+          .doc(user!.uid)
+          .update(userModel.locationToJSON());
+    }
   }
 }

@@ -109,7 +109,7 @@ class _BodyUpdateAvtState extends State<BodyUpdateAvt> {
     await firebaseFirestore
         .collection('users')
         .doc(user!.uid)
-        .update(userModel.avtToMap());
+        .update(userModel.avtToJSON());
     Navigator.pushNamed(context, UpdateLocationScreen.routeName);
   }
 }

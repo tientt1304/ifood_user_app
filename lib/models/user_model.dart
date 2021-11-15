@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String? uid;
   String? email;
@@ -7,6 +9,7 @@ class UserModel {
   String? avatar;
   String? latitude;
   String? longitude;
+
   UserModel(
       {this.uid,
       this.email,
@@ -16,19 +19,27 @@ class UserModel {
       this.avatar,
       this.latitude,
       this.longitude});
+
   //receiving data from server
-  factory UserModel.fromMap(map) {
+  factory UserModel.fromDocument(DocumentSnapshot doc) {
     return UserModel(
-        uid: map['uid'],
-        email: map['email'],
-        fName: map['fName'],
-        lName: map['lName'],
-        phoneNumber: map['phoneNumber'],
-        avatar: map['avatar'],
-        latitude: map['latitude'],
-        longitude: map['longitude']);
+      uid: doc.data().toString().contains('uid') ? doc.get('uid') : '',
+      email: doc.data().toString().contains('email') ? doc.get('email') : '',
+      fName: doc.data().toString().contains('fName') ? doc.get('fName') : '',
+      lName: doc.data().toString().contains('lName') ? doc.get('lName') : '',
+      phoneNumber: doc.data().toString().contains('phoneNumber')
+          ? doc.get('phoneNumber')
+          : '',
+      avatar: doc.data().toString().contains('avatar') ? doc.get('avatar') : '',
+      latitude:
+          doc.data().toString().contains('latitude') ? doc.get('latitude') : '',
+      longitude: doc.data().toString().contains('longitude')
+          ? doc.get('longitude')
+          : '',
+    );
   }
-  Map<String, dynamic> toMap() {
+  //Convert to JSON
+  Map<String, dynamic> toJSON() {
     return {
       'uid': uid,
       'email': email,
@@ -41,11 +52,11 @@ class UserModel {
     };
   }
 
-  Map<String, dynamic> avtToMap() {
+  Map<String, dynamic> avtToJSON() {
     return {'avatar': avatar};
   }
 
-  Map<dynamic, dynamic> locationToMap() {
+  Map<String, dynamic> locationToJSON() {
     return {'latitude': latitude, 'longitude': longitude};
   }
 }

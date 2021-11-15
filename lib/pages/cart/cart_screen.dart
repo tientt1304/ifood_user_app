@@ -15,11 +15,13 @@ class CartScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Orders', style: TextStyle(color: kTitleColor, fontWeight: FontWeight.bold)),
+          title: Text('Orders',
+              style:
+                  TextStyle(color: kTitleColor, fontWeight: FontWeight.bold)),
           centerTitle: true,
           bottom: TabBar(
             labelColor: mainColor,
-            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18 ),
+            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             indicatorColor: mainColor,
             tabs: [
               Tab(
@@ -31,13 +33,14 @@ class CartScreen extends StatelessWidget {
             ],
           ),
         ),
-        body:  TabBarView(
+        body: TabBarView(
           children: [
             CartDelivering(),
             CartHistory(),
           ],
+          physics: NeverScrollableScrollPhysics(),
         ),
-        ),
-    );  
+      ),
+    );
   }
 }

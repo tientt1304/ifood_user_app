@@ -64,11 +64,11 @@ class _BottomBarState extends State<BottomBar> {
                 hoverColor: mainColor.withOpacity(0.8),
                 haptic: true, // haptic feedback
                 tabBorderRadius: 20,
-                duration: Duration(milliseconds: 200), // tab animation duration
+                duration: Duration(milliseconds: 500), // tab animation duration
                 gap: 6, // the tab button gap between icon and text
                 color: mainColor.withOpacity(0.9), // unselected icon color
                 activeColor: Colors.white, // selected icon and text color
-                iconSize: 30, // tab button icon size
+                iconSize: 25, // tab button icon size
                 tabBackgroundColor: mainColor.withOpacity(0.9),
                 //mainColor.withOpacity(0.7), // selected tab background color
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),

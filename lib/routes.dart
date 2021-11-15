@@ -8,6 +8,7 @@ import 'package:ifood_user_app/pages/my_account/myaccount_screen.dart';
 import 'package:ifood_user_app/pages/notification/notification_screen.dart';
 import 'package:ifood_user_app/pages/profile/profile_screen.dart';
 import 'package:ifood_user_app/pages/register/register_screen.dart';
+import 'package:ifood_user_app/pages/select_location/set_location_screen.dart';
 import 'package:ifood_user_app/pages/sign_in/sign_in_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/login_success_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/register_success_screen.dart';
@@ -37,4 +38,5 @@ final routes = <String, WidgetBuilder>{
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
   AboutScreen.routeName: (context) => AboutScreen(),
   MyAccountScreen.routeName: (context) => MyAccountScreen(),
+  SetLocationScreen.routeName: (context) => SetLocationScreen()
 };
