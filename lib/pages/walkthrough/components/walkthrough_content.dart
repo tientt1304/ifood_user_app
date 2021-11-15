@@ -13,7 +13,7 @@ class WalkthroughContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         SvgPicture.asset(image),
-        SizedBox(height: 20,),
+        SizedBox(height: 5,),
         Text(
           title,
           style: TextStyle(

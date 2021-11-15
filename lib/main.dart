@@ -1,10 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ifood_user_app/pages/walkthrough/components/splash_screen.dart';
 import 'package:ifood_user_app/routes.dart';
 import 'package:ifood_user_app/theme.dart';
 
-import 'pages/get_started/get_started_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,7 @@ class _IFoodState extends State<IFood> {
           theme: theme(),
           routes: routes,
           //home: UpdateAvtScreen()
-          initialRoute: GetStartedScreen.routeName,
+          initialRoute: SplashScreen.routeName,
         ),
       );
 }

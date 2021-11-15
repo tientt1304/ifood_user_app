@@ -26,7 +26,7 @@ class CartScreen extends StatelessWidget {
                 text: 'Delivering',
               ),
               Tab(
-                text: 'Order',
+                text: 'History',
               )
             ],
           ),
@@ -36,6 +36,7 @@ class CartScreen extends StatelessWidget {
             CartDelivering(),
             CartHistory(),
           ],
+          physics: NeverScrollableScrollPhysics(),
         ),
         ),
     );  

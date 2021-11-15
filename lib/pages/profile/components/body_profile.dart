@@ -4,7 +4,7 @@ import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/pages/about/about_screen.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
-import 'package:ifood_user_app/pages/my_account/myaccount_screen.dart';
+
 
 class BodyProfile extends StatelessWidget {
   const BodyProfile({Key? key}) : super(key: key);
