@@ -38,5 +38,6 @@ final routes = <String, WidgetBuilder>{
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
   AboutScreen.routeName: (context) => AboutScreen(),
   MyAccountScreen.routeName: (context) => MyAccountScreen(),
-  SetLocationScreen.routeName: (context) => SetLocationScreen()
+  SetLocationScreen.routeName: (context) => SetLocationScreen(),
+  //RestaurantDetailScreen.routeName: (context) => RestaurantDetailScreen(),
 };

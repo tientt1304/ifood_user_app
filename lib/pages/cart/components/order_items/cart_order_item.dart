@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
-import 'package:ifood_user_app/models/cart.dart';
-
+import 'package:ifood_user_app/models/cart_model.dart';
 
 class CartCard extends StatelessWidget {
   const CartCard({
@@ -26,25 +25,25 @@ class CartCard extends StatelessWidget {
                 color: kgrey,
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset(cart.product.images[0]),
+              child: Image.asset(cart.product.images),
             ),
           ),
         ),
-        SizedBox(width: SizeConfig.screenWidth!* 0.05),
+        SizedBox(width: SizeConfig.screenWidth! * 0.05),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              cart.product.title,
+              cart.product.name,
               style: TextStyle(color: Colors.black, fontSize: 16),
               maxLines: 2,
             ),
-            SizedBox(height: SizeConfig.screenHeight!* 0.12),
+            SizedBox(height: SizeConfig.screenHeight! * 0.12),
             Text.rich(
               TextSpan(
                 text: "\$${cart.product.price}",
-                style: TextStyle(
-                    fontWeight: FontWeight.w600, color: primaryColor),
+                style:
+                    TextStyle(fontWeight: FontWeight.w600, color: primaryColor),
               ),
             )
           ],

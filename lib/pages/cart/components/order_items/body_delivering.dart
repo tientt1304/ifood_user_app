@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
-import 'package:ifood_user_app/models/cart.dart';
+import 'package:ifood_user_app/models/cart_model.dart';
 import 'package:ifood_user_app/pages/cart/components/order_items/item.dart';
-
 
 class BodyDeliveringItems extends StatelessWidget {
   @override
@@ -13,15 +12,16 @@ class BodyDeliveringItems extends StatelessWidget {
       child: ListView.builder(
           itemCount: deliveringCarts.length,
           itemBuilder: (context, index) => Padding(
-            padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(10)),
-            child: Column(
+                padding: EdgeInsets.symmetric(
+                    vertical: getProportionateScreenHeight(10)),
+                child: Column(
                   children: [
                     CartItemCard(
                       cart: deliveringCarts[index],
                     ),
                   ],
                 ),
-          )),
+              )),
     );
   }
 }

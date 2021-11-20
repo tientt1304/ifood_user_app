@@ -1,32 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RestaurantModel {
-  String? idRestaurant;
-  String? name;
+  String idRestaurant;
+  String name;
   double? rating;
-  double? distance;
-  String? time;
-  String? logo;
-  String? coverPicture;
+  String logo;
+  String coverPicture;
   String? phoneNumber;
   String? description;
   String? address;
   String? latitude;
   String? longitude;
 
-  RestaurantModel(
-      {this.idRestaurant,
-      this.name,
-      this.rating,
-      this.distance,
-      this.time,
-      this.logo,
-      this.coverPicture,
-      this.phoneNumber,
-      this.description,
-      this.address,
-      this.latitude,
-      this.longitude});
+  RestaurantModel({
+    required this.idRestaurant,
+    required this.name,
+    this.rating,
+    required this.logo,
+    required this.coverPicture,
+    this.phoneNumber,
+    this.description,
+    this.address,
+    this.latitude,
+    this.longitude,
+  });
 
   //receiving data from server
   factory RestaurantModel.fromDocument(DocumentSnapshot doc) {
@@ -36,9 +33,6 @@ class RestaurantModel {
           : '',
       name: doc.data().toString().contains('name') ? doc.get('name') : '',
       rating: doc.data().toString().contains('rating') ? doc.get('rating') : '',
-      distance:
-          doc.data().toString().contains('distance') ? doc.get('distance') : '',
-      time: doc.data().toString().contains('time') ? doc.get('time') : '',
       logo: doc.data().toString().contains('logo') ? doc.get('logo') : '',
       coverPicture: doc.data().toString().contains('coverPicture')
           ? doc.get('coverPicture')
@@ -64,15 +58,13 @@ class RestaurantModel {
       'idRestaurant': idRestaurant,
       'name': name,
       'rating': rating,
-      'distance': distance,
-      'time': time,
       'logo': logo,
       'coverPicture': coverPicture,
       'phoneNumber': phoneNumber,
       'description': description,
       'address': address,
       'latitude': latitude,
-      'longitude': longitude
+      'longitude': longitude,
     };
   }
 
@@ -88,3 +80,15 @@ class RestaurantModel {
     return {'latitude': latitude, 'longitude': longitude};
   }
 }
+
+List<RestaurantModel> demoRestaurants = [
+  RestaurantModel(
+    logo: '',
+    idRestaurant: '1',
+    name: 'Tra sua Toocha - Binh Tho, Thu Duc',
+    rating: 4.7,
+    description:
+        'Most whole Alaskan Red King Crabs get broken down into legs, claws, and lump meat. We offer all of these options as well in our online shop, but there is nothing like getting the whole . . . .',
+    coverPicture: 'assets/images/bgRestaurant.png',
+  ),
+];

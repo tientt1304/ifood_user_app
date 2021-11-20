@@ -1,8 +1,7 @@
-import 'package:ifood_user_app/models/product.dart';
+import 'package:ifood_user_app/models/food_model.dart';
 
 class Cart {
-  final Product product;
-  
+  final FoodModel product;
 
   Cart({required this.product});
 }

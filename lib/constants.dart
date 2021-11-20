@@ -6,6 +6,7 @@ const mainColor = Color(0xFFFF7643);
 final mainColorGradient = Color(0xFFFF7643).withOpacity(0.44);
 const primaryColor = Color(0xFFFF806F);
 const secondaryColor = Color(0xFF979797);
+const blurTextColor = Color(0xFF3B3B3B);
 const splitColor = Color(0xFFE9E9E9);
 const kred = Color(0xFFFF4B4B);
 const kgrey = Color(0xFFE9E9E9);

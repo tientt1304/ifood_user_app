@@ -7,21 +7,19 @@ class RestaurantCard extends StatelessWidget {
     Key? key,
     required this.name,
     required this.img,
-    required this.rating,
-    required this.distance,
-    required this.time,
+    this.rating,
+    required this.onPress,
   }) : super(key: key);
 
   final String name;
   final String img;
-  final double rating;
-  final double distance;
-  final time;
+  final double? rating;
+  final Function() onPress;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onPress,
       child: Column(
         children: [
           Row(
@@ -29,7 +27,7 @@ class RestaurantCard extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(right: 20, left: 10),
-                child: Image.asset(
+                child: Image.network(
                   img,
                   width: 70,
                   height: 70,
@@ -60,7 +58,7 @@ class RestaurantCard extends StatelessWidget {
                         color: splitColor,
                       ),
                       Icon(Icons.location_on_outlined),
-                      Text('$distance km'),
+                      Text('1.7 km'),
                       Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: SizeConfig.screenWidth! * 0.05),
@@ -69,7 +67,7 @@ class RestaurantCard extends StatelessWidget {
                         color: splitColor,
                       ),
                       Icon(Icons.timer),
-                      Text(time)
+                      Text('15 minutes')
                     ],
                   )
                 ],
