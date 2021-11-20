@@ -4,6 +4,7 @@ import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/pages/about/about_screen.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
+import 'package:ifood_user_app/pages/my_account/myaccount_screen.dart';
 
 
 class BodyProfile extends StatelessWidget {
@@ -33,7 +34,6 @@ class BodyProfile extends StatelessWidget {
             ],
           ),
 
-          // Picprofile(),
           SizedBox(
             height: SizeConfig.screenHeight! * 0.01,
           ),
@@ -48,7 +48,7 @@ class BodyProfile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15)),
                 color: kgrey,
                 onPressed: () {
-                  // Navigator.pushNamed(context, MyAccountScreen.routeName);
+                  Navigator.pushNamed(context, MyAccountScreen.routeName);
                 },
                 child: Row(
                   children: [
