@@ -35,3 +35,5 @@ OutlineInputBorder outlineInputBorder(
     borderSide: BorderSide(color: borderColor),
   );
 }
+
+const MY_CART_KEY = 'CART_STORAGE';

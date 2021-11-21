@@ -17,6 +17,19 @@ class FoodCard extends StatefulWidget {
 }
 
 class _FoodCardState extends State<FoodCard> {
+  int count = 0;
+  void descrementCount() {
+    setState(() {
+      count--;
+    });
+  }
+
+  void increamentCount() {
+    setState(() {
+      count++;
+    });
+  }
+
   FoodFB foodFB = new FoodFB();
   @override
   Widget build(BuildContext context) {
@@ -42,10 +55,9 @@ class _FoodCardState extends State<FoodCard> {
                   child: GestureDetector(
                     onTap: () {},
                     child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: Padding(
                             padding: EdgeInsets.only(right: 20, left: 10),
                             child: Container(
@@ -61,7 +73,7 @@ class _FoodCardState extends State<FoodCard> {
                           ),
                         ),
                         Expanded(
-                          flex: 2,
+                          flex: 3,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -80,59 +92,64 @@ class _FoodCardState extends State<FoodCard> {
                           width: SizeConfig.screenWidth! * 0.02,
                         ),
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: Row(
-                            //mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              InkWell(
-                                child: Container(
-                                  width: 30,
-                                  height: 25,
-                                  //padding: EdgeInsets.all(2),
-                                  child: Text(
-                                    '-',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
+                              Expanded(
+                                flex: 1,
+                                child: InkWell(
+                                  onTap: descrementCount,
+                                  child: Container(
+                                    width: 30,
+                                    height: 25,
+                                    //padding: EdgeInsets.all(2),
+                                    child: Text(
+                                      '-',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    color: primaryColor,
                                   ),
-                                  color: primaryColor,
                                 ),
                               ),
-                              SizedBox(
-                                width: SizeConfig.screenWidth! * 0.02,
-                              ),
-                              Text(
-                                '0',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  '$count',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
-                              SizedBox(
-                                width: SizeConfig.screenWidth! * 0.02,
-                              ),
-                              InkWell(
-                                child: Container(
-                                  width: 30,
-                                  height: 25,
-                                  //padding: EdgeInsets.all(2),
-                                  child: Text(
-                                    '+',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
+                              Expanded(
+                                flex: 1,
+                                child: InkWell(
+                                  onTap: increamentCount,
+                                  child: Container(
+                                    width: 30,
+                                    height: 25,
+                                    //padding: EdgeInsets.all(2),
+                                    child: Text(
+                                      '+',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    color: primaryColor,
                                   ),
-                                  color: primaryColor,
                                 ),
                               ),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

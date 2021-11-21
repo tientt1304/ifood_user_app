@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
 import 'package:ifood_user_app/routes.dart';
 import 'package:ifood_user_app/theme.dart';
@@ -8,6 +8,7 @@ import 'package:ifood_user_app/theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await GetStorage.init();
   runApp(IFood());
 }
 
@@ -19,29 +20,12 @@ class IFood extends StatefulWidget {
 }
 
 class _IFoodState extends State<IFood> {
-  DateTime timeBackPressed = DateTime.now();
-
   @override
-  Widget build(BuildContext context) => WillPopScope(
-        onWillPop: () async {
-          final difference = DateTime.now().difference(timeBackPressed);
-          final isExitWarining = difference >= Duration(seconds: 2);
-          timeBackPressed = DateTime.now();
-          if (isExitWarining) {
-            final message = 'Press back again to exit';
-            Fluttertoast.showToast(msg: message, fontSize: 14);
-            return false;
-          } else {
-            Fluttertoast.cancel();
-            return true;
-          }
-        },
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'iFood',
-          theme: theme(),
-          routes: routes,
-          initialRoute: GetStartedScreen.routeName,
-        ),
+  Widget build(BuildContext context) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'iFood',
+        theme: theme(),
+        routes: routes,
+        initialRoute: GetStartedScreen.routeName,
       );
 }
