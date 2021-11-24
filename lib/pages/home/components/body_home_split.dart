@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/models/user_model.dart';
 import 'package:ifood_user_app/pages/home/components/banner.dart';
 import 'package:ifood_user_app/pages/home/components/food_filter_card.dart';
@@ -127,14 +126,11 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
             ),
           ],
         ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          height: 5,
-          width: double.infinity,
-          color: splitColor,
+        Divider(
+          thickness: 4,
         ),
         SizedBox(
-          height: 93,
+          height: 94,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: foodFilterList.length,

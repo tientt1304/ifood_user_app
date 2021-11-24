@@ -1,31 +1,44 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/firebase/fb_food.dart';
 import 'package:ifood_user_app/models/food_model.dart';
 import 'package:ifood_user_app/pages/food_detail/food_detail_screen.dart';
 
-class FoodCard extends StatefulWidget {
-  const FoodCard({
+class FoodCardDetail extends StatefulWidget {
+  const FoodCardDetail({
     Key? key,
-    required this.idRestaurant,
+    required this.idFood,
   }) : super(key: key);
-  final String idRestaurant;
+  final String idFood;
 
   @override
-  State<FoodCard> createState() => _FoodCardState();
+  State<FoodCardDetail> createState() => _FoodCardDetailState();
 }
 
-class _FoodCardState extends State<FoodCard> {
+class _FoodCardDetailState extends State<FoodCardDetail> {
+  int count = 0;
+  void descrementCount() {
+    if (count > 0) {
+      setState(() {
+        count--;
+      });
+    }
+  }
+
+  void increamentCount() {
+    setState(() {
+      count++;
+    });
+  }
+
   FoodFB foodFB = new FoodFB();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: foodFB.collectionReference
-            .where('idRestaurant', isEqualTo: widget.idRestaurant)
+            .where('idFood', isEqualTo: widget.idFood)
             .snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
@@ -67,7 +80,7 @@ class _FoodCardState extends State<FoodCard> {
                           ),
                         ),
                         Expanded(
-                          flex: 5,
+                          flex: 3,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -86,38 +99,58 @@ class _FoodCardState extends State<FoodCard> {
                           width: SizeConfig.screenWidth! * 0.02,
                         ),
                         Expanded(
-                          flex: 1,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: primaryColor,
-                                padding: EdgeInsets.symmetric(horizontal: 5)),
-                            onPressed: () async {
-                              final FirebaseAuth _auth = FirebaseAuth.instance;
-                              var currentUser = _auth.currentUser;
-                              CollectionReference _collectionRef =
-                                  FirebaseFirestore.instance
-                                      .collection('users-cart-items');
-                              return _collectionRef
-                                  .doc(currentUser!.email)
-                                  .collection('item')
-                                  .doc()
-                                  .set({
-                                'name': foodModel.name,
-                                'images': foodModel.images,
-                                'price': foodModel.price,
-                                'idFood': foodModel.idFood,
-                                'quantity': 1,
-                              }).then((value) => Fluttertoast.showToast(
-                                      msg: 'Added item to cart'));
-                            },
-                            child: Text(
-                              '+',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
+                          flex: 2,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: primaryColor,
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5)),
+                                  onPressed: descrementCount,
+                                  child: Text(
+                                    '-',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                    //textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  '$count',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: primaryColor,
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5)),
+                                  onPressed: increamentCount,
+                                  child: Text(
+                                    '+',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                    // textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

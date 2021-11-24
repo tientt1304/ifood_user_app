@@ -1,31 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
-import 'package:ifood_user_app/firebase/fb_restaurant.dart';
-import 'package:ifood_user_app/models/restaurant_model.dart';
-import 'package:ifood_user_app/pages/restaurant_detail/components/food_card.dart';
+import 'package:ifood_user_app/firebase/fb_food.dart';
+import 'package:ifood_user_app/models/food_model.dart';
+import 'package:ifood_user_app/pages/food_detail/components/food_card_detail.dart';
 import 'package:ifood_user_app/pages/shopping_cart/shopping_cart_screen.dart';
-import 'package:ifood_user_app/widgets/check_out_bar.dart';
+import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 
 import 'package:ifood_user_app/widgets/custom_app_bar.dart';
 
-class BodyRestaurantDetail extends StatefulWidget {
-  const BodyRestaurantDetail({Key? key, required this.id}) : super(key: key);
+class BodyFoodDetail extends StatefulWidget {
+  const BodyFoodDetail({Key? key, required this.idFood}) : super(key: key);
 
-  final String id;
+  final String idFood;
 
   @override
-  State<BodyRestaurantDetail> createState() => _BodyRestaurantDetailState();
+  State<BodyFoodDetail> createState() => _BodyFoodDetailState();
 }
 
-class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
+class _BodyFoodDetailState extends State<BodyFoodDetail> {
+  //var count = 0;
+
   @override
   Widget build(BuildContext context) {
-    RestaurantFB restaurantFB = new RestaurantFB();
+    FoodFB foodFB = new FoodFB();
     return StreamBuilder(
-        stream: restaurantFB.collectionReference
-            .where('idRestaurant', isEqualTo: widget.id)
+        stream: foodFB.collectionReference
+            .where('idFood', isEqualTo: widget.idFood)
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
@@ -34,7 +38,7 @@ class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
             );
           } else {
             QueryDocumentSnapshot x = snapshot.data!.docs[0];
-            RestaurantModel restaurantModel = RestaurantModel.fromDocument(x);
+            FoodModel foodModel = FoodModel.fromDocument(x);
             return Stack(
               alignment: Alignment.topCenter,
               children: <Widget>[
@@ -42,9 +46,9 @@ class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
                   alignment: Alignment.topCenter,
                   child: Container(
                       width: SizeConfig.screenWidth,
-                      height: SizeConfig.screenHeight! * 0.35,
+                      height: SizeConfig.screenHeight! * 0.5,
                       child: Image.network(
-                        restaurantModel.coverPicture,
+                        foodModel.images,
                         fit: BoxFit.cover,
                       )),
                 ),
@@ -59,7 +63,7 @@ class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     width: SizeConfig.screenWidth,
-                    height: SizeConfig.screenHeight! * 0.75,
+                    height: SizeConfig.screenHeight! * 0.6,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -76,12 +80,7 @@ class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            Text(
-                              restaurantModel.name,
-                              style:
-                                  TextStyle(fontFamily: 'FSSemi', fontSize: 23),
-                              textAlign: TextAlign.start,
-                            ),
+                            FoodCardDetail(idFood: foodModel.idFood),
                             SizedBox(
                               height: 10,
                             ),
@@ -92,7 +91,7 @@ class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
                                   color: primaryColor,
                                 ),
                                 Text(
-                                  ' ${restaurantModel.rating} rating',
+                                  '${foodModel.ratingFood} rating',
                                   style: TextStyle(color: blurTextColor),
                                 ),
                                 SizedBox(width: SizeConfig.screenWidth! * 0.15),
@@ -110,19 +109,36 @@ class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
                               height: 15,
                             ),
                             Text(
-                              restaurantModel.description!,
+                              foodModel.desc,
                               textAlign: TextAlign.justify,
                               style: TextStyle(height: 2, wordSpacing: 2),
                             ),
-                            Text(
-                              'MENU',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1),
+                            SizedBox(
+                              height: SizeConfig.screenHeight! * 0.05,
                             ),
-                            FoodCard(idRestaurant: widget.id),
-                            CheckOutBar()
+                            MainButton(
+                                title: 'Add To Cart',
+                                onPress: () async {
+                                  final FirebaseAuth _auth =
+                                      FirebaseAuth.instance;
+                                  var currentUser = _auth.currentUser;
+                                  CollectionReference _collectionRef =
+                                      FirebaseFirestore.instance
+                                          .collection('users-cart-items');
+
+                                  return _collectionRef
+                                      .doc(currentUser!.email)
+                                      .collection('item')
+                                      .doc()
+                                      .set({
+                                    'name': foodModel.name,
+                                    'images': foodModel.images,
+                                    'price': foodModel.price,
+                                    'idFood': foodModel.idFood,
+                                    'quantity': 1,
+                                  }).then((value) => Fluttertoast.showToast(
+                                          msg: 'Added item to cart'));
+                                })
                           ],
                         ),
                       ),

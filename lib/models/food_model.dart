@@ -7,15 +7,16 @@ class FoodModel {
   final String images;
   final num price;
   final String idRestaurant;
+  final num? ratingFood;
 
-  FoodModel({
-    required this.idRestaurant,
-    required this.idFood,
-    required this.images,
-    required this.name,
-    required this.price,
-    required this.desc,
-  });
+  FoodModel(
+      {required this.idRestaurant,
+      required this.idFood,
+      required this.images,
+      required this.name,
+      required this.price,
+      required this.desc,
+      this.ratingFood});
 
   //receiving data from server
   factory FoodModel.fromDocument(DocumentSnapshot doc) {
@@ -28,6 +29,9 @@ class FoodModel {
       desc: doc.data().toString().contains('desc') ? doc.get('desc') : '',
       images: doc.data().toString().contains('images') ? doc.get('images') : '',
       price: doc.data().toString().contains('price') ? doc.get('price') : '',
+      ratingFood: doc.data().toString().contains('ratingFood')
+          ? doc.get('ratingFood')
+          : '',
     );
   }
   //Convert to JSON
@@ -39,6 +43,7 @@ class FoodModel {
       'images': images,
       'price': price,
       'idRestaurant': idRestaurant,
+      'ratingFood': ratingFood
     };
   }
 }

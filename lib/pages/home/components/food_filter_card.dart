@@ -34,7 +34,7 @@ class _FoodFilterCardState extends State<FoodFilterCard> {
         });
       },
       child: Container(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(4.0),
         width: SizeConfig.screenWidth! * 0.22,
         child: Column(
           children: [

@@ -1,27 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:ifood_user_app/constants.dart';
 
 class CustomAppBar extends StatelessWidget {
-  final IconData icon;
-  final Function? callBack;
-  CustomAppBar(this.icon, {this.callBack});
+  final IconData leftIcon, rightIcon;
+  final Function? leftCallBack, rightCallBack;
+  CustomAppBar(this.leftIcon, this.rightIcon,
+      {this.leftCallBack, this.rightCallBack});
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: callBack != null ? () => callBack!() : null,
-      child: Row(
-        children: [
-          Container(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: leftCallBack != null ? () => leftCallBack!() : null,
+          child: Container(
             margin: EdgeInsets.only(top: 30, left: 20, right: 20),
             padding: EdgeInsets.fromLTRB(16, 8, 8, 8),
             decoration:
-                BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                BoxDecoration(shape: BoxShape.circle, color: primaryColor),
             child: Icon(
-              icon,
-              size: 20,
+              leftIcon,
+              size: 19,
+              color: Colors.white,
             ),
           ),
-        ],
-      ),
+        ),
+        GestureDetector(
+          onTap: rightCallBack != null ? () => rightCallBack!() : null,
+          child: Container(
+            margin: EdgeInsets.only(top: 30, left: 20, right: 20),
+            padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+            decoration:
+                BoxDecoration(shape: BoxShape.circle, color: primaryColor),
+            child: Icon(
+              rightIcon,
+              size: 23,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

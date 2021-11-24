@@ -74,12 +74,9 @@ class RestaurantCard extends StatelessWidget {
               )
             ],
           ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            height: 2,
-            width: double.infinity,
-            color: splitColor,
-          ),
+          Divider(
+            thickness: 2,
+          )
         ],
       ),
     );

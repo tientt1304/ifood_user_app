@@ -20,18 +20,6 @@ class CartModel extends FoodModel {
           price: price,
           desc: desc,
         );
-  // factory CartModel.fromJson(Map<String, dynamic> json) {
-  //   final food = new FoodModel.fromJson(json);
-  //   final quantity = json['quantity'];
-  //   return CartModel(
-  //       quantity: quantity,
-  //       idRestaurant: food.idRestaurant,
-  //       idFood: food.idFood,
-  //       images: food.images,
-  //       name: food.name,
-  //       price: food.price,
-  //       desc: food.desc);
-  // }
   //receiving data from server
   factory CartModel.fromDocument(DocumentSnapshot doc) {
     return CartModel(
