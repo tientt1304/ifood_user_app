@@ -80,7 +80,8 @@ class _BodyHomeState extends State<BodyHome> {
                                                             .idRestaurant)));
                                   },
                                 );
-                              });
+                              },
+                              );
                         }
                       }),
                 )

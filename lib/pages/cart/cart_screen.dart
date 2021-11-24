@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
+import 'package:ifood_user_app/pages/cart/components/cart_cart.dart';
 import 'package:ifood_user_app/pages/cart/components/cart_delivering.dart';
 import 'package:ifood_user_app/pages/cart/components/cart_history.dart';
 
@@ -12,10 +13,10 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Orders',
+          title: Text('Cart',
               style:
                   TextStyle(color: kTitleColor, fontWeight: FontWeight.bold)),
           centerTitle: true,
@@ -28,8 +29,11 @@ class CartScreen extends StatelessWidget {
                 text: 'Delivering',
               ),
               Tab(
-                text: 'Order',
-              )
+                text: 'History',
+              ),
+              Tab(
+                text: 'Cart',
+              ),
             ],
           ),
         ),
@@ -37,6 +41,7 @@ class CartScreen extends StatelessWidget {
           children: [
             CartDelivering(),
             CartHistory(),
+            CartCart(),
           ],
           physics: NeverScrollableScrollPhysics(),
         ),

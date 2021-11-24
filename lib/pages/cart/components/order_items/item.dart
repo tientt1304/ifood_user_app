@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
+import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/models/cart_model.dart';
 
 class CartItemCard extends StatelessWidget {
@@ -14,34 +15,43 @@ class CartItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            SizedBox(
-              width: getProportionateScreenWidth(88),
-              child: AspectRatio(
-                aspectRatio: 0.88,
-                child: Image.asset(cart.product.images),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: splitColor,
+          ),
+          child: Row(
+            children: [
+              SizedBox(
+                width: getProportionateScreenWidth(10),
               ),
-            ),
-            SizedBox(width: getProportionateScreenWidth(20)),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  cart.product.name,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              SizedBox(
+                width: getProportionateScreenWidth(30),
+                child: AspectRatio(
+                  aspectRatio: 0.5,
+                  child: Image.asset(cart.product.images),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text.rich(
-                  TextSpan(
-                    text: 'Cost: \$${cart.product.price}',
+              ),
+              SizedBox(width: getProportionateScreenWidth(20)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    cart.product.name,
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
-            )
-          ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text.rich(
+                    TextSpan(
+                      text: 'Cost: ${cart.product.price} \VND',
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ],
     );
