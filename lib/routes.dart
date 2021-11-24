@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/pages/about/about_screen.dart';
 import 'package:ifood_user_app/pages/cart/cart_screen.dart';
+import 'package:ifood_user_app/pages/category/category_screen.dart';
 import 'package:ifood_user_app/pages/forgot_password/forgot_password_screen.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
+import 'package:ifood_user_app/pages/help_center/helpcenter_screen.dart';
 import 'package:ifood_user_app/pages/home/home_screen.dart';
 import 'package:ifood_user_app/pages/my_account/myaccount_screen.dart';
 import 'package:ifood_user_app/pages/notification/notification_screen.dart';
@@ -41,5 +43,7 @@ final routes = <String, WidgetBuilder>{
   MyAccountScreen.routeName: (context) => MyAccountScreen(),
   SetLocationScreen.routeName: (context) => SetLocationScreen(),
   ShoppingCartScreen.routeName: (context) => ShoppingCartScreen(),
+  CategoryScreen.routeName: (context) => CategoryScreen(),
+  HelpCenterScreen.routeName: (context) => HelpCenterScreen(),
   //RestaurantDetailScreen.routeName: (context) => RestaurantDetailScreen(),
 };
