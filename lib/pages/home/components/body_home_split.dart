@@ -130,7 +130,7 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
           thickness: 4,
         ),
         SizedBox(
-          height: 94,
+          height: SizeConfig.screenHeight! * 0.14,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: foodFilterList.length,

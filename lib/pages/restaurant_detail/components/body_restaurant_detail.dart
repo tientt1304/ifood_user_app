@@ -122,13 +122,14 @@ class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
                                   height: 1),
                             ),
                             FoodCard(idRestaurant: widget.id),
-                            CheckOutBar()
+                            SizedBox(height: SizeConfig.screenHeight! * 0.06)
                           ],
                         ),
                       ),
                     ),
                   ),
-                )
+                ),
+                CheckOutBar()
               ],
             );
           }

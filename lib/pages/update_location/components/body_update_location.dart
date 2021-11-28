@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/models/user_model.dart';
 import 'package:ifood_user_app/pages/success_screens/register_success_screen.dart';
 import 'package:ifood_user_app/pages/update_location/components/button_location_card.dart';
@@ -62,8 +62,8 @@ class _BodyUpdateLocationState extends State<BodyUpdateLocation> {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
-      Fluttertoast.showToast(msg: 'Permission not given');
-      // LocationPermission asked = await Geolocator.requestPermission();
+      //Fluttertoast.showToast(msg: 'Permission not given');
+      await Geolocator.openLocationSettings();
     } else {
       Position currentPositon = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.best);

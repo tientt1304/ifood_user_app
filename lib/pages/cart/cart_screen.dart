@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
-import 'package:ifood_user_app/pages/cart/components/cart_cart.dart';
 import 'package:ifood_user_app/pages/cart/components/cart_delivering.dart';
 import 'package:ifood_user_app/pages/cart/components/cart_history.dart';
+import 'package:ifood_user_app/pages/shopping_cart/shopping_cart_screen.dart';
 
 class CartScreen extends StatelessWidget {
   static String routeName = '/cartscreen';
@@ -16,7 +16,7 @@ class CartScreen extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Cart',
+          title: Text('My Orders',
               style:
                   TextStyle(color: kTitleColor, fontWeight: FontWeight.bold)),
           centerTitle: true,
@@ -26,7 +26,7 @@ class CartScreen extends StatelessWidget {
             indicatorColor: mainColor,
             tabs: [
               Tab(
-                text: 'Delivering',
+                text: 'Ongoing',
               ),
               Tab(
                 text: 'History',
@@ -41,7 +41,7 @@ class CartScreen extends StatelessWidget {
           children: [
             CartDelivering(),
             CartHistory(),
-            CartCart(),
+            ShoppingCartScreen(),
           ],
           physics: NeverScrollableScrollPhysics(),
         ),

@@ -15,7 +15,7 @@ class ButtonLocationCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPress,
       child: Container(
-          height: SizeConfig.screenHeight! * 0.25,
+          height: SizeConfig.screenHeight! * 0.27,
           margin: EdgeInsets.symmetric(horizontal: 20),
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(

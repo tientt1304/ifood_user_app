@@ -5,7 +5,12 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
+import 'package:ifood_user_app/firebase/fb_cart.dart';
+import 'package:ifood_user_app/models/cart_model.dart';
 import 'package:ifood_user_app/pages/food_detail/food_detail_screen.dart';
+import 'package:ifood_user_app/providers/cart_provider.dart';
+import 'package:ifood_user_app/widgets/check_out_bar.dart';
+import 'package:provider/provider.dart';
 
 class BodyShoppingCart extends StatefulWidget {
   BodyShoppingCart({Key? key}) : super(key: key);
@@ -15,8 +20,10 @@ class BodyShoppingCart extends StatefulWidget {
 }
 
 class _BodyShoppingCartState extends State<BodyShoppingCart> {
+  CartFB cartFB = new CartFB();
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context);
     return SafeArea(
       child: Stack(
         children: <Widget>[
@@ -26,10 +33,9 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
               width: SizeConfig.screenWidth,
               height: SizeConfig.screenHeight! * 0.8,
               child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('users-cart-items')
+                stream: cartFB.collectionReference
                     .doc(FirebaseAuth.instance.currentUser!.email)
-                    .collection('item')
+                    .collection('items')
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -54,21 +60,15 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) {
                           DocumentSnapshot x = snapshot.data!.docs[index];
-
+                          CartModel cartModel = CartModel.fromDocument(x);
                           return Slidable(
                             endActionPane: ActionPane(
                               motion: ScrollMotion(),
                               children: [
                                 SlidableAction(
                                   onPressed: (context) {
-                                    FirebaseFirestore.instance
-                                        .collection('users-cart-items')
-                                        .doc(FirebaseAuth
-                                            .instance.currentUser!.email)
-                                        .collection('item')
-                                        .doc(x.id)
-                                        .delete();
-
+                                    cartFB.delete(x.id);
+                                    cart.deleteItem(x.id);
                                     Fluttertoast.showToast(
                                         msg: 'Delete food successful');
                                   },
@@ -82,18 +82,18 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        FoodDetailScreen(idFood: x['idFood'])));
+                                    builder: (context) => FoodDetailScreen(
+                                        idFood: cartModel.idFood)));
                               },
                               child: Card(
                                 elevation: 2,
                                 child: ListTile(
-                                  leading: Image.network(x['images'],
+                                  leading: Image.network(cartModel.images,
                                       width: 70, fit: BoxFit.fitWidth),
-                                  title: Text(x['name']),
-                                  subtitle: Text('x ${x['quantity']}'),
-                                  trailing:
-                                      Text('${x['price'] * x['quantity']} VND'),
+                                  title: Text(cartModel.name),
+                                  subtitle: Text('x ${cartModel.quantity}'),
+                                  trailing: Text(
+                                      '${cartModel.price * cartModel.quantity} VND'),
                                 ),
                               ),
                             ),
@@ -104,9 +104,9 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Text('Total: total'),
+          CheckOutBar(
+            numOfItems: cart.itemCount,
+            total: cart.totalAmount,
           )
         ],
       ),

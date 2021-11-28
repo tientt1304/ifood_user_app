@@ -29,8 +29,8 @@ class _BodyHomeState extends State<BodyHome> {
           physics: NeverScrollableScrollPhysics(),
           headerSliverBuilder: (context, isScrolled) => [
             SliverAppBar(
-              collapsedHeight: SizeConfig.screenHeight! * 0.79,
-              expandedHeight: SizeConfig.screenHeight! * 0.79,
+              collapsedHeight: SizeConfig.screenHeight! * 0.82,
+              expandedHeight: SizeConfig.screenHeight! * 0.7,
               flexibleSpace: BodyHomeSplit(),
             ),
             SliverPersistentHeader(
@@ -59,29 +59,27 @@ class _BodyHomeState extends State<BodyHome> {
                           return Center(child: Text('No data'));
                         } else {
                           return ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
-                                QueryDocumentSnapshot x =
-                                    snapshot.data!.docs[index];
-                                RestaurantModel restaurantModel =
-                                    RestaurantModel.fromDocument(x);
-                                return RestaurantCard(
-                                  name: restaurantModel.name,
-                                  img: restaurantModel.logo,
-                                  rating: restaurantModel.rating,
-                                  onPress: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                RestaurantDetailScreen(
-                                                    idRestaurant:
-                                                        restaurantModel
-                                                            .idRestaurant)));
-                                  },
-                                );
-                              },
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              QueryDocumentSnapshot x =
+                                  snapshot.data!.docs[index];
+                              RestaurantModel restaurantModel =
+                                  RestaurantModel.fromDocument(x);
+                              return RestaurantCard(
+                                name: restaurantModel.name,
+                                img: restaurantModel.logo,
+                                rating: restaurantModel.rating,
+                                onPress: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          RestaurantDetailScreen(
+                                              idRestaurant: restaurantModel
+                                                  .idRestaurant)));
+                                },
                               );
+                            },
+                          );
                         }
                       }),
                 )

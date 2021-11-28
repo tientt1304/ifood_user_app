@@ -4,7 +4,7 @@ import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/pages/about/about_screen.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
-import 'package:ifood_user_app/pages/help_center/helpcenter_screen.dart';
+//import 'package:ifood_user_app/pages/help_center/helpcenter_screen.dart';
 import 'package:ifood_user_app/pages/my_account/myaccount_screen.dart';
 import 'package:ifood_user_app/pages/notification/notification_screen.dart';
 
@@ -13,7 +13,7 @@ class BodyProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
       child: Column(
         children: <Widget>[
           SizedBox(
@@ -30,12 +30,15 @@ class BodyProfile extends StatelessWidget {
               ),
               Text(
                 'TUNE',
-                style: TextStyle(color: kTextColor, fontSize: 16, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    color: kTextColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600),
               ),
             ],
           ),
 
-  // My Account
+          // My Account
           SizedBox(
             height: SizeConfig.screenHeight! * 0.01,
           ),
@@ -126,7 +129,7 @@ class BodyProfile extends StatelessWidget {
 
           //Help center
 
-           Container(
+          Container(
             height: SizeConfig.screenHeight! * 0.12,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

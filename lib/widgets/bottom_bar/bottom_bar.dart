@@ -87,32 +87,14 @@ class _BottomBarState extends State<BottomBar> {
                   GButton(
                     icon: Icons.shopping_cart_outlined,
                     text: 'Order',
-                    // onPressed: () {
-                    //   setState(() {
-                    //     currentScreen = CartScreen();
-                    //     _selectedIndex = 1;
-                    //   });
-                    // },
                   ),
                   GButton(
                     icon: Icons.notifications_none,
                     text: 'Notification',
-                    // onPressed: () {
-                    //   setState(() {
-                    //     currentScreen = NotificationScreen();
-                    //     _selectedIndex = 2;
-                    //   });
-                    // },
                   ),
                   GButton(
                     icon: Icons.person_outline,
                     text: 'Profile',
-                    // onPressed: () {
-                    //   setState(() {
-                    //     currentScreen = ProfileScreen();
-                    //     _selectedIndex = 3;
-                    //   });
-                    // },
                   )
                 ],
                 selectedIndex: _selectedIndex,

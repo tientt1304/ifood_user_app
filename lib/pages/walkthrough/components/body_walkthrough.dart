@@ -44,7 +44,7 @@ class _BodyWalkthroughState extends State<BodyWalkthrough> {
           child: Column(
             children: <Widget>[
               Expanded(
-                flex: 8,
+                flex: 9,
                 child: PageView.builder(
                   controller: _pageController,
                   onPageChanged: (index) {
@@ -71,7 +71,9 @@ class _BodyWalkthroughState extends State<BodyWalkthrough> {
                         (index) => buildDot(index: index),
                       ),
                     ),
-                    SizedBox(height: getProportionateScreenHeight(90),),
+                    SizedBox(
+                      height: getProportionateScreenHeight(90),
+                    ),
                     MainButton(
                         title: currentPage == 2 ? 'Get Started' : 'Next',
                         onPress: () {
@@ -84,7 +86,10 @@ class _BodyWalkthroughState extends State<BodyWalkthrough> {
                             }
                             if (currentPage > 2) {
                               currentPage = 2;
-                              Navigator.pushNamedAndRemoveUntil(context, GetStartedScreen.routeName, (Route<dynamic> route) => false);
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  GetStartedScreen.routeName,
+                                  (Route<dynamic> route) => false);
                             }
                           });
                         })

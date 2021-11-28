@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../SizeConfig.dart';
 import '../../../constants.dart';
 
-// ignore: must_be_immutable
 class FoodFilterCard extends StatefulWidget {
   FoodFilterCard(
       {Key? key,

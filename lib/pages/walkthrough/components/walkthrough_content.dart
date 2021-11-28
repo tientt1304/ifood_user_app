@@ -13,17 +13,20 @@ class WalkthroughContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         SvgPicture.asset(image),
-        SizedBox(height: 20,),
-        Text(
-          title,
-          style: TextStyle(
-              fontFamily: 'FSBold', fontWeight: FontWeight.bold, fontSize: 22),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title,
+            style: TextStyle(
+                fontFamily: 'FSBold',
+                fontWeight: FontWeight.bold,
+                fontSize: 22),
+          ),
         ),
         Container(
           padding: EdgeInsets.symmetric(
-            horizontal: getProportionateScreenWidth(50), 
-            vertical: getProportionateScreenHeight(10)
-            ),
+              horizontal: getProportionateScreenWidth(50),
+              vertical: getProportionateScreenHeight(10)),
           child: Text(
             text,
             textAlign: TextAlign.center,

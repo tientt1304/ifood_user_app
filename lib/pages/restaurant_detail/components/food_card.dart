@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/firebase/fb_food.dart';
 import 'package:ifood_user_app/models/food_model.dart';
 import 'package:ifood_user_app/pages/food_detail/food_detail_screen.dart';
+import 'package:ifood_user_app/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class FoodCard extends StatefulWidget {
   const FoodCard({
@@ -23,6 +25,7 @@ class _FoodCardState extends State<FoodCard> {
   FoodFB foodFB = new FoodFB();
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context);
     return StreamBuilder(
         stream: foodFB.collectionReference
             .where('idRestaurant', isEqualTo: widget.idRestaurant)
@@ -92,23 +95,12 @@ class _FoodCardState extends State<FoodCard> {
                                 primary: primaryColor,
                                 padding: EdgeInsets.symmetric(horizontal: 5)),
                             onPressed: () async {
-                              final FirebaseAuth _auth = FirebaseAuth.instance;
-                              var currentUser = _auth.currentUser;
-                              CollectionReference _collectionRef =
-                                  FirebaseFirestore.instance
-                                      .collection('users-cart-items');
-                              return _collectionRef
-                                  .doc(currentUser!.email)
-                                  .collection('item')
-                                  .doc()
-                                  .set({
-                                'name': foodModel.name,
-                                'images': foodModel.images,
-                                'price': foodModel.price,
-                                'idFood': foodModel.idFood,
-                                'quantity': 1,
-                              }).then((value) => Fluttertoast.showToast(
-                                      msg: 'Added item to cart'));
+                              cart.addItem(
+                                  foodModel.idRestaurant,
+                                  foodModel.idFood,
+                                  foodModel.images,
+                                  foodModel.name,
+                                  foodModel.price);
                             },
                             child: Text(
                               '+',
