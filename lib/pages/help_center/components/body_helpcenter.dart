@@ -27,7 +27,7 @@ class HelpCenterBody extends StatelessWidget {
             const ContactUsItem(
               icon: 'assets/icons/Conversation.svg',
               description: 'You can chat with us here',
-              title: 'Chat Tokoto now',
+              title: 'Chat iFood now',
             ),
             const ContactUsItem(
               icon: 'assets/icons/Mail.svg',
@@ -36,13 +36,13 @@ class HelpCenterBody extends StatelessWidget {
             ),
             const ContactUsItem(
               icon: 'assets/icons/Call.svg',
-              description: '1800806',
+              description: '0345450642',
               title: 'Costumer Service',
             ),
             SizedBox(height: getProportionateScreenWidth(30)),
             const Center(
               child: Text(
-                '© Copyright 2020 - Stay at Home',
+                '© Copyright 2021 - Stay at Home',
                 textAlign: TextAlign.center,
               ),
             ),

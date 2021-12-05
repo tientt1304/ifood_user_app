@@ -5,13 +5,20 @@ import 'package:ifood_user_app/pages/check_out/check_out_screen.dart';
 // import 'package:ifood_user_app/models/cart_model.dart';
 // import 'package:provider/provider.dart';
 
-class CheckOutBar extends StatelessWidget {
+class CheckOutBar extends StatefulWidget {
   const CheckOutBar({Key? key, this.total, this.numOfItems}) : super(key: key);
   final num? total;
   final num? numOfItems;
+
+  @override
+  State<CheckOutBar> createState() => _CheckOutBarState();
+}
+
+class _CheckOutBarState extends State<CheckOutBar> {
   @override
   Widget build(BuildContext context) {
     //final cart = Provider.of<CartModel>(context);
+    print("bar");
     return Positioned(
       width: SizeConfig.screenWidth,
       //alignment: Alignment.bottomCenter,
@@ -30,10 +37,12 @@ class CheckOutBar extends StatelessWidget {
                   color: primaryColor,
                 ),
               ),
-              numOfItems != null ? Text('$numOfItems Items') : Text('0 Items'),
-              numOfItems != null
+              widget.numOfItems != null
+                  ? Text('${widget.numOfItems} Items')
+                  : Text('0 Items'),
+              widget.numOfItems != null
                   ? Text(
-                      '$total VND',
+                      '${widget.total} VND',
                       textAlign: TextAlign.end,
                     )
                   : Text(

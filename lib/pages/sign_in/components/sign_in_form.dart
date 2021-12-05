@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
+import 'package:ifood_user_app/firebase/fb_cart.dart';
 import 'package:ifood_user_app/pages/forgot_password/forgot_password_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/login_success_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
@@ -17,6 +18,7 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
+  CartFB cartFB = new CartFB();
   final _formKey = GlobalKey<FormState>();
   bool remember = false;
   final _auth = FirebaseAuth.instance;
@@ -132,8 +134,26 @@ class _SignInFormState extends State<SignInForm> {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
-                  Fluttertoast.showToast(msg: "Login Successful"),
+                  //Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName),
+                  // Provider.of<CartProvider>(context, listen: false)
+                  //     .listCartModel
+                  //     .clear(),
+                  // StreamBuilder(
+                  //   stream: cartFB.collectionReference
+                  //       .doc(FirebaseAuth.instance.currentUser!.email)
+                  //       .collection('items')
+                  //       .snapshots(),
+                  //   builder: (BuildContext context, snapshot) {
+                  //     if (snapshot.hasData) {
+                  //       final cartDB = snapshot.data.;
+                  //       CartModel cartModel = CartModel.fromDocument(x);
+                  //       Provider.of<CartProvider>(context)
+                  //           .listCartModel
+                  //           .add(cartModel);
+                  //     }
+                  //   },
+                  // ),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

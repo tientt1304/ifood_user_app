@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-//import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
-import 'package:ifood_user_app/pages/walkthrough/walkthrough_screen.dart';
+import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
 import 'package:ifood_user_app/routes.dart';
 import 'package:ifood_user_app/theme.dart';
 import 'package:provider/provider.dart';
@@ -34,8 +33,8 @@ class _IFoodState extends State<IFood> {
           title: 'iFood',
           theme: theme(),
           routes: routes,
-          //initialRoute: GetStartedScreen.routeName,
-          initialRoute: WalkthroughScreen.routeName,
+          initialRoute: GetStartedScreen.routeName,
+          //initialRoute: WalkthroughScreen.routeName,
         ));
   }
 }

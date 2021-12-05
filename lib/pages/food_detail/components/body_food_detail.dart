@@ -35,8 +35,9 @@ class _BodyFoodDetailState extends State<BodyFoodDetail> {
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Center(
-              child: Text('No Data'),
-            );
+                child: CircularProgressIndicator(
+              color: primaryColor,
+            ));
           } else {
             QueryDocumentSnapshot x = snapshot.data!.docs[0];
             FoodModel foodModel = FoodModel.fromDocument(x);

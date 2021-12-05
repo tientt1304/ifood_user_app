@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:ifood_user_app/constants.dart';
+import 'package:ifood_user_app/firebase/fb_notification.dart';
+import 'package:ifood_user_app/models/notification_model.dart';
 
 class BodyNotification extends StatelessWidget {
   @override
@@ -11,41 +12,31 @@ class BodyNotification extends StatelessWidget {
 }
 
 Widget _notify(BuildContext context) {
-  return Container(
-    child: ListView(
-      children: ListTile.divideTiles(
-        context: context,
-        tiles: [
-          ListTile(
-            title: Text('Order status 1',
-                style:
-                    TextStyle(color: kTitleColor, fontWeight: FontWeight.bold)),
-            subtitle: Text('Your order is on its way to delivery',
-                style: TextStyle(color: kTextColor)),
-          ),
-          ListTile(
-            title: Text('Order status 2',
-                style:
-                    TextStyle(color: kTitleColor, fontWeight: FontWeight.bold)),
-            subtitle: Text('Your order has been delivered.',
-                style: TextStyle(color: kTextColor)),
-          ),
-          ListTile(
-            title: Text('Order status 3',
-                style:
-                    TextStyle(color: kTitleColor, fontWeight: FontWeight.bold)),
-            subtitle: Text('The restaurant has accepted your order.',
-                style: TextStyle(color: kTextColor)),
-          ),
-          ListTile(
-            title: Text('Order status 4',
-                style:
-                    TextStyle(color: kTitleColor, fontWeight: FontWeight.bold)),
-            subtitle: Text('Your order has been cancelled.',
-                style: TextStyle(color: kTextColor)),
-          ),
-        ],
-      ).toList(),
-    ),
-  );
+  NotificationFB notificationFB = NotificationFB();
+  return StreamBuilder(
+      stream: notificationFB.collectionReference.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+              child: CircularProgressIndicator(
+            color: primaryColor,
+          ));
+        } else {
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              QueryDocumentSnapshot noti = snapshot.data!.docs[index];
+              NotificationModel notificationModel =
+                  NotificationModel.fromDocument(noti);
+              return ListTile(
+                title: Text(notificationModel.title,
+                    style: TextStyle(
+                        color: kTitleColor, fontWeight: FontWeight.bold)),
+                subtitle: Text(notificationModel.content,
+                    style: TextStyle(color: kTextColor)),
+              );
+            },
+          );
+        }
+      });
 }

@@ -6,41 +6,51 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/models/cart_model.dart';
 
 class CartProvider with ChangeNotifier {
+  List<CartModel> _listCartModel = [];
+  List<CartModel> get listCartModel => _listCartModel;
+  set listCartModel(value) {
+    _listCartModel = value;
+    notifyListeners();
+  }
+
   Map<String, CartModel> _items = {};
 
   Map<String, CartModel> get items {
     return {..._items};
   }
 
+  num _itemCountx = 0;
+
+  get itemCountx => _itemCountx;
+  set itemCountx(value) {
+    _itemCountx = value;
+    //notifyListeners();
+  }
+
+  void count(value) {
+    _itemCountx = value;
+    notifyListeners();
+  }
+
   int get itemCount {
-    int itemCount = 0;
-    _items.forEach((key, value) {
-      itemCount = itemCount + value.quantity;
-    });
+    int itemCount = _listCartModel.length;
+
     return itemCount;
   }
 
-  num get totalAmount {
-    num total = 0;
-    _items.forEach((key, value) {
-      total = total + value.quantity * value.price;
-    });
-    return total;
-  }
-
-  void deleteItem(String idFood) {
-    _items.remove(idFood);
-    notifyListeners();
-  }
+  // num get totalAmount {
+  //   num total = 0;
+  //   _items.forEach((key, value) {
+  //     total = total + value.quantity * value.price;
+  //   });
+  //   notifyListeners();
+  //   return total;
+  // }
 
   void addItem(String idRestaurant, String idFood, String images, String name,
       num price) {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     var currentUser = _auth.currentUser;
-    // var cartFB = new CartFB();
-    // if(cartFB.isContainFood(idFood) == idFood){
-    //   return cartFB.updateQuantity(idFood)
-    // }
     if (_items.containsKey(idFood)) {
       //change quantity
       _items.update(idFood, (existingCartModel) {

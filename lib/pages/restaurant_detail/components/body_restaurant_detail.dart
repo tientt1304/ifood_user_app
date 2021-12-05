@@ -6,7 +6,6 @@ import 'package:ifood_user_app/firebase/fb_restaurant.dart';
 import 'package:ifood_user_app/models/restaurant_model.dart';
 import 'package:ifood_user_app/pages/restaurant_detail/components/food_card.dart';
 import 'package:ifood_user_app/pages/shopping_cart/shopping_cart_screen.dart';
-import 'package:ifood_user_app/widgets/check_out_bar.dart';
 
 import 'package:ifood_user_app/widgets/custom_app_bar.dart';
 
@@ -30,7 +29,9 @@ class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Center(
-              child: Text('No Data'),
+              child: CircularProgressIndicator(
+                color: primaryColor,
+              ),
             );
           } else {
             QueryDocumentSnapshot x = snapshot.data!.docs[0];
@@ -129,7 +130,6 @@ class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
                     ),
                   ),
                 ),
-                CheckOutBar()
               ],
             );
           }

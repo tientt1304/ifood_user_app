@@ -56,7 +56,10 @@ class _BodyHomeState extends State<BodyHome> {
                       builder:
                           (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (!snapshot.hasData) {
-                          return Center(child: Text('No data'));
+                          return Center(
+                              child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ));
                         } else {
                           return ListView.builder(
                             shrinkWrap: true,

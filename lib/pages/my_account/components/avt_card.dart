@@ -6,15 +6,14 @@ import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ImageWidget extends StatelessWidget {
+class AvtCard extends StatelessWidget {
   final File image;
   final ValueChanged<ImageSource> onClicked;
-  const ImageWidget({Key? key, required this.image, required this.onClicked})
+  const AvtCard({Key? key, required this.image, required this.onClicked})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary;
     return Center(
       child: Stack(
         children: [
@@ -22,7 +21,7 @@ class ImageWidget extends StatelessWidget {
           Positioned(
             bottom: 0,
             right: 4,
-            child: buildEditIcon(color),
+            child: buildEditIcon(),
           )
         ],
       ),
@@ -31,7 +30,7 @@ class ImageWidget extends StatelessWidget {
 
   Widget buildImage(BuildContext context) {
     final imagePath = this.image.path;
-    final image = imagePath.contains('http://')
+    final image = imagePath.contains('://')
         ? NetworkImage(imagePath)
         : FileImage(File(imagePath));
     return ClipOval(
@@ -40,8 +39,8 @@ class ImageWidget extends StatelessWidget {
         child: Ink.image(
           image: image as ImageProvider,
           fit: BoxFit.cover,
-          width: SizeConfig.screenWidth! * 0.6,
-          height: SizeConfig.screenWidth! * 0.6,
+          width: SizeConfig.screenWidth! * 0.3,
+          height: SizeConfig.screenWidth! * 0.3,
           child: InkWell(onTap: () async {
             final source = await showImageSource(context);
             if (source == null) return;
@@ -52,7 +51,7 @@ class ImageWidget extends StatelessWidget {
     );
   }
 
-  Widget buildEditIcon(Color color) => buildCirCle(
+  Widget buildEditIcon() => buildCirCle(
         color: Colors.white,
         all: 3,
         child: buildCirCle(
@@ -60,7 +59,7 @@ class ImageWidget extends StatelessWidget {
           all: 10,
           child: Icon(
             Icons.edit,
-            size: 25,
+            size: 15,
             color: Colors.white,
           ),
         ),

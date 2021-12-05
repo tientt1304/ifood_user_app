@@ -36,7 +36,7 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
           .collection('users')
           .doc(_auth.currentUser!.uid.toString())
           .get();
-      name = user['fName'];
+      name = user['fName'] + ' ' + user['lName'];
     }
     return name;
   }

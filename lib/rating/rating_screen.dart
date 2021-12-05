@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/rating/components/body_rating.dart';
+import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
 
 class RatingScreen extends StatelessWidget {
   static String routeName = '/rating';
@@ -13,7 +14,8 @@ class RatingScreen extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded),
             iconSize: 21,
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                context, BottomBar.routeName, (route) => false),
           ),
           title: Text('Rating',
               style: TextStyle(

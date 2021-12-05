@@ -13,7 +13,7 @@ import 'package:ifood_user_app/pages/update_location/update_location_screen.dart
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/contents/title_content.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
+//import 'package:path/path.dart';
 
 class BodyUpdateAvt extends StatefulWidget {
   const BodyUpdateAvt({Key? key}) : super(key: key);
@@ -43,8 +43,6 @@ class _BodyUpdateAvtState extends State<BodyUpdateAvt> {
 
   @override
   Widget build(BuildContext context) {
-    final imageName =
-        image != null ? basename(image!.path) : 'No image selected';
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
@@ -75,7 +73,6 @@ class _BodyUpdateAvtState extends State<BodyUpdateAvt> {
               SizedBox(
                 height: SizeConfig.screenHeight! * 0.1,
               ),
-              Text(imageName),
               MainButton(
                   title: 'Continue', onPress: () => uploadImage(context)),
             ],
@@ -88,7 +85,7 @@ class _BodyUpdateAvtState extends State<BodyUpdateAvt> {
   Future uploadImage(BuildContext context) async {
     if (image == null) return;
 
-    final fileName = basename(image!.path);
+    final fileName = (new DateTime.now().microsecondsSinceEpoch).toString();
     final destination = 'avatar/$fileName';
 
     task = FirebaseApi.uploadFile(destination, image!);

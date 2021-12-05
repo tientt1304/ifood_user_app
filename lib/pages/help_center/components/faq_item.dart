@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 
-
 class FAQItem extends StatelessWidget {
   const FAQItem({
     Key? key,
@@ -21,7 +20,7 @@ class FAQItem extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: Container(
-          width:  getProportionateScreenWidth(30),
+          width: double.infinity,
           padding: EdgeInsets.symmetric(
             vertical: getProportionateScreenHeight(5),
           ),
@@ -31,7 +30,10 @@ class FAQItem extends StatelessWidget {
               color: const Color(0xFFD8D8D8).withOpacity(0.6),
             )),
           ),
-          child: Text(content),
+          child: Text(
+            content,
+            textAlign: TextAlign.start,
+          ),
         ),
       ),
     );

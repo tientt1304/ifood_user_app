@@ -24,9 +24,14 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
+    Provider.of<CartProvider>(context, listen: false).listCartModel.clear();
     return SafeArea(
       child: Stack(
         children: <Widget>[
+          CheckOutBar(
+            numOfItems: cart.itemCountx,
+            //total: cart.totalAmount,
+          ),
           Align(
             alignment: Alignment.topCenter,
             child: Container(
@@ -36,78 +41,77 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
                 stream: cartFB.collectionReference
                     .doc(FirebaseAuth.instance.currentUser!.email)
                     .collection('items')
-                    .snapshots(),
+                    .snapshots(includeMetadataChanges: true),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
                     return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.network(
-                              'https://firebasestorage.googleapis.com/v0/b/ifood-6cabb.appspot.com/o/source_images%2FGroup.png?alt=media&token=2b71dcf9-19a8-48cd-8d67-c8dc2bc712a3'),
-                          Text(
-                            'I’m famished!',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text('Fill me up quickly by adding some items')
-                        ],
-                      ),
-                    );
+                        child: CircularProgressIndicator(
+                      color: primaryColor,
+                    ));
                   } else {
                     return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          DocumentSnapshot x = snapshot.data!.docs[index];
-                          CartModel cartModel = CartModel.fromDocument(x);
-                          return Slidable(
-                            endActionPane: ActionPane(
-                              motion: ScrollMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (context) {
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        DocumentSnapshot x = snapshot.data!.docs[index];
+                        CartModel cartModel = CartModel.fromDocument(x);
+
+                        Provider.of<CartProvider>(context)
+                            .listCartModel
+                            .add(cartModel);
+
+                        return Slidable(
+                          endActionPane: ActionPane(
+                            motion: ScrollMotion(),
+                            children: [
+                              SlidableAction(
+                                onPressed: (context) {
+                                  // cartFB.delete(x.id);
+                                  // cart.deleteItem(x.id);
+                                  setState(() {
                                     cartFB.delete(x.id);
-                                    cart.deleteItem(x.id);
-                                    Fluttertoast.showToast(
-                                        msg: 'Delete food successful');
-                                  },
-                                  backgroundColor: primaryColor,
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.delete,
-                                  label: 'Delete',
-                                ),
-                              ],
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => FoodDetailScreen(
-                                        idFood: cartModel.idFood)));
-                              },
-                              child: Card(
-                                elevation: 2,
-                                child: ListTile(
-                                  leading: Image.network(cartModel.images,
-                                      width: 70, fit: BoxFit.fitWidth),
-                                  title: Text(cartModel.name),
-                                  subtitle: Text('x ${cartModel.quantity}'),
-                                  trailing: Text(
-                                      '${cartModel.price * cartModel.quantity} VND'),
-                                ),
+                                    Provider.of<CartProvider>(context,
+                                            listen: false)
+                                        .listCartModel
+                                        .clear();
+                                    cartFB.getList();
+                                  });
+                                  Fluttertoast.showToast(
+                                      msg: 'Delete food successful');
+                                },
+                                backgroundColor: primaryColor,
+                                foregroundColor: Colors.white,
+                                icon: Icons.delete,
+                                label: 'Delete',
+                              ),
+                            ],
+                          ),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => FoodDetailScreen(
+                                      idFood: cartModel.idFood)));
+                            },
+                            child: Card(
+                              elevation: 2,
+                              child: ListTile(
+                                leading: Image.network(cartModel.images,
+                                    width: 70, fit: BoxFit.fitWidth),
+                                title: Text(cartModel.name),
+                                subtitle: Text('x ${cartModel.quantity}'),
+                                trailing: Text(
+                                    '${cartModel.price * cartModel.quantity} VND'),
                               ),
                             ),
-                          );
-                        });
+                          ),
+                        );
+                      },
+                    );
                   }
                 },
               ),
             ),
           ),
-          CheckOutBar(
-            numOfItems: cart.itemCount,
-            total: cart.totalAmount,
-          )
         ],
       ),
     );
