@@ -38,6 +38,16 @@ class UserModel {
           : '',
     );
   }
+  UserModel.fromSnapshot(DocumentSnapshot snapshot) {
+    uid = snapshot['uid'];
+    phoneNumber = snapshot['phoneNumber'];
+    email = snapshot['email'];
+    fName = snapshot['fName'];
+    lName = snapshot['lName'];
+    avatar = snapshot['avatar'];
+    latitude = snapshot['latitude'];
+    longitude = snapshot['longitude'];
+  }
   //Convert to JSON
   Map<String, dynamic> toJSON() {
     return {

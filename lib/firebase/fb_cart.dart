@@ -33,14 +33,6 @@ class CartFB {
         .catchError((error) => print('fail'));
   }
 
-  Future<void> updateQuantity(String idFood) async {
-    return collectionReference
-        .doc(_authCurrentUser!.email)
-        .collection('items')
-        .doc('id')
-        .delete();
-  }
-
   Future<void> delete(String id) async {
     return collectionReference
         .doc(_authCurrentUser!.email)
@@ -49,6 +41,8 @@ class CartFB {
         .delete();
   }
 
+  List<CartModel> _listCartModel = [];
+
   int _itemCount = 0;
   get itemCount => _itemCount;
   set itemCount(value) {
@@ -56,7 +50,7 @@ class CartFB {
   }
 
   Future getList() async {
-    List<CartModel> _listCartModel = [];
+    _listCartModel.clear();
     await FirebaseFirestore.instance
         .collection('users-cart-items')
         .doc(FirebaseAuth.instance.currentUser!.email)
@@ -66,10 +60,8 @@ class CartFB {
       value.docs.forEach((element) {
         CartModel cartModel = CartModel.fromDocument(element);
         _listCartModel.add(cartModel);
-        // print(cartModel.idRestaurant);
       });
     });
     _itemCount = _listCartModel.length;
-    print('length' + _itemCount.toString());
   }
 }

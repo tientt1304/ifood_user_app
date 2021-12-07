@@ -21,9 +21,10 @@ class BodyMyAccount extends StatefulWidget {
 
 class _BodyMyAccountState extends State<BodyMyAccount> {
   String avtUrl = '';
+  String uid = '';
+  late UserModel userModel;
   File? image;
   UploadTask? task;
-  String uid = '';
   final _auth = FirebaseAuth.instance;
   UserModel? user;
 
@@ -49,6 +50,17 @@ class _BodyMyAccountState extends State<BodyMyAccount> {
     return uid;
   }
 
+  Future<UserModel> getUserModel(BuildContext context) async {
+    UserModel model = new UserModel();
+    var uid = await getUid(context);
+    if (_auth.currentUser != null) {
+      var doc =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      model = UserModel.fromDocument(doc);
+    }
+    return model;
+  }
+
   Future<String> getAvt(BuildContext context) async {
     String url = '';
     if (_auth.currentUser != null) {
@@ -70,10 +82,11 @@ class _BodyMyAccountState extends State<BodyMyAccount> {
         image = File(avtUrl);
       });
     });
-
     getUid(context).then((value) {
       uid = value;
     });
+    getUserModel(context);
+    print('2' + userModel.email.toString());
   }
 
   @override
@@ -90,7 +103,7 @@ class _BodyMyAccountState extends State<BodyMyAccount> {
                   onClicked: (source) => pickImage(source)),
           Padding(
             padding: EdgeInsets.only(top: SizeConfig.screenHeight! * 0.02),
-            child: MyAccountForm(uid: uid),
+            child: MyAccountForm(userModel, uid),
           ),
           MainButton(title: 'Change Password', onPress: () {})
         ],

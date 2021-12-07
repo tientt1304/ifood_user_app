@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/models/user_model.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
@@ -7,89 +6,78 @@ import 'package:ifood_user_app/widgets/custom_suffix_icon.dart';
 import '../../../SizeConfig.dart';
 
 class MyAccountForm extends StatefulWidget {
-  const MyAccountForm({
-    Key? key,
-    required this.uid,
-  }) : super(key: key);
-  final uid;
+  final UserModel userModel;
+  final String uid;
+  MyAccountForm(this.userModel, this.uid);
 
   @override
   _MyAccountFormState createState() => _MyAccountFormState();
 }
 
 class _MyAccountFormState extends State<MyAccountForm> {
-  TextEditingController fNameController = TextEditingController();
-  TextEditingController lNameController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
-  bool isLoading = false;
-  UserModel userModel = new UserModel();
-  // bool _nameValid = true;
-  // bool _phoneValid = true;
+  TextEditingController _fNameController = TextEditingController();
+  TextEditingController _lNameController = TextEditingController();
+  TextEditingController _phoneNumberController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    getUser();
+    initInfo();
+    //print(widget.userModel.email);
   }
 
-  getUser() async {
-    setState(() {
-      isLoading = true;
-    });
-    DocumentSnapshot doc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.uid)
-        .get();
-    userModel = UserModel.fromDocument(doc);
-    fNameController.text = userModel.fName!;
-    lNameController.text = userModel.lName!;
-    phoneNumberController.text = userModel.phoneNumber!;
-    print('3' + userModel.fName!);
-    setState(() {
-      isLoading = false;
-    });
+  initInfo() async {
+    _fNameController.text = this.widget.userModel.fName.toString();
+    _lNameController.text = this.widget.userModel.lName.toString();
+    _phoneNumberController.text = this.widget.userModel.phoneNumber.toString();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: SizeConfig.screenWidth! * 0.06,
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: SizeConfig.screenHeight! * 0.01),
-            child: buildFirstNameTextField(),
-          ),
-          Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: SizeConfig.screenHeight! * 0.01),
-            child: buildLastNameTextField(),
-          ),
-          Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: SizeConfig.screenHeight! * 0.01),
-            child: buildPhoneNumberTextField(),
-          ),
-          SizedBox(
-            height: SizeConfig.screenHeight! * 0.02,
-          ),
-          MainButton(
-            title: 'Save',
-            onPress: () {},
-          ),
-        ],
-      ),
-    );
+    if (widget.userModel.fName == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else {
+      return Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.screenWidth! * 0.06,
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.screenHeight! * 0.01),
+              child: buildFirstNameTextField(),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.screenHeight! * 0.01),
+              child: buildLastNameTextField(),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.screenHeight! * 0.01),
+              child: buildPhoneNumberTextField(),
+            ),
+            SizedBox(
+              height: SizeConfig.screenHeight! * 0.02,
+            ),
+            MainButton(
+              title: 'Save',
+              onPress: () {},
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   TextFormField buildPhoneNumberTextField() => TextFormField(
         onChanged: (value) {
-          phoneNumberController.text = value;
+          _phoneNumberController.text = value;
         },
-        controller: phoneNumberController,
+        controller: _phoneNumberController,
         textInputAction: TextInputAction.done,
         validator: (value) {
           if (value != null && !phoneNumberValidatorRegExp.hasMatch(value)) {
@@ -101,15 +89,14 @@ class _MyAccountFormState extends State<MyAccountForm> {
         },
         decoration: const InputDecoration(
           labelText: 'Phone Number',
-          hintText: '',
           suffixIcon:
               CustomSuffixIcon(svgIconSrc: 'assets/icons/phone_android.svg'),
         ),
       );
   TextFormField buildLastNameTextField() => TextFormField(
-        controller: lNameController,
+        controller: _lNameController,
         onChanged: (value) {
-          lNameController.text = value.toString();
+          _lNameController.text = value.toString();
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -124,9 +111,9 @@ class _MyAccountFormState extends State<MyAccountForm> {
         ),
       );
   TextFormField buildFirstNameTextField() => TextFormField(
-        controller: fNameController,
+        controller: _fNameController,
         onChanged: (value) {
-          fNameController.text = value.toString();
+          _fNameController.text = value.toString();
         },
         validator: (value) {
           if (value == null || value.isEmpty) {

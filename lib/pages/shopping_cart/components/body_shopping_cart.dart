@@ -66,8 +66,6 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
                             children: [
                               SlidableAction(
                                 onPressed: (context) {
-                                  // cartFB.delete(x.id);
-                                  // cart.deleteItem(x.id);
                                   setState(() {
                                     cartFB.delete(x.id);
                                     Provider.of<CartProvider>(context,
