@@ -51,9 +51,8 @@ class CartFB {
 
   Future getList() async {
     _listCartModel.clear();
-    await FirebaseFirestore.instance
-        .collection('users-cart-items')
-        .doc(FirebaseAuth.instance.currentUser!.email)
+    await collectionReference
+        .doc(_authCurrentUser!.email)
         .collection('items')
         .get()
         .then((value) {
@@ -64,4 +63,7 @@ class CartFB {
     });
     _itemCount = _listCartModel.length;
   }
+
+  void addItem(String idRestaurant, String idFood, String images, String name,
+      num price) {}
 }

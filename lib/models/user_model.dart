@@ -62,6 +62,14 @@ class UserModel {
     };
   }
 
+  Map<String, dynamic> updateProfile() {
+    return {
+      'fName': fName,
+      'lName': lName,
+      'phoneNumber': phoneNumber,
+    };
+  }
+
   Map<String, dynamic> avtToJSON() {
     return {'avatar': avatar};
   }

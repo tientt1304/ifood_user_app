@@ -6,10 +6,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
+import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/models/user_model.dart';
+import 'package:ifood_user_app/pages/forgot_password/components/forgot_password_form.dart';
 import 'package:ifood_user_app/pages/my_account/components/avt_card.dart';
 import 'package:ifood_user_app/pages/my_account/components/myaccount_form.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
+import 'package:ifood_user_app/widgets/contents/title_content.dart';
 import 'package:image_picker/image_picker.dart';
 
 class BodyMyAccount extends StatefulWidget {
@@ -22,7 +25,7 @@ class BodyMyAccount extends StatefulWidget {
 class _BodyMyAccountState extends State<BodyMyAccount> {
   String avtUrl = '';
   String uid = '';
-  late UserModel userModel;
+  UserModel userModel = new UserModel();
   File? image;
   UploadTask? task;
   final _auth = FirebaseAuth.instance;
@@ -51,14 +54,14 @@ class _BodyMyAccountState extends State<BodyMyAccount> {
   }
 
   Future<UserModel> getUserModel(BuildContext context) async {
-    UserModel model = new UserModel();
+    //UserModel model = new UserModel();
     var uid = await getUid(context);
     if (_auth.currentUser != null) {
       var doc =
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
-      model = UserModel.fromDocument(doc);
+      userModel = UserModel.fromDocument(doc);
     }
-    return model;
+    return userModel;
   }
 
   Future<String> getAvt(BuildContext context) async {
@@ -102,12 +105,35 @@ class _BodyMyAccountState extends State<BodyMyAccount> {
                       'https://firebasestorage.googleapis.com/v0/b/ifood-6cabb.appspot.com/o/source_images%2Fpng-clipart-computer-icons-user-profile-avatar-profile-heroes-profile-thumbnail.png?alt=media&token=9cb56cba-05d4-4a30-8c1b-fbdd2bf82396'),
                   onClicked: (source) => pickImage(source)),
           Padding(
-            padding: EdgeInsets.only(top: SizeConfig.screenHeight! * 0.02),
-            child: MyAccountForm(userModel, uid),
-          ),
-          MainButton(title: 'Change Password', onPress: () {})
+              padding: EdgeInsets.only(top: SizeConfig.screenHeight! * 0.02),
+              child: userModel.fName != null
+                  ? MyAccountForm(uid, userModel)
+                  : Center(
+                      child: CircularProgressIndicator(color: primaryColor),
+                    )),
+          MainButton(title: 'Change Password', onPress: openAlertForgetPassword)
         ],
       ),
     );
+  }
+
+  openAlertForgetPassword() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TitleContent(
+                      title: 'Forgot Password',
+                      content:
+                          'Please enter your email and we will send you a link to return to your account'),
+                  ForgotPasswordForm(),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

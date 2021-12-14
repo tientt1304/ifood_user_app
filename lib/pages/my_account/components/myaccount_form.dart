@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/models/user_model.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
@@ -6,10 +8,11 @@ import 'package:ifood_user_app/widgets/custom_suffix_icon.dart';
 import '../../../SizeConfig.dart';
 
 class MyAccountForm extends StatefulWidget {
-  final UserModel userModel;
   final String uid;
-  MyAccountForm(this.userModel, this.uid);
+  final UserModel userModel;
 
+//  const MyAccountForm({Key? key, required this.uid}) : super(key: key);
+  MyAccountForm(this.uid, this.userModel);
   @override
   _MyAccountFormState createState() => _MyAccountFormState();
 }
@@ -23,7 +26,7 @@ class _MyAccountFormState extends State<MyAccountForm> {
   void initState() {
     super.initState();
     initInfo();
-    //print(widget.userModel.email);
+    print(widget.uid);
   }
 
   initInfo() async {
@@ -34,43 +37,37 @@ class _MyAccountFormState extends State<MyAccountForm> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.userModel.fName == null) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    } else {
-      return Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.screenWidth! * 0.06,
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.screenHeight! * 0.01),
-              child: buildFirstNameTextField(),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.screenHeight! * 0.01),
-              child: buildLastNameTextField(),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.screenHeight! * 0.01),
-              child: buildPhoneNumberTextField(),
-            ),
-            SizedBox(
-              height: SizeConfig.screenHeight! * 0.02,
-            ),
-            MainButton(
-              title: 'Save',
-              onPress: () {},
-            ),
-          ],
-        ),
-      );
-    }
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: SizeConfig.screenWidth! * 0.06,
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding:
+                EdgeInsets.symmetric(vertical: SizeConfig.screenHeight! * 0.01),
+            child: buildFirstNameTextField(),
+          ),
+          Padding(
+            padding:
+                EdgeInsets.symmetric(vertical: SizeConfig.screenHeight! * 0.01),
+            child: buildLastNameTextField(),
+          ),
+          Padding(
+            padding:
+                EdgeInsets.symmetric(vertical: SizeConfig.screenHeight! * 0.01),
+            child: buildPhoneNumberTextField(),
+          ),
+          SizedBox(
+            height: SizeConfig.screenHeight! * 0.02,
+          ),
+          MainButton(
+            title: 'Save',
+            onPress: updateDetailsToFireStore,
+          ),
+        ],
+      ),
+    );
   }
 
   TextFormField buildPhoneNumberTextField() => TextFormField(
@@ -127,4 +124,30 @@ class _MyAccountFormState extends State<MyAccountForm> {
           suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/person.svg'),
         ),
       );
+  updateDetailsToFireStore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    //User? user = _auth.currentUser;
+    UserModel userModel = UserModel();
+    // DocumentSnapshot currentAvatar = await firebaseFirestore
+    //     .collection('users')
+    //     .doc(user!.uid.toString())
+    //     .get();
+    //userModel.uid = user.uid;
+    userModel.phoneNumber = _phoneNumberController.text;
+    userModel.fName = _fNameController.text;
+    userModel.lName = _lNameController.text;
+    await firebaseFirestore
+        .collection('users')
+        .doc(userModel.uid)
+        .update(userModel.updateProfile());
+    // if (currentAvatar['avatar'] != avtUrl) {
+    //   userModel.avatar = avtUrl;
+    //   await firebaseFirestore
+    //       .collection('users')
+    //       .doc(userModel.uid)
+    //       .update(userModel.avtToJSON());
+    // }
+
+    Fluttertoast.showToast(msg: 'Update information successful!');
+  }
 }
