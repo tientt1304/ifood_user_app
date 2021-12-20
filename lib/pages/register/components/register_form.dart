@@ -84,7 +84,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         agree = value!;
                       });
                     }),
-                Text('You agree with our Term and Condition'),
+                Text('You agree with our Terms and Conditions'),
               ],
             ),
             MainButton(
@@ -213,6 +213,9 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
       );
   void _onSignUp(String email, String password) async {
+    if (agree == false)
+      Fluttertoast.showToast(
+          msg: 'You have to agree with our Terms and Conditions');
     if (_formKey.currentState!.validate() && agree == true) {
       try {
         await _auth

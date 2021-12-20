@@ -1,28 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:ifood_user_app/models/food_model.dart';
 
 class CartModel {
-  final idCart;
-  final String idFood;
-  final String name;
-  final String images;
-  final num price;
-  final String idRestaurant;
-  final int quantity;
+  String? idCart;
+  //FoodModel? foodModel;
+  String idFood;
+  String idRestaurant;
+  String images;
+  String name;
+  num price;
+  num quantity;
 
   CartModel({
-    required this.idCart,
-    required this.idRestaurant,
-    required this.idFood,
-    required this.images,
-    required this.name,
-    required this.price,
-    required this.quantity,
+    this.idCart,
+    this.idFood = '',
+    this.idRestaurant = '',
+    this.images = '',
+    this.name = '',
+    this.price = 0,
+    //this.foodModel,
+    this.quantity = 1,
   });
 
   //receiving data from server
   factory CartModel.fromDocument(DocumentSnapshot doc) {
     return CartModel(
       idCart: doc.data().toString().contains('idCart') ? doc.get('idCart') : '',
+      // foodModel: doc.data().toString().contains('foodModel.id')
+      //     ? doc.get('foodModel')
+      //     : '',
       idRestaurant: doc.data().toString().contains('idRestaurant')
           ? doc.get('idRestaurant')
           : '',
@@ -31,13 +37,14 @@ class CartModel {
       images: doc.data().toString().contains('images') ? doc.get('images') : '',
       price: doc.data().toString().contains('price') ? doc.get('price') : '',
       quantity:
-          doc.data().toString().contains('quantity') ? doc.get('quantity') : '',
+          doc.data().toString().contains('quantity') ? doc.get('quantity') : 1,
     );
   }
   //Convert to JSON
   Map<String, dynamic> toJSON() {
     return {
       'idCart': idCart,
+      //'foodModel': foodModel,
       'idFood': idFood,
       'name': name,
       'images': images,

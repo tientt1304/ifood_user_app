@@ -1,11 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
+import 'package:ifood_user_app/api/cart_api.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/firebase/fb_cart.dart';
 import 'package:ifood_user_app/firebase/fb_food.dart';
+import 'package:ifood_user_app/models/cart_model.dart';
 import 'package:ifood_user_app/models/food_model.dart';
+import 'package:ifood_user_app/notifier/cart_notifier.dart';
 import 'package:ifood_user_app/pages/food_detail/food_detail_screen.dart';
+import 'package:provider/provider.dart';
 
 class FoodCard extends StatefulWidget {
   const FoodCard({
@@ -21,9 +26,15 @@ class FoodCard extends StatefulWidget {
 class _FoodCardState extends State<FoodCard> {
   FoodFB foodFB = new FoodFB();
   CartFB cartFB = new CartFB();
-  // Future<void> getData() async {}
+  CartModel _currentCart = new CartModel();
   @override
   Widget build(BuildContext context) {
+    CartNotifier cartNotifier = Provider.of<CartNotifier>(context);
+    _onCartAdded(CartModel cartModel) {
+      cartNotifier.addToCart(cartModel);
+      Fluttertoast.showToast(msg: 'Added');
+    }
+
     return StreamBuilder(
         stream: foodFB.collectionReference
             .where('idRestaurant', isEqualTo: widget.idRestaurant)
@@ -62,7 +73,6 @@ class _FoodCardState extends State<FoodCard> {
                                 width: 70,
                                 height: 70,
                                 fit: BoxFit.fitHeight,
-                                //height: 70,
                               ),
                             ),
                           ),
@@ -92,13 +102,16 @@ class _FoodCardState extends State<FoodCard> {
                             style: ElevatedButton.styleFrom(
                                 primary: primaryColor,
                                 padding: EdgeInsets.symmetric(horizontal: 5)),
-                            onPressed: () async {
-                              // cart.addItem(
-                              //     foodModel.idRestaurant,
-                              //     foodModel.idFood,
-                              //     foodModel.images,
-                              //     foodModel.name,
-                              //     foodModel.price);
+                            onPressed: () {
+                              _currentCart.idFood = foodModel.idFood;
+                              _currentCart.idRestaurant =
+                                  foodModel.idRestaurant;
+                              _currentCart.images = foodModel.images;
+                              _currentCart.name = foodModel.name;
+                              _currentCart.price = foodModel.price;
+                              cartNotifier.currentCart = _currentCart;
+                              addToCart(cartNotifier.currentCart, _onCartAdded,
+                                  cartNotifier);
                             },
                             child: Text(
                               '+',

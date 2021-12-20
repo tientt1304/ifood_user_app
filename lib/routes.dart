@@ -10,6 +10,7 @@ import 'package:ifood_user_app/pages/home/home_screen.dart';
 import 'package:ifood_user_app/pages/my_account/myaccount_screen.dart';
 import 'package:ifood_user_app/pages/notification/notification_screen.dart';
 import 'package:ifood_user_app/pages/profile/profile_screen.dart';
+import 'package:ifood_user_app/pages/rating/rating_screen.dart';
 import 'package:ifood_user_app/pages/register/register_screen.dart';
 import 'package:ifood_user_app/pages/select_location/set_location_screen.dart';
 import 'package:ifood_user_app/pages/shopping_cart/shopping_cart_screen.dart';
@@ -21,7 +22,6 @@ import 'package:ifood_user_app/pages/update_avt/update_avt_screen.dart';
 import 'package:ifood_user_app/pages/update_location/update_location_screen.dart';
 import 'package:ifood_user_app/pages/walkthrough/components/body_walkthrough.dart';
 import 'package:ifood_user_app/pages/walkthrough/walkthrough_screen.dart';
-import 'package:ifood_user_app/rating/rating_screen.dart';
 import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
 import 'pages/walkthrough/components/splash_screen.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/rating/rating_screen.dart';
+import 'package:ifood_user_app/pages/rating/rating_screen.dart';
 import 'package:ifood_user_app/widgets/success_sceen.dart';
 
 class BodyOrderSuccess extends StatelessWidget {

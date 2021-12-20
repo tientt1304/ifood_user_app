@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ifood_user_app/models/cart_model.dart';
 
 class CartFB {
   final _authCurrentUser = FirebaseAuth.instance.currentUser;
@@ -41,27 +40,18 @@ class CartFB {
         .delete();
   }
 
-  List<CartModel> _listCartModel = [];
-
-  int _itemCount = 0;
-  get itemCount => _itemCount;
-  set itemCount(value) {
-    _itemCount = value;
-  }
-
+  // List<UserModel> _listCartModel = [];
   Future getList() async {
-    _listCartModel.clear();
     await collectionReference
         .doc(_authCurrentUser!.email)
         .collection('items')
         .get()
         .then((value) {
       value.docs.forEach((element) {
-        CartModel cartModel = CartModel.fromDocument(element);
-        _listCartModel.add(cartModel);
+        //CartModel cartModel = CartModel.fromDocument(element);
+        // _listCartModel.add(cartModel);
       });
     });
-    _itemCount = _listCartModel.length;
   }
 
   void addItem(String idRestaurant, String idFood, String images, String name,

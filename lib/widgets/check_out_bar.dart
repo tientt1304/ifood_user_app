@@ -17,8 +17,6 @@ class CheckOutBar extends StatefulWidget {
 class _CheckOutBarState extends State<CheckOutBar> {
   @override
   Widget build(BuildContext context) {
-    //final cart = Provider.of<CartModel>(context);
-    print("bar");
     return Positioned(
       width: SizeConfig.screenWidth,
       //alignment: Alignment.bottomCenter,

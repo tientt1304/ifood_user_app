@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/constants.dart';
-import 'package:ifood_user_app/rating/components/body_rating.dart';
+import 'package:ifood_user_app/pages/rating/components/body_rating.dart';
 import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
 
 class RatingScreen extends StatelessWidget {

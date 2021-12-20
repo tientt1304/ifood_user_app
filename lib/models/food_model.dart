@@ -35,7 +35,7 @@ class FoodModel {
     );
   }
   //Convert to JSON
-  Map<String, dynamic> toJSON() {
+  Map<String, dynamic> toMap() {
     return {
       'idFood': idFood,
       'name': name,
