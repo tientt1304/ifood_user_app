@@ -249,7 +249,6 @@ class _RegisterFormState extends State<RegisterForm> {
             err = "An undefined Error happened.";
         }
         Fluttertoast.showToast(msg: err!);
-        print(error.code);
       }
     }
   }

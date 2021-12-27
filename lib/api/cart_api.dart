@@ -23,16 +23,17 @@ addToCart(
     CartModel cartModel, Function cartAdded, CartNotifier cartNotifier) async {
   await getCarts(cartNotifier);
   bool isExist = false;
+  CartModel existCart = CartModel();
   final _authCurrentUser = FirebaseAuth.instance.currentUser;
-  cartNotifier.cart.forEach((item) {
-    if (item.idFood == cartModel.idFood) isExist = true;
+  cartNotifier.carts.forEach((item) {
+    if (item.idFood == cartModel.idFood) {
+      isExist = true;
+      existCart = item;
+    }
   });
   if (isExist == true) {
     //change quantity
-    print('Existed');
-    num _currentQuantity = 0;
-    _currentQuantity = cartModel.quantity + 1;
-    print(_currentQuantity.toString());
+    num _currentQuantity = existCart.quantity + 1;
     await FirebaseFirestore.instance
         .collection('users-cart-items')
         .doc(_authCurrentUser!.email)
@@ -55,9 +56,9 @@ addToCart(
       'name': cartModel.name,
       'quantity': 1,
       'images': cartModel.images,
-      'price': cartModel.price
+      'price': cartModel.price,
+      'status': cartModel.status
     });
-    print('Added New item');
   }
   cartAdded(cartModel);
 }
@@ -71,4 +72,17 @@ deleteCart(CartModel cartModel, Function cartDeleted) async {
       .doc(cartModel.idFood)
       .delete();
   cartDeleted(cartModel);
+}
+
+deleteAllCart(CartNotifier cartNotifier) async {
+  final _authCurrentUser = FirebaseAuth.instance.currentUser;
+  await getCarts(cartNotifier);
+  cartNotifier.carts.forEach((item) {
+    FirebaseFirestore.instance
+        .collection('users-cart-items')
+        .doc(_authCurrentUser!.email)
+        .collection('items')
+        .doc(item.idFood)
+        .delete();
+  });
 }

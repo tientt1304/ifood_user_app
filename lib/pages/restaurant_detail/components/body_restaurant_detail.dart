@@ -4,8 +4,8 @@ import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/firebase/fb_restaurant.dart';
 import 'package:ifood_user_app/models/restaurant_model.dart';
+import 'package:ifood_user_app/pages/cart/shopping_cart/shopping_cart_screen.dart';
 import 'package:ifood_user_app/pages/restaurant_detail/components/food_card.dart';
-import 'package:ifood_user_app/pages/shopping_cart/shopping_cart_screen.dart';
 
 import 'package:ifood_user_app/widgets/custom_app_bar.dart';
 

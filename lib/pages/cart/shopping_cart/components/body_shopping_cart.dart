@@ -19,20 +19,31 @@ class BodyShoppingCart extends StatefulWidget {
 
 class _BodyShoppingCartState extends State<BodyShoppingCart> {
   CartFB cartFB = new CartFB();
+  num countItem = 0;
+  num total = 0;
+  getCountItem(CartNotifier cartNotifier) async {
+    getCarts(cartNotifier);
+    countItem = await cartNotifier.countItems();
+    return countItem;
+  }
+
   @override
   void initState() {
     CartNotifier cartNotifier =
         Provider.of<CartNotifier>(context, listen: false);
-    getCarts(cartNotifier);
+    getCountItem(cartNotifier);
+    total = cartNotifier.total();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     CartNotifier cartNotifier = Provider.of<CartNotifier>(context);
-
     Future<void> _refreshList() async {
       getCarts(cartNotifier);
+      countItem = cartNotifier.countItems();
+      total = cartNotifier.total();
+      print("count after refresh: " + countItem.toString());
     }
 
     _onCartDeleted(CartModel cartModel) {
@@ -47,7 +58,7 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
             child: RefreshIndicator(
               onRefresh: _refreshList,
               child: ListView.builder(
-                itemCount: cartNotifier.cart.length,
+                itemCount: cartNotifier.carts.length,
                 itemBuilder: (context, index) {
                   return Slidable(
                     endActionPane: ActionPane(
@@ -57,8 +68,9 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
                           onPressed: (context) {
                             setState(() {
                               deleteCart(
-                                  cartNotifier.cart[index], _onCartDeleted);
+                                  cartNotifier.carts[index], _onCartDeleted);
                             });
+
                             Fluttertoast.showToast(
                                 msg: 'Delete food successful');
                           },
@@ -73,20 +85,20 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => FoodDetailScreen(
-                                idFood: cartNotifier.cart[index].idFood)));
+                                idFood: cartNotifier.carts[index].idFood)));
                       },
                       child: Card(
                         elevation: 2,
                         child: ListTile(
                           leading: Image.network(
-                              cartNotifier.cart[index].images,
+                              cartNotifier.carts[index].images,
                               width: 70,
                               fit: BoxFit.fitWidth),
-                          title: Text(cartNotifier.cart[index].name),
+                          title: Text(cartNotifier.carts[index].name),
                           subtitle:
-                              Text('x ${cartNotifier.cart[index].quantity}'),
+                              Text('x ${cartNotifier.carts[index].quantity}'),
                           trailing: Text(
-                              '${cartNotifier.cart[index].price * cartNotifier.cart[index].quantity} VND'),
+                              '${cartNotifier.carts[index].price * cartNotifier.carts[index].quantity} VND'),
                         ),
                       ),
                     ),
@@ -96,8 +108,8 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
             ),
           ),
           CheckOutBar(
-            numOfItems: 0,
-            total: 0,
+            numOfItems: countItem,
+            total: total,
           ),
         ],
       ),

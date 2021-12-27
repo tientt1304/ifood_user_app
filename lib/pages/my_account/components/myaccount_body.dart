@@ -29,7 +29,6 @@ class _BodyMyAccountState extends State<BodyMyAccount> {
   File? image;
   UploadTask? task;
   final _auth = FirebaseAuth.instance;
-  UserModel? user;
 
   Future pickImage(ImageSource imageSoure) async {
     try {
@@ -54,7 +53,6 @@ class _BodyMyAccountState extends State<BodyMyAccount> {
   }
 
   Future<UserModel> getUserModel(BuildContext context) async {
-    //UserModel model = new UserModel();
     var uid = await getUid(context);
     if (_auth.currentUser != null) {
       var doc =

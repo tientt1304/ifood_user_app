@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ifood_user_app/notifier/bill_notifier.dart';
 import 'package:ifood_user_app/notifier/cart_notifier.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
 import 'package:ifood_user_app/routes.dart';
@@ -27,6 +28,9 @@ class _IFoodState extends State<IFood> {
         providers: [
           ChangeNotifierProvider(
             create: (context) => CartNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => BillNotifier(),
           ),
         ],
         child: MaterialApp(

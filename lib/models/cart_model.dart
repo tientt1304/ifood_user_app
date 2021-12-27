@@ -10,17 +10,18 @@ class CartModel {
   String name;
   num price;
   num quantity;
+  String status;
 
-  CartModel({
-    this.idCart,
-    this.idFood = '',
-    this.idRestaurant = '',
-    this.images = '',
-    this.name = '',
-    this.price = 0,
-    //this.foodModel,
-    this.quantity = 1,
-  });
+  CartModel(
+      {this.idCart,
+      this.idFood = '',
+      this.idRestaurant = '',
+      this.images = '',
+      this.name = '',
+      this.price = 0,
+      //this.foodModel,
+      this.quantity = 1,
+      this.status = 'in-cart'});
 
   //receiving data from server
   factory CartModel.fromDocument(DocumentSnapshot doc) {
@@ -37,20 +38,21 @@ class CartModel {
       images: doc.data().toString().contains('images') ? doc.get('images') : '',
       price: doc.data().toString().contains('price') ? doc.get('price') : '',
       quantity:
-          doc.data().toString().contains('quantity') ? doc.get('quantity') : 1,
+          doc.data().toString().contains('quantity') ? doc.get('quantity') : 0,
+      status: doc.data().toString().contains('status') ? doc.get('status') : '',
     );
   }
   //Convert to JSON
   Map<String, dynamic> toJSON() {
     return {
       'idCart': idCart,
-      //'foodModel': foodModel,
       'idFood': idFood,
       'name': name,
       'images': images,
       'price': price,
       'idRestaurant': idRestaurant,
-      'quantity': quantity
+      'quantity': quantity,
+      'status': status
     };
   }
 }

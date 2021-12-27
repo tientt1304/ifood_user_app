@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
-import 'package:ifood_user_app/pages/cart/components/cart_delivering.dart';
-import 'package:ifood_user_app/pages/cart/components/cart_history.dart';
-import 'package:ifood_user_app/pages/shopping_cart/shopping_cart_screen.dart';
+import 'package:ifood_user_app/pages/cart/history/history_screen.dart';
+import 'package:ifood_user_app/pages/cart/on_going/on_going_screen.dart';
+import 'package:ifood_user_app/pages/cart/shopping_cart/shopping_cart_screen.dart';
 
 class CartScreen extends StatelessWidget {
   static String routeName = '/cartscreen';
@@ -39,8 +39,8 @@ class CartScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            CartDelivering(),
-            CartHistory(),
+            OnGoingScreen(),
+            HistoryScreen(),
             ShoppingCartScreen(),
           ],
           physics: NeverScrollableScrollPhysics(),
