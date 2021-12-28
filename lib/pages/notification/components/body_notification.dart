@@ -1,42 +1,34 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/constants.dart';
-import 'package:ifood_user_app/firebase/fb_notification.dart';
+import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/models/notification_model.dart';
+import 'package:ifood_user_app/pages/notification/components/notification_item.dart';
+
 
 class BodyNotification extends StatelessWidget {
+  const BodyNotification({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return _notify(context);
+    return SafeArea(
+      child: Column(
+        children: [
+          SizedBox(
+            height: getProportionateScreenWidth(SizeConfig.screenWidth!*0.05),
+          ),
+          Expanded(
+            
+            child: ListView.builder(
+              itemCount: demoNotifications.length,
+              itemBuilder: (context, index) {
+                return NotificationItem(
+                    index: index, notification: demoNotifications[index]);
+              },
+              
+            ),
+          ),
+        ],
+        
+      ),
+    );
   }
-}
-
-Widget _notify(BuildContext context) {
-  NotificationFB notificationFB = NotificationFB();
-  return StreamBuilder(
-      stream: notificationFB.collectionReference.snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-              child: CircularProgressIndicator(
-            color: primaryColor,
-          ));
-        } else {
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              QueryDocumentSnapshot noti = snapshot.data!.docs[index];
-              NotificationModel notificationModel =
-                  NotificationModel.fromDocument(noti);
-              return ListTile(
-                title: Text(notificationModel.title,
-                    style: TextStyle(
-                        color: kTitleColor, fontWeight: FontWeight.bold)),
-                subtitle: Text(notificationModel.content,
-                    style: TextStyle(color: kTextColor)),
-              );
-            },
-          );
-        }
-      });
 }
