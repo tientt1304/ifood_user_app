@@ -55,7 +55,7 @@ class ContactUsItem extends StatelessWidget {
                     Text(description,
                         style: TextStyle(
                           fontSize: getProportionateScreenWidth(13),
-                          color: const Color(0xFFBBBBBB),
+                          color: const Color(0xFFCCCC),
                         )),
                   ],
                 ),
