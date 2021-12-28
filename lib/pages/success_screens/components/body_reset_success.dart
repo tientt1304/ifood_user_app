@@ -8,7 +8,6 @@ class BodyResetPasswordSuccess extends StatelessWidget {
   Widget build(BuildContext context) {
     return SuccessScreen(
       text: 'Reset password successful',
-      onPress: () {},
     );
   }
 }

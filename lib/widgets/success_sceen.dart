@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
-import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 
 class SuccessScreen extends StatelessWidget {
-  const SuccessScreen({Key? key, required this.text, required this.onPress}) : super(key: key);
+  const SuccessScreen({Key? key, required this.text}) : super(key: key);
   final String text;
-  final Function() onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class SuccessScreen extends StatelessWidget {
           width: SizeConfig.screenWidth!,
         ),
         SizedBox(
-          height: SizeConfig.screenHeight!*0.01,
+          height: SizeConfig.screenHeight! * 0.01,
         ),
         Text('Congrats!',
             style: TextStyle(
@@ -38,7 +36,6 @@ class SuccessScreen extends StatelessWidget {
         SizedBox(
           height: SizeConfig.screenHeight! * 0.1,
         ),
-        MainButton(title: 'Back to Home', onPress:onPress)
       ],
     );
   }

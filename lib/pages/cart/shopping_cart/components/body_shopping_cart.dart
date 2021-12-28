@@ -56,6 +56,7 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
           Align(
             alignment: Alignment.topCenter,
             child: RefreshIndicator(
+              color: primaryColor,
               onRefresh: _refreshList,
               child: ListView.builder(
                 itemCount: cartNotifier.carts.length,

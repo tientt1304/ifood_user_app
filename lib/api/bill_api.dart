@@ -13,14 +13,11 @@ getBills(BillNotifier billNotifier) async {
       .collection('bills')
       .get();
   List<BillModel> _billList = [];
-  print('enter heer');
   querySnapshot.docs.forEach((doc) {
-    print('enter 2');
     BillModel billModel = BillModel.fromDocument(doc);
-    print('idBill: ' + billModel.idBill.toString());
     _billList.add(billModel);
   });
-  print('enter 3');
+
   billNotifier.billList = _billList;
 }
 
@@ -66,8 +63,29 @@ addBill(
     'latitude': billModel.latitude,
     'longitude': billModel.longitude,
     'status': billModel.status,
-    'itemCount': billModel.itemCount
+    'itemCount': billModel.itemCount,
+    'isRating': billModel.isRating
   });
 
   billAdded(billModel);
+}
+
+checkReceivedBill(BillModel billModel) async {
+  final _authCurrentUser = FirebaseAuth.instance.currentUser;
+  await FirebaseFirestore.instance
+      .collection('users-cart-items')
+      .doc(_authCurrentUser!.email)
+      .collection('bills')
+      .doc(billModel.idBill)
+      .update({'status': 'received'});
+}
+
+checkRatingBill(BillModel billModel) async {
+  final _authCurrentUser = FirebaseAuth.instance.currentUser;
+  await FirebaseFirestore.instance
+      .collection('users-cart-items')
+      .doc(_authCurrentUser!.email)
+      .collection('bills')
+      .doc(billModel.idBill)
+      .update({'isRating': true});
 }

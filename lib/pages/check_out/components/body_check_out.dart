@@ -6,13 +6,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/api/bill_api.dart';
 import 'package:ifood_user_app/api/cart_api.dart';
+import 'package:ifood_user_app/api/notification_api.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/firebase/fb_cart.dart';
 import 'package:ifood_user_app/models/bill_model.dart';
 import 'package:ifood_user_app/models/cart_model.dart';
+import 'package:ifood_user_app/models/notification_model.dart';
 import 'package:ifood_user_app/models/user_model.dart';
 import 'package:ifood_user_app/notifier/bill_notifier.dart';
 import 'package:ifood_user_app/notifier/cart_notifier.dart';
+import 'package:ifood_user_app/notifier/notification_notifier.dart';
 import 'package:ifood_user_app/pages/food_detail/food_detail_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/order_cuccess_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
@@ -91,6 +94,8 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
   @override
   Widget build(BuildContext context) {
     CartNotifier cartNotifier = Provider.of<CartNotifier>(context);
+    NotificationNotifier notificationNotifier =
+        Provider.of<NotificationNotifier>(context);
     _onCartDeleted(CartModel cartModel) {
       cartNotifier.deleteCart(cartModel);
     }
@@ -98,18 +103,16 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
     BillNotifier billNotifier = Provider.of<BillNotifier>(context);
     billAdded(BillModel billModel) {
       billNotifier.addBill(billModel);
-      Fluttertoast.showToast(msg: 'Order successful!');
+    }
+
+    notiAdded(NotificationModel noti) {
+      notificationNotifier.addNoti(noti);
     }
 
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          // userModel.phoneNumber != null
-          //     DeliInformationForm(uid, userModel)
-          //     : Center(
-          //         child: CircularProgressIndicator(color: primaryColor),
-          //       ),
           Form(
             key: _formKey,
             child: Padding(
@@ -222,7 +225,7 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
               child: MainButton(
                   title: 'Place Order',
                   onPress: () {
-                    _onPress(billModel, billAdded, cartNotifier);
+                    _onPress(billModel, billAdded, notiAdded, cartNotifier);
                   }))
         ],
       ),
@@ -289,7 +292,7 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
           labelText: 'Comment',
         ),
       );
-  void _onPress(BillModel billModel, Function billAdded,
+  void _onPress(BillModel billModel, Function billAdded, Function notiAdded,
       CartNotifier cartNotifier) async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -311,6 +314,7 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
         billModel.carts = cartNotifier.carts;
         addBill(billModel, billAdded, cartNotifier);
         deleteAllCart(cartNotifier);
+        addNotification(billModel, notiAdded);
         Navigator.pushNamedAndRemoveUntil(
             context, OrderSuccessScreen.routeName, (route) => false);
       } on FirebaseAuthException catch (error) {

@@ -31,32 +31,48 @@ class _BodyOnGoingState extends State<BodyOnGoing> {
 
     return RefreshIndicator(
       onRefresh: _refreshList,
+      color: primaryColor,
       child: ListView.builder(
         itemCount: billNotifier.billList.length,
         itemBuilder: (context, index) {
-          return GestureDetector(
-              onTap: () {
-                print('ulatr');
-              },
-              child: Card(
-                elevation: 2,
-                child: ListTile(
-                  leading: Image.network(
-                      'https://firebasestorage.googleapis.com/v0/b/ifood-6cabb.appspot.com/o/source_images%2Ficons%2Fdelivery-man.png?alt=media&token=9ff53485-2b9d-4d9d-adf7-f64465434cce',
-                      width: 70,
-                      fit: BoxFit.fitWidth),
-                  title: Text(
-                      'Order ${billNotifier.billList[index].idBill} is ${billNotifier.billList[index].status}'),
-                  subtitle: Text(
-                      '${billNotifier.billList[index].total}đ (${billNotifier.billList[index].itemCount} items)'),
-                  trailing: ElevatedButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Received',
+          return billNotifier.billList[index].status == 'on-going'
+              ? GestureDetector(
+                  onTap: () {},
+                  child: Card(
+                    elevation: 2,
+                    child: ListTile(
+                      leading: Image.network(
+                          'https://firebasestorage.googleapis.com/v0/b/ifood-6cabb.appspot.com/o/source_images%2Ficons%2Fdelivery-man.png?alt=media&token=9ff53485-2b9d-4d9d-adf7-f64465434cce',
+                          width: 50,
+                          fit: BoxFit.fitWidth),
+                      title: RichText(
+                        text: TextSpan(
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                          children: <TextSpan>[
+                            TextSpan(text: 'Order '),
+                            TextSpan(
+                                text: '${billNotifier.billList[index].idBill} ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: primaryColor)),
+                          ],
+                        ),
                       ),
-                      style: ElevatedButton.styleFrom(primary: primaryColor)),
-                ),
-              ));
+                      subtitle: Text(
+                          '${billNotifier.billList[index].total}đ (${billNotifier.billList[index].itemCount} items)'),
+                      trailing: ElevatedButton(
+                          onPressed: () {
+                            checkReceivedBill(billNotifier.billList[index]);
+                          },
+                          child: Text(
+                            'Delivered',
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: primaryColor,
+                          )),
+                    ),
+                  ))
+              : Container();
         },
       ),
     );
