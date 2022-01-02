@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:ifood_user_app/pages/rating/rating_screen.dart';
+import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
 import 'package:ifood_user_app/widgets/success_sceen.dart';
 
 class BodyOrderSuccess extends StatefulWidget {
@@ -16,7 +16,7 @@ class _BodyOrderSuccessState extends State<BodyOrderSuccess> {
   void initState() {
     Timer(Duration(seconds: 1), () {
       Navigator.pushNamedAndRemoveUntil(
-          context, RatingScreen.routeName, (route) => false);
+          context, BottomBar.routeName, (route) => false);
     });
     super.initState();
   }

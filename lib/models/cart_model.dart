@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CartModel {
   String? idCart;
-  //FoodModel? foodModel;
   String idFood;
   String idRestaurant;
   String images;
@@ -19,7 +18,6 @@ class CartModel {
       this.images = '',
       this.name = '',
       this.price = 0,
-      //this.foodModel,
       this.quantity = 1,
       this.status = 'in-cart'});
 
@@ -27,9 +25,6 @@ class CartModel {
   factory CartModel.fromDocument(DocumentSnapshot doc) {
     return CartModel(
       idCart: doc.data().toString().contains('idCart') ? doc.get('idCart') : '',
-      // foodModel: doc.data().toString().contains('foodModel.id')
-      //     ? doc.get('foodModel')
-      //     : '',
       idRestaurant: doc.data().toString().contains('idRestaurant')
           ? doc.get('idRestaurant')
           : '',

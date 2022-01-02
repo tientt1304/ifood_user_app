@@ -7,7 +7,7 @@ class FoodModel {
   final String images;
   final num price;
   final String idRestaurant;
-  final num? ratingFood;
+  num? ratingFood;
 
   FoodModel(
       {required this.idRestaurant,

@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
+import 'package:ifood_user_app/api/bill_api.dart';
+import 'package:ifood_user_app/api/notification_api.dart';
 import 'package:ifood_user_app/constants.dart';
-import 'package:ifood_user_app/firebase/fb_cart.dart';
+import 'package:ifood_user_app/models/notification_model.dart';
+import 'package:ifood_user_app/notifier/notification_notifier.dart';
+import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
+import 'package:provider/provider.dart';
 
 class BodyRating extends StatefulWidget {
-  const BodyRating({Key? key}) : super(key: key);
-
+  const BodyRating({Key? key, required this.idBill}) : super(key: key);
+  final String? idBill;
   @override
   State<BodyRating> createState() => _BodyRatingState();
 }
@@ -17,9 +23,15 @@ class _BodyRatingState extends State<BodyRating> {
 
   final _feedbackController = TextEditingController();
 
-  CartFB cartFB = new CartFB();
   @override
   Widget build(BuildContext context) {
+    num? ratingBill;
+    NotificationNotifier notificationNotifier =
+        Provider.of<NotificationNotifier>(context);
+    notiAdded(NotificationModel noti) {
+      notificationNotifier.addNoti(noti);
+    }
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -53,7 +65,8 @@ class _BodyRatingState extends State<BodyRating> {
                 color: Colors.amber,
               ),
               onRatingUpdate: (rating) {
-                print(rating);
+                ratingBill = rating;
+                print(ratingBill);
               },
             ),
           ),
@@ -68,7 +81,16 @@ class _BodyRatingState extends State<BodyRating> {
               child: buildFeedbackTextField(),
             ),
           ),
-          MainButton(title: 'Rating', onPress: () {})
+          MainButton(
+              title: 'Rating',
+              onPress: () {
+                checkRatingBill(
+                    widget.idBill, ratingBill, _feedbackController.text);
+                Fluttertoast.showToast(msg: 'Rating successful');
+                addNotification(widget.idBill, notiAdded, 'rating');
+                Navigator.pushNamedAndRemoveUntil(
+                    context, BottomBar.routeName, (route) => false);
+              })
         ],
       ),
     );

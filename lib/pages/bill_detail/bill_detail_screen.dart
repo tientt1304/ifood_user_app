@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/constants.dart';
-import 'package:ifood_user_app/pages/rating/components/body_rating.dart';
-import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
+import 'package:ifood_user_app/models/bill_model.dart';
+import 'package:ifood_user_app/pages/bill_detail/components/body_bill_detail.dart';
 
-class RatingScreen extends StatelessWidget {
-  static String routeName = '/rating';
-  const RatingScreen({Key? key, required this.idBill}) : super(key: key);
-  final String? idBill;
-
+class BillDetailScreen extends StatelessWidget {
+  const BillDetailScreen({Key? key, required this.billModel}) : super(key: key);
+  final BillModel billModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,10 +13,9 @@ class RatingScreen extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded),
             iconSize: 21,
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                context, BottomBar.routeName, (route) => false),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text('Rating',
+          title: Text('Detail Bill',
               style: TextStyle(
                   color: kTitleColor,
                   fontSize: 18,
@@ -26,8 +23,8 @@ class RatingScreen extends StatelessWidget {
                   fontFamily: 'FSSemiBold')),
           centerTitle: true,
         ),
-        body: BodyRating(
-          idBill: idBill,
+        body: BodyBillDetail(
+          billModel: billModel,
         ));
   }
 }

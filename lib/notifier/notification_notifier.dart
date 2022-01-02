@@ -26,4 +26,10 @@ class NotificationNotifier with ChangeNotifier {
     _notiList.add(notificationModel);
     notifyListeners();
   }
+
+  deleteNoti(NotificationModel notificationModel) {
+    _notiList.removeWhere(
+        (_noti) => _noti.idNotification == notificationModel.idNotification);
+    notifyListeners();
+  }
 }

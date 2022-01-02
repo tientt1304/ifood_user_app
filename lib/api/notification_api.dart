@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ifood_user_app/models/bill_model.dart';
 import 'package:ifood_user_app/models/notification_model.dart';
-import 'package:ifood_user_app/notifier/bill_notifier.dart';
 import 'package:ifood_user_app/notifier/notification_notifier.dart';
 
 getNotifications(NotificationNotifier notificationNotifier) async {
@@ -21,15 +19,12 @@ getNotifications(NotificationNotifier notificationNotifier) async {
   notificationNotifier.notiList = _notiList;
 }
 
-addNotification(BillModel billModel, Function notiAdded) async {
+addNotification(String? idBill, Function notiAdded, String title) async {
   final _authCurrentUser = FirebaseAuth.instance.currentUser;
   String idNoti = (new DateTime.now().microsecondsSinceEpoch).toString();
-  DateTime date = DateTime.now();
+  DateTime? date = DateTime.now();
   NotificationModel notificationModel = new NotificationModel(
-      idNotification: idNoti,
-      idBill: billModel.idBill,
-      title: 'ordered',
-      date: date);
+      idNotification: idNoti, idBill: idBill, title: title, date: date);
 
   await FirebaseFirestore.instance
       .collection('notifications')
@@ -38,30 +33,41 @@ addNotification(BillModel billModel, Function notiAdded) async {
       .doc(idNoti)
       .set({
     'idNotification': idNoti,
-    'idBill': billModel.idBill,
+    'idBill': idBill,
     'date': date,
-    'title': 'ordered',
+    'title': title,
   });
 
   notiAdded(notificationModel);
 }
 
-checkReceivedBill(BillModel billModel) async {
-  final _authCurrentUser = FirebaseAuth.instance.currentUser;
-  await FirebaseFirestore.instance
-      .collection('users-cart-items')
-      .doc(_authCurrentUser!.email)
-      .collection('bills')
-      .doc(billModel.idBill)
-      .update({'status': 'received'});
-}
+// checkReceivedBill(BillModel billModel) async {
+//   final _authCurrentUser = FirebaseAuth.instance.currentUser;
+//   await FirebaseFirestore.instance
+//       .collection('users-cart-items')
+//       .doc(_authCurrentUser!.email)
+//       .collection('bills')
+//       .doc(billModel.idBill)
+//       .update({'status': 'received'});
+// }
 
-checkRatingBill(BillModel billModel) async {
+// checkRatingBill(BillModel billModel) async {
+//   final _authCurrentUser = FirebaseAuth.instance.currentUser;
+//   await FirebaseFirestore.instance
+//       .collection('users-cart-items')
+//       .doc(_authCurrentUser!.email)
+//       .collection('bills')
+//       .doc(billModel.idBill)
+//       .update({'isRating': true});
+// }
+
+deleteNoti(NotificationModel notificationModel, Function notiDeleted) async {
   final _authCurrentUser = FirebaseAuth.instance.currentUser;
   await FirebaseFirestore.instance
-      .collection('users-cart-items')
+      .collection('notifications')
       .doc(_authCurrentUser!.email)
-      .collection('bills')
-      .doc(billModel.idBill)
-      .update({'isRating': true});
+      .collection('noti')
+      .doc(notificationModel.idNotification)
+      .delete();
+  notiDeleted(notificationModel);
 }

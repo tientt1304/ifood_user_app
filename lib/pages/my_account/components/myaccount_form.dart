@@ -10,8 +10,6 @@ import '../../../SizeConfig.dart';
 class MyAccountForm extends StatefulWidget {
   final String uid;
   final UserModel userModel;
-
-//  const MyAccountForm({Key? key, required this.uid}) : super(key: key);
   MyAccountForm(this.uid, this.userModel);
   @override
   _MyAccountFormState createState() => _MyAccountFormState();
@@ -72,7 +70,10 @@ class _MyAccountFormState extends State<MyAccountForm> {
 
   TextFormField buildPhoneNumberTextField() => TextFormField(
         onChanged: (value) {
-          _phoneNumberController.text = value;
+          _phoneNumberController
+            ..text = value.toString()
+            ..selection = TextSelection.collapsed(
+                offset: _phoneNumberController.text.length);
         },
         controller: _phoneNumberController,
         textInputAction: TextInputAction.done,
@@ -93,7 +94,10 @@ class _MyAccountFormState extends State<MyAccountForm> {
   TextFormField buildLastNameTextField() => TextFormField(
         controller: _lNameController,
         onChanged: (value) {
-          _lNameController.text = value.toString();
+          _lNameController
+            ..text = value.toString()
+            ..selection =
+                TextSelection.collapsed(offset: _lNameController.text.length);
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -110,7 +114,10 @@ class _MyAccountFormState extends State<MyAccountForm> {
   TextFormField buildFirstNameTextField() => TextFormField(
         controller: _fNameController,
         onChanged: (value) {
-          _fNameController.text = value.toString();
+          _fNameController
+            ..text = value.toString()
+            ..selection =
+                TextSelection.collapsed(offset: _fNameController.text.length);
         },
         validator: (value) {
           if (value == null || value.isEmpty) {

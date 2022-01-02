@@ -17,6 +17,8 @@ class BillModel {
   String? status;
   num itemCount;
   bool isRating;
+  num? ratingBill;
+  String? feedback;
 
   BillModel(
       {this.idBill,
@@ -33,13 +35,15 @@ class BillModel {
       this.longitude,
       this.status,
       this.itemCount = 0,
-      this.isRating = false});
+      this.isRating = false,
+      this.ratingBill,
+      this.feedback});
 
   //receiving data from server
   factory BillModel.fromDocument(DocumentSnapshot doc) {
     return BillModel(
       idBill: doc.data().toString().contains('idBill') ? doc.get('idBill') : '',
-      // carts: doc.get('carts'),
+      //carts: doc['carts'],
       total: doc.data().toString().contains('total') ? doc.get('total') : 0,
       subTotal:
           doc.data().toString().contains('idFood') ? doc.get('subTotal') : 0,
@@ -67,13 +71,17 @@ class BillModel {
       isRating: doc.data().toString().contains('isRating')
           ? doc.get('isRating')
           : false,
+      ratingBill: doc.data().toString().contains('ratingBill')
+          ? doc.get('ratingBill')
+          : 0,
+      feedback:
+          doc.data().toString().contains('feedback') ? doc.get('feedback') : 0,
     );
   }
   //Convert to JSON
   Map<String, dynamic> toJSON() {
     return {
       'idBill': idBill,
-      'carts': carts,
       'total': total,
       'subTotal': subTotal,
       'shippingFee': shippingFee,
@@ -86,7 +94,8 @@ class BillModel {
       'longitude': longitude,
       'status': status,
       'itemCount': itemCount,
-      'isRating': isRating
+      'isRating': isRating,
+      'ratingBill': ratingBill
     };
   }
 }

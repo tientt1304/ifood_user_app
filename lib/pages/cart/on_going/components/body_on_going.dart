@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/api/bill_api.dart';
+import 'package:ifood_user_app/api/notification_api.dart';
 import 'package:ifood_user_app/constants.dart';
+import 'package:ifood_user_app/models/notification_model.dart';
 import 'package:ifood_user_app/notifier/bill_notifier.dart';
+import 'package:ifood_user_app/notifier/notification_notifier.dart';
+import 'package:ifood_user_app/pages/bill_detail/bill_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class BodyOnGoing extends StatefulWidget {
@@ -23,21 +27,36 @@ class _BodyOnGoingState extends State<BodyOnGoing> {
   @override
   Widget build(BuildContext context) {
     BillNotifier billNotifier = Provider.of<BillNotifier>(context);
+    NotificationNotifier notificationNotifier =
+        Provider.of<NotificationNotifier>(context);
+
     getBills(billNotifier);
+
     Future<void> _refreshList() async {
       getBills(billNotifier);
-      print('refresh');
+    }
+
+    notiAdded(NotificationModel noti) {
+      notificationNotifier.addNoti(noti);
     }
 
     return RefreshIndicator(
       onRefresh: _refreshList,
       color: primaryColor,
       child: ListView.builder(
-        itemCount: billNotifier.billList.length,
+        itemCount: billNotifier.billList.reversed.toList().length,
         itemBuilder: (context, index) {
-          return billNotifier.billList[index].status == 'on-going'
+          return billNotifier.billList.reversed.toList()[index].status ==
+                  'on-going'
               ? GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    billNotifier.currentBill =
+                        billNotifier.billList.reversed.toList()[index];
+                    getCartsInBill(billNotifier);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => BillDetailScreen(
+                            billModel: billNotifier.currentBill)));
+                  },
                   child: Card(
                     elevation: 2,
                     child: ListTile(
@@ -51,7 +70,8 @@ class _BodyOnGoingState extends State<BodyOnGoing> {
                           children: <TextSpan>[
                             TextSpan(text: 'Order '),
                             TextSpan(
-                                text: '${billNotifier.billList[index].idBill} ',
+                                text:
+                                    '${billNotifier.billList.reversed.toList()[index].idBill} ',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: primaryColor)),
@@ -59,10 +79,17 @@ class _BodyOnGoingState extends State<BodyOnGoing> {
                         ),
                       ),
                       subtitle: Text(
-                          '${billNotifier.billList[index].total}đ (${billNotifier.billList[index].itemCount} items)'),
+                          '${billNotifier.billList.reversed.toList()[index].total}đ (${billNotifier.billList.reversed.toList()[index].itemCount} items)'),
                       trailing: ElevatedButton(
                           onPressed: () {
-                            checkReceivedBill(billNotifier.billList[index]);
+                            checkReceivedBill(
+                                billNotifier.billList.reversed.toList()[index]);
+                            addNotification(
+                                billNotifier.billList.reversed
+                                    .toList()[index]
+                                    .idBill,
+                                notiAdded,
+                                'delivered');
                           },
                           child: Text(
                             'Delivered',

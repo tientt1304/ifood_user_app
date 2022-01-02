@@ -17,7 +17,7 @@ import 'package:ifood_user_app/notifier/bill_notifier.dart';
 import 'package:ifood_user_app/notifier/cart_notifier.dart';
 import 'package:ifood_user_app/notifier/notification_notifier.dart';
 import 'package:ifood_user_app/pages/food_detail/food_detail_screen.dart';
-import 'package:ifood_user_app/pages/success_screens/order_cuccess_screen.dart';
+import 'package:ifood_user_app/pages/success_screens/order_success_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
@@ -124,17 +124,17 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
                   Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: SizeConfig.screenHeight! * 0.01),
-                    child: buildLocationTextField(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.screenHeight! * 0.01),
                     child: buildNameTextField(),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: SizeConfig.screenHeight! * 0.01),
                     child: buildPhoneNumberTextField(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: SizeConfig.screenHeight! * 0.01),
+                    child: buildLocationTextField(),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -197,7 +197,7 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
                           subtitle:
                               Text('x ${cartNotifier.carts[index].quantity}'),
                           trailing: Text(
-                              '${cartNotifier.carts[index].price * cartNotifier.carts[index].quantity} VND'),
+                              '${cartNotifier.carts[index].price * cartNotifier.carts[index].quantity} đ'),
                         ),
                       ),
                     ),
@@ -205,11 +205,11 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
                 }),
           ),
           Text(
-            'Sub Total: $subTotal VND',
+            'Sub Total: $subTotal đ',
             style: TextStyle(fontSize: 17, height: 2),
           ),
           Text(
-            'Shipping Fee: 15000 VND',
+            'Shipping Fee: 15000 đ',
             style: TextStyle(fontSize: 17, height: 2),
           ),
           Divider(
@@ -217,7 +217,7 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
             thickness: 1.5,
           ),
           Text(
-            'Total: ${subTotal + 15000} VND',
+            'Total: ${subTotal + 15000} đ',
             style:
                 TextStyle(fontSize: 19, fontWeight: FontWeight.bold, height: 2),
           ),
@@ -296,6 +296,8 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
       CartNotifier cartNotifier) async {
     if (_formKey.currentState!.validate()) {
       try {
+        String idBill = (new DateTime.now().microsecondsSinceEpoch).toString();
+        billModel.idBill = idBill;
         billModel.subTotal = subTotal;
         billModel.shippingFee = 15000;
         billModel.total = subTotal + billModel.shippingFee;
@@ -312,9 +314,10 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
         billModel.itemCount = cartNotifier.countItems();
 
         billModel.carts = cartNotifier.carts;
+
         addBill(billModel, billAdded, cartNotifier);
         deleteAllCart(cartNotifier);
-        addNotification(billModel, notiAdded);
+        addNotification(billModel.idBill, notiAdded, 'ordered');
         Navigator.pushNamedAndRemoveUntil(
             context, OrderSuccessScreen.routeName, (route) => false);
       } on FirebaseAuthException catch (error) {

@@ -8,7 +8,7 @@ class NotificationModel {
 
   NotificationModel({
     this.idNotification,
-    this.idBill = '',
+    this.idBill,
     this.date,
     this.title = '',
   });
@@ -20,7 +20,7 @@ class NotificationModel {
           ? doc.get('idNotification')
           : '',
       idBill: doc.data().toString().contains('idBill') ? doc.get('idBill') : '',
-      date: doc.data().toString().contains('date') ? doc.get('date') : null,
+      // date: doc['date'],
       title: doc.data().toString().contains('title') ? doc.get('title') : '',
     );
   }

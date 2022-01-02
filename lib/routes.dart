@@ -13,12 +13,11 @@ import 'package:ifood_user_app/pages/home/home_screen.dart';
 import 'package:ifood_user_app/pages/my_account/myaccount_screen.dart';
 import 'package:ifood_user_app/pages/notification/notification_screen.dart';
 import 'package:ifood_user_app/pages/profile/profile_screen.dart';
-import 'package:ifood_user_app/pages/rating/rating_screen.dart';
 import 'package:ifood_user_app/pages/register/register_screen.dart';
 import 'package:ifood_user_app/pages/select_location/set_location_screen.dart';
 import 'package:ifood_user_app/pages/sign_in/sign_in_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/login_success_screen.dart';
-import 'package:ifood_user_app/pages/success_screens/order_cuccess_screen.dart';
+import 'package:ifood_user_app/pages/success_screens/order_success_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/register_success_screen.dart';
 import 'package:ifood_user_app/pages/update_avt/update_avt_screen.dart';
 import 'package:ifood_user_app/pages/update_location/update_location_screen.dart';
@@ -51,9 +50,7 @@ final routes = <String, WidgetBuilder>{
   ShoppingCartScreen.routeName: (context) => ShoppingCartScreen(),
   CategoryScreen.routeName: (context) => CategoryScreen(),
   HelpCenterScreen.routeName: (context) => HelpCenterScreen(),
-  //RestaurantDetailScreen.routeName: (context) => RestaurantDetailScreen(),
   CheckOutScreen.routeName: (context) => CheckOutScreen(),
-  RatingScreen.routeName: (context) => RatingScreen(),
   OnGoingScreen.routeName: (context) => OnGoingScreen(),
-  HistoryScreen.routeName: (context) => HistoryScreen()
+  HistoryScreen.routeName: (context) => HistoryScreen(),
 };
