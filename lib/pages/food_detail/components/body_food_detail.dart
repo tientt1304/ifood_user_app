@@ -1,14 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
+import 'package:ifood_user_app/api/cart_api.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/firebase/fb_food.dart';
+import 'package:ifood_user_app/models/cart_model.dart';
 import 'package:ifood_user_app/models/food_model.dart';
+import 'package:ifood_user_app/notifier/cart_notifier.dart';
 import 'package:ifood_user_app/pages/cart/cart_screen.dart';
 import 'package:ifood_user_app/pages/food_detail/components/food_card_detail.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 
 import 'package:ifood_user_app/widgets/custom_app_bar.dart';
+import 'package:provider/provider.dart';
 
 class BodyFoodDetail extends StatefulWidget {
   const BodyFoodDetail({Key? key, required this.idFood}) : super(key: key);
@@ -20,10 +25,16 @@ class BodyFoodDetail extends StatefulWidget {
 }
 
 class _BodyFoodDetailState extends State<BodyFoodDetail> {
-  //var count = 0;
+  CartModel _currentCart = new CartModel();
 
   @override
   Widget build(BuildContext context) {
+    CartNotifier cartNotifier = Provider.of<CartNotifier>(context);
+    _onCartAdded(CartModel cartModel) {
+      cartNotifier.addToCart(cartModel);
+      Fluttertoast.showToast(msg: 'Added');
+    }
+
     FoodFB foodFB = new FoodFB();
     return StreamBuilder(
         stream: foodFB.collectionReference
@@ -116,7 +127,18 @@ class _BodyFoodDetailState extends State<BodyFoodDetail> {
                               height: SizeConfig.screenHeight! * 0.05,
                             ),
                             MainButton(
-                                title: 'Add To Cart', onPress: () async {})
+                                title: 'Add To Cart',
+                                onPress: () async {
+                                  _currentCart.idFood = foodModel.idFood;
+                                  _currentCart.idRestaurant =
+                                      foodModel.idRestaurant;
+                                  _currentCart.images = foodModel.images;
+                                  _currentCart.name = foodModel.name;
+                                  _currentCart.price = foodModel.price;
+                                  cartNotifier.currentCart = _currentCart;
+                                  addToCart(cartNotifier.currentCart,
+                                      _onCartAdded, cartNotifier);
+                                })
                           ],
                         ),
                       ),
