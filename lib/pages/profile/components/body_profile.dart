@@ -73,7 +73,6 @@ class _BodyProfileState extends State<BodyProfile> {
 
   @override
   void initState() {
-    super.initState();
     getName(context).then((String name) {
       setState(() {
         displayName = name;
@@ -86,6 +85,7 @@ class _BodyProfileState extends State<BodyProfile> {
         print(url);
       });
     });
+    super.initState();
   }
 
   @override
@@ -133,43 +133,56 @@ class _BodyProfileState extends State<BodyProfile> {
         }
       }
     ];
-    return SingleChildScrollView(
-        child: Column(
-      children: [
-        SizedBox(
-          height: SizeConfig.screenHeight! * 0.015,
-        ),
-        (image != null)
-            ? AvatarCard(
-                image: image!, onClicked: (source) => pickImage(source))
-            : AvatarCard(
-                image: File(
-                    'https://firebasestorage.googleapis.com/v0/b/ifood-6cabb.appspot.com/o/source_images%2Fpng-clipart-computer-icons-user-profile-avatar-profile-heroes-profile-thumbnail.png?alt=media&token=9cb56cba-05d4-4a30-8c1b-fbdd2bf82396'),
-                onClicked: (source) => pickImage(source)),
-        SizedBox(
-          height: SizeConfig.screenHeight! * 0.01,
-        ),
-        Text(
-          displayName,
-          style: TextStyle(
-              color: kTextColor, fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(
-          height: SizeConfig.screenHeight! * 0.01,
-        ),
-        SizedBox(
-          height: SizeConfig.screenHeight! * 0.8,
-          child: ListView.builder(
-              itemCount: content.length,
-              itemBuilder: (context, index) {
-                return ProfileCard(
-                  onPress: content[index]['onPress'],
-                  title: content[index]['title'],
-                  prefixIcon: content[index]['prefixIcon'],
-                );
-              }),
-        ),
-      ],
-    ));
+    Future<void> _refreshList() async {
+      //getBills(billNotifier);
+      getName(context).then((String name) {
+        setState(() {
+          displayName = name;
+        });
+      });
+    }
+
+    return RefreshIndicator(
+      onRefresh: _refreshList,
+      color: primaryColor,
+      child: SingleChildScrollView(
+          child: Column(
+        children: [
+          SizedBox(
+            height: SizeConfig.screenHeight! * 0.015,
+          ),
+          (image != null)
+              ? AvatarCard(
+                  image: image!, onClicked: (source) => pickImage(source))
+              : AvatarCard(
+                  image: File(
+                      'https://firebasestorage.googleapis.com/v0/b/ifood-6cabb.appspot.com/o/source_images%2Fpng-clipart-computer-icons-user-profile-avatar-profile-heroes-profile-thumbnail.png?alt=media&token=9cb56cba-05d4-4a30-8c1b-fbdd2bf82396'),
+                  onClicked: (source) => pickImage(source)),
+          SizedBox(
+            height: SizeConfig.screenHeight! * 0.01,
+          ),
+          Text(
+            displayName,
+            style: TextStyle(
+                color: kTextColor, fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: SizeConfig.screenHeight! * 0.01,
+          ),
+          SizedBox(
+            height: SizeConfig.screenHeight! * 0.8,
+            child: ListView.builder(
+                itemCount: content.length,
+                itemBuilder: (context, index) {
+                  return ProfileCard(
+                    onPress: content[index]['onPress'],
+                    title: content[index]['title'],
+                    prefixIcon: content[index]['prefixIcon'],
+                  );
+                }),
+          ),
+        ],
+      )),
+    );
   }
 }

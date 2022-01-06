@@ -84,6 +84,10 @@ class _BodyRatingState extends State<BodyRating> {
           MainButton(
               title: 'Rating',
               onPress: () {
+                NotificationApi.showNotification(
+                    title: 'Rating Successful',
+                    body: 'Order ${widget.idBill} has been rating success',
+                    payload: 'Rating Successful');
                 checkRatingBill(
                     widget.idBill, ratingBill, _feedbackController.text);
                 Fluttertoast.showToast(msg: 'Rating successful');

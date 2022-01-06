@@ -3,13 +3,20 @@ import 'package:ifood_user_app/models/food_model.dart';
 import 'package:ifood_user_app/notifier/food_notifier.dart';
 
 getFoods(FoodNotifier foodNotifier) async {
-  List<FoodModel> _foodList = [];
   QuerySnapshot querySnapshot =
       await FirebaseFirestore.instance.collection('foods').get();
-  querySnapshot.docs.map((doc) {
+  List<FoodModel> _foodList = [];
+
+  querySnapshot.docs.forEach((doc) {
     FoodModel foodModel = FoodModel.fromDocument(doc);
+
     _foodList.add(foodModel);
   });
 
   foodNotifier.foodList = _foodList;
+}
+
+Future<List<FoodModel?>> getUserSuggestions(String query) async {
+  List<FoodModel?> foodsSuggestion = [];
+  return foodsSuggestion;
 }

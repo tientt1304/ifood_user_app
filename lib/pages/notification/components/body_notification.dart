@@ -80,8 +80,8 @@ class _BodyNotificationState extends State<BodyNotification> {
                                 .title ==
                             'delivered'
                         ? SvgPicture.asset('assets/icons/Parcel.svg',
-                            width: 40, fit: BoxFit.fitWidth)
-                        : SvgPicture.asset('assets/icons/Close.svg',
+                            width: 35, fit: BoxFit.fitWidth)
+                        : SvgPicture.asset('assets/icons/star.svg',
                             width: 40, fit: BoxFit.fitWidth)),
                 title: notificationNotifier.notiList.reversed
                             .toList()[index]

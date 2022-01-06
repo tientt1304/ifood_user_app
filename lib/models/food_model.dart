@@ -1,21 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FoodModel {
-  final String idFood;
-  final String name;
-  final String desc;
-  final String images;
-  final num price;
-  final String idRestaurant;
+  String idFood;
+  String name;
+  String desc;
+  String images;
+  num price;
+  String idRestaurant;
   num? ratingFood;
 
   FoodModel(
-      {required this.idRestaurant,
-      required this.idFood,
-      required this.images,
-      required this.name,
-      required this.price,
-      required this.desc,
+      {this.idRestaurant = '',
+      this.idFood = '',
+      this.images = '',
+      this.name = '',
+      this.price = 0,
+      this.desc = '',
       this.ratingFood});
 
   //receiving data from server
@@ -28,7 +28,7 @@ class FoodModel {
       name: doc.data().toString().contains('name') ? doc.get('name') : '',
       desc: doc.data().toString().contains('desc') ? doc.get('desc') : '',
       images: doc.data().toString().contains('images') ? doc.get('images') : '',
-      price: doc.data().toString().contains('price') ? doc.get('price') : '',
+      price: doc.data().toString().contains('price') ? doc.get('price') : 0,
       ratingFood: doc.data().toString().contains('ratingFood')
           ? doc.get('ratingFood')
           : '',

@@ -72,7 +72,7 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
   initInfo() async {
     await getUserModel(context);
     _nameController.text =
-        userModel.fName.toString() + ' ' + userModel.lName.toString();
+        userModel.lName.toString() + ' ' + userModel.fName.toString();
     _phoneNumberController.text = userModel.phoneNumber.toString();
     _locationController.text =
         userModel.latitude.toString() + ', ' + userModel.longitude.toString();
@@ -89,8 +89,13 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
     });
     getUserModel(context);
     initInfo();
+
+    NotificationApi.init();
+    listenNotifications();
   }
 
+  void listenNotifications() =>
+      NotificationApi.onNotifications.stream.listen((payload) {});
   @override
   Widget build(BuildContext context) {
     CartNotifier cartNotifier = Provider.of<CartNotifier>(context);
@@ -318,6 +323,10 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
         addBill(billModel, billAdded, cartNotifier);
         deleteAllCart(cartNotifier);
         addNotification(billModel.idBill, notiAdded, 'ordered');
+        NotificationApi.showNotification(
+            title: 'Ordered Success',
+            body: 'Order $idBill has been success',
+            payload: 'title.txt');
         Navigator.pushNamedAndRemoveUntil(
             context, OrderSuccessScreen.routeName, (route) => false);
       } on FirebaseAuthException catch (error) {

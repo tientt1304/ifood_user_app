@@ -1,11 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:ifood_user_app/api/food_api.dart';
+import 'package:ifood_user_app/constants.dart';
+import 'package:ifood_user_app/models/food_model.dart';
 import 'package:ifood_user_app/models/user_model.dart';
+import 'package:ifood_user_app/notifier/food_notifier.dart';
+import 'package:ifood_user_app/pages/food_detail/food_detail_screen.dart';
 import 'package:ifood_user_app/pages/home/components/banner.dart';
 import 'package:ifood_user_app/pages/home/components/food_filter_card.dart';
 import 'package:ifood_user_app/pages/home/components/food_group.dart';
-import 'package:ifood_user_app/pages/home/components/search_field.dart';
+import 'package:provider/provider.dart';
 
 import '../../../SizeConfig.dart';
 
@@ -36,7 +42,7 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
           .collection('users')
           .doc(_auth.currentUser!.uid.toString())
           .get();
-      name = user['fName'] + ' ' + user['lName'];
+      name = user['lName'] + ' ' + user['fName'];
     }
     return name;
   }
@@ -53,6 +59,9 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
 
   @override
   Widget build(BuildContext context) {
+    FoodNotifier foodNotifier = Provider.of<FoodNotifier>(context);
+    getFoods(foodNotifier);
+    //print(foodNotifier.foodList);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(children: [
@@ -67,7 +76,57 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
             ),
           ),
         ),
-        SearchField(),
+        Center(
+          child: Container(
+            width: SizeConfig.screenWidth! * 0.9,
+            height: SizeConfig.screenWidth! * 0.12,
+            child: TypeAheadField<FoodModel>(
+              suggestionsCallback: (String query) async {
+                print(query);
+
+                return foodNotifier.foodList.where((food) {
+                  final nameLower = food.name.toLowerCase();
+                  final queryLower = query.toLowerCase();
+
+                  return nameLower.contains(queryLower);
+                }).toList();
+              },
+              itemBuilder: (context, FoodModel? suggestion) {
+                final food = suggestion!;
+                return ListTile(
+                  leading: Image.network('${food.images}',
+                      width: 35, fit: BoxFit.fitWidth),
+                  title: Text(food.name),
+                  subtitle: Text('${food.price}'),
+                );
+              },
+              noItemsFoundBuilder: (context) => Container(
+                height: SizeConfig.screenWidth! * 0.12,
+                child: Center(
+                  child: Text(
+                    'No Food Found.',
+                  ),
+                ),
+              ),
+              onSuggestionSelected: (FoodModel? suggestion) {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        FoodDetailScreen(idFood: suggestion!.idFood)));
+              },
+              textFieldConfiguration: TextFieldConfiguration(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: primaryColor,
+                  ),
+                  border: OutlineInputBorder(),
+                  hintText: 'What do you want to order?',
+                ),
+              ),
+            ),
+          ),
+        ),
+        // SearchField(),
         SizedBox(
           height: SizeConfig.screenHeight! * 0.02,
         ),

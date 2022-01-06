@@ -8,7 +8,7 @@ import 'package:ifood_user_app/firebase/fb_food.dart';
 import 'package:ifood_user_app/models/cart_model.dart';
 import 'package:ifood_user_app/models/food_model.dart';
 import 'package:ifood_user_app/notifier/cart_notifier.dart';
-import 'package:ifood_user_app/pages/cart/cart_screen.dart';
+import 'package:ifood_user_app/pages/cart/shopping_cart/shopping_cart_screen.dart';
 import 'package:ifood_user_app/pages/food_detail/components/food_card_detail.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 
@@ -66,8 +66,8 @@ class _BodyFoodDetailState extends State<BodyFoodDetail> {
                   Icons.arrow_back_ios,
                   Icons.shopping_cart,
                   leftCallBack: () => Navigator.of(context).pop(),
-                  rightCallBack: () =>
-                      Navigator.popAndPushNamed(context, CartScreen.routeName),
+                  rightCallBack: () => Navigator.popAndPushNamed(
+                      context, ShoppingCartScreen.routeName),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,

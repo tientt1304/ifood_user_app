@@ -133,27 +133,27 @@ class _MyAccountFormState extends State<MyAccountForm> {
       );
   updateDetailsToFireStore() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
+    User? user = FirebaseAuth.instance.currentUser;
     UserModel userModel = UserModel();
-    DocumentSnapshot currentAvatar = await firebaseFirestore
-        .collection('users')
-        .doc(user!.uid.toString())
-        .get();
-    userModel.uid = user.uid;
+    // DocumentSnapshot currentAvatar = await firebaseFirestore
+    //     .collection('users')
+    //     .doc(user!.uid.toString())
+    //     .get();
+    //userModel.uid = user.uid;
     userModel.phoneNumber = _phoneNumberController.text;
     userModel.fName = _fNameController.text;
     userModel.lName = _lNameController.text;
     await firebaseFirestore
         .collection('users')
-        .doc(userModel.uid)
+        .doc(user!.uid)
         .update(userModel.updateProfile());
-    if (currentAvatar['avatar'] != avtUrl) {
-      userModel.avatar = avtUrl;
-      await firebaseFirestore
-          .collection('users')
-          .doc(userModel.uid)
-          .update(userModel.avtToJSON());
-    }
+    // if (currentAvatar['avatar'] != avtUrl) {
+    //   userModel.avatar = avtUrl;
+    //   await firebaseFirestore
+    //       .collection('users')
+    //       .doc(userModel.uid)
+    //       .update(userModel.avtToJSON());
+    // }
 
     Fluttertoast.showToast(msg: 'Update information successful!');
   }

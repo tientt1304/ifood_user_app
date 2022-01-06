@@ -22,8 +22,12 @@ class _BodyOnGoingState extends State<BodyOnGoing> {
         Provider.of<BillNotifier>(context, listen: false);
     getBills(billNotifier);
     super.initState();
+    NotificationApi.init();
+    listenNotifications();
   }
 
+  void listenNotifications() =>
+      NotificationApi.onNotifications.stream.listen((payload) {});
   @override
   Widget build(BuildContext context) {
     BillNotifier billNotifier = Provider.of<BillNotifier>(context);
@@ -82,6 +86,11 @@ class _BodyOnGoingState extends State<BodyOnGoing> {
                           '${billNotifier.billList.reversed.toList()[index].total}đ (${billNotifier.billList.reversed.toList()[index].itemCount} items)'),
                       trailing: ElevatedButton(
                           onPressed: () {
+                            NotificationApi.showNotification(
+                                title: 'Order Delivered',
+                                body:
+                                    'Order ${billNotifier.billList.reversed.toList()[index].idBill} has been delivered',
+                                payload: 'Order Delivered');
                             checkReceivedBill(
                                 billNotifier.billList.reversed.toList()[index]);
                             addNotification(
