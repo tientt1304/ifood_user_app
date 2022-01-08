@@ -4,7 +4,6 @@ import 'package:ifood_user_app/pages/cart/cart_screen.dart';
 import 'package:ifood_user_app/pages/cart/history/history_screen.dart';
 import 'package:ifood_user_app/pages/cart/on_going/on_going_screen.dart';
 import 'package:ifood_user_app/pages/cart/shopping_cart/shopping_cart_screen.dart';
-import 'package:ifood_user_app/pages/category/category_screen.dart';
 import 'package:ifood_user_app/pages/check_out/check_out_screen.dart';
 import 'package:ifood_user_app/pages/forgot_password/forgot_password_screen.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
@@ -47,7 +46,6 @@ final routes = <String, WidgetBuilder>{
   AboutScreen.routeName: (context) => AboutScreen(),
   MyAccountScreen.routeName: (context) => MyAccountScreen(),
   ShoppingCartScreen.routeName: (context) => ShoppingCartScreen(),
-  CategoryScreen.routeName: (context) => CategoryScreen(),
   HelpCenterScreen.routeName: (context) => HelpCenterScreen(),
   CheckOutScreen.routeName: (context) => CheckOutScreen(),
   OnGoingScreen.routeName: (context) => OnGoingScreen(),

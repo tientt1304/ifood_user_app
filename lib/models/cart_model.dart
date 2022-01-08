@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:ifood_user_app/models/food_model.dart';
 
 class CartModel {
   String? idCart;

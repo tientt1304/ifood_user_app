@@ -55,13 +55,15 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
         displayName = name;
       });
     });
+    FoodNotifier foodNotifier =
+        Provider.of<FoodNotifier>(context, listen: false);
+    getFoods(foodNotifier);
   }
 
   @override
   Widget build(BuildContext context) {
     FoodNotifier foodNotifier = Provider.of<FoodNotifier>(context);
     getFoods(foodNotifier);
-    //print(foodNotifier.foodList);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(children: [
@@ -126,7 +128,6 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
             ),
           ),
         ),
-        // SearchField(),
         SizedBox(
           height: SizeConfig.screenHeight! * 0.02,
         ),
@@ -139,22 +140,18 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
                 FoodGroup(
                   foodName: 'Rice',
                   foodImg: 'assets/images/rice.png',
-                  onPress: () {},
                 ),
                 FoodGroup(
                   foodName: 'Snacks',
                   foodImg: 'assets/images/snack.png',
-                  onPress: () {},
                 ),
                 FoodGroup(
                   foodName: 'Noodle',
                   foodImg: 'assets/images/noodle.png',
-                  onPress: () {},
                 ),
                 FoodGroup(
-                  foodName: 'Pizza',
+                  foodName: 'Milktea',
                   foodImg: 'assets/images/pizza.png',
-                  onPress: () {},
                 ),
               ],
             ),
@@ -162,24 +159,20 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 FoodGroup(
-                  foodName: 'Hamburger',
+                  foodName: 'Cake',
                   foodImg: 'assets/images/hamburger.png',
-                  onPress: () {},
                 ),
                 FoodGroup(
-                  foodName: 'Sushi',
+                  foodName: 'Vegetable',
                   foodImg: 'assets/images/sushi.png',
-                  onPress: () {},
                 ),
                 FoodGroup(
-                  foodName: 'Chicken',
+                  foodName: 'Soft Drink',
                   foodImg: 'assets/images/chicken.png',
-                  onPress: () {},
                 ),
                 FoodGroup(
-                  foodName: 'Beer',
+                  foodName: 'Sea Food',
                   foodImg: 'assets/images/beer.png',
-                  onPress: () {},
                 ),
               ],
             ),

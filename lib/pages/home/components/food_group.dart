@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
+import 'package:ifood_user_app/pages/category/category_screen.dart';
 
 class FoodGroup extends StatelessWidget {
-  const FoodGroup(
-      {Key? key,
-      required this.foodName,
-      required this.foodImg,
-      required this.onPress})
-      : super(key: key);
+  const FoodGroup({
+    Key? key,
+    required this.foodName,
+    required this.foodImg,
+  }) : super(key: key);
   final String foodName;
   final String foodImg;
-  final Function() onPress;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPress,
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CategoryScreen(
+                  category: foodName.toLowerCase(),
+                )));
+      },
       child: Container(
         padding: const EdgeInsets.all(8.0),
         width: SizeConfig.screenWidth! * 0.22,

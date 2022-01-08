@@ -8,6 +8,7 @@ class FoodModel {
   num price;
   String idRestaurant;
   num? ratingFood;
+  String category;
 
   FoodModel(
       {this.idRestaurant = '',
@@ -16,7 +17,8 @@ class FoodModel {
       this.name = '',
       this.price = 0,
       this.desc = '',
-      this.ratingFood});
+      this.ratingFood,
+      this.category = ''});
 
   //receiving data from server
   factory FoodModel.fromDocument(DocumentSnapshot doc) {
@@ -32,10 +34,12 @@ class FoodModel {
       ratingFood: doc.data().toString().contains('ratingFood')
           ? doc.get('ratingFood')
           : '',
+      category:
+          doc.data().toString().contains('category') ? doc.get('category') : '',
     );
   }
   //Convert to JSON
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'idFood': idFood,
       'name': name,
@@ -43,7 +47,8 @@ class FoodModel {
       'images': images,
       'price': price,
       'idRestaurant': idRestaurant,
-      'ratingFood': ratingFood
+      'ratingFood': ratingFood,
+      'category': category
     };
   }
 }

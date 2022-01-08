@@ -30,7 +30,7 @@ class _BodyHomeState extends State<BodyHome> {
           headerSliverBuilder: (context, isScrolled) => [
             SliverAppBar(
               collapsedHeight: SizeConfig.screenHeight! * 0.82,
-              expandedHeight: SizeConfig.screenHeight! * 0.7,
+              expandedHeight: SizeConfig.screenHeight! * 0.8,
               flexibleSpace: BodyHomeSplit(),
             ),
             SliverPersistentHeader(

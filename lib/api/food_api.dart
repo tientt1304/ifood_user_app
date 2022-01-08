@@ -16,7 +16,18 @@ getFoods(FoodNotifier foodNotifier) async {
   foodNotifier.foodList = _foodList;
 }
 
-Future<List<FoodModel?>> getUserSuggestions(String query) async {
-  List<FoodModel?> foodsSuggestion = [];
-  return foodsSuggestion;
+getCategoryFoods(FoodNotifier foodNotifier, String category) async {
+  QuerySnapshot querySnapshot =
+      await FirebaseFirestore.instance.collection('foods').get();
+  List<FoodModel> _categoryFoodList = [];
+
+  querySnapshot.docs.forEach((doc) {
+    FoodModel foodModel = FoodModel.fromDocument(doc);
+    print(foodModel.category);
+    if (foodModel.category == category) {
+      _categoryFoodList.add(foodModel);
+    }
+  });
+
+  foodNotifier.categoryFoodList = _categoryFoodList;
 }
