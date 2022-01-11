@@ -42,7 +42,6 @@ getCartsInBill(BillNotifier billNotifier) async {
 addBill(
     BillModel billModel, Function billAdded, CartNotifier cartNotifier) async {
   final _authCurrentUser = FirebaseAuth.instance.currentUser;
-  //String idBill = (new DateTime.now().microsecondsSinceEpoch).toString();
   getCarts(cartNotifier);
   cartNotifier.carts.forEach((item) {
     FirebaseFirestore.instance
@@ -80,6 +79,7 @@ addBill(
     'comment': billModel.comment,
     'latitude': billModel.latitude,
     'longitude': billModel.longitude,
+    'address': billModel.address,
     'status': billModel.status,
     'itemCount': billModel.itemCount,
     'isRating': billModel.isRating,

@@ -6,7 +6,6 @@ import 'package:ifood_user_app/notifier/food_notifier.dart';
 import 'package:ifood_user_app/notifier/notification_notifier.dart';
 import 'package:ifood_user_app/notifier/restaurant_notifier.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
-import 'package:ifood_user_app/pages/select_location/components/location_provider.dart';
 import 'package:ifood_user_app/routes.dart';
 import 'package:ifood_user_app/theme.dart';
 import 'package:provider/provider.dart';
@@ -44,9 +43,6 @@ class _IFoodState extends State<IFood> {
           ),
           ChangeNotifierProvider(
             create: (context) => NotificationNotifier(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => LocationProvider(),
           ),
         ],
         child: MaterialApp(

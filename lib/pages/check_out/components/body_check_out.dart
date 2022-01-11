@@ -16,6 +16,7 @@ import 'package:ifood_user_app/models/user_model.dart';
 import 'package:ifood_user_app/notifier/bill_notifier.dart';
 import 'package:ifood_user_app/notifier/cart_notifier.dart';
 import 'package:ifood_user_app/notifier/notification_notifier.dart';
+import 'package:ifood_user_app/pages/check_out/components/update_location2.dart';
 import 'package:ifood_user_app/pages/food_detail/food_detail_screen.dart';
 import 'package:ifood_user_app/pages/success_screens/order_success_screen.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
@@ -42,6 +43,8 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
   UserModel userModel = new UserModel();
   String uid = '';
   final _auth = FirebaseAuth.instance;
+  String? longitude;
+  String? latitude;
   CartFB cartFB = new CartFB();
   num subTotal = 0;
   BillModel billModel = new BillModel();
@@ -74,8 +77,9 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
     _nameController.text =
         userModel.lName.toString() + ' ' + userModel.fName.toString();
     _phoneNumberController.text = userModel.phoneNumber.toString();
-    _locationController.text =
-        userModel.latitude.toString() + ', ' + userModel.longitude.toString();
+    _locationController.text = userModel.address.toString();
+    longitude = userModel.longitude;
+    latitude = userModel.latitude;
   }
 
   @override
@@ -139,7 +143,13 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
                   Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: SizeConfig.screenHeight! * 0.01),
-                    child: buildLocationTextField(),
+                    child: GestureDetector(
+                      child: buildLocationTextField(),
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                            context, UpdateLocation2.routeName);
+                      },
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -241,6 +251,12 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
         onSaved: (value) {
           _phoneNumberController.text = value!;
         },
+        onChanged: (value) {
+          _phoneNumberController
+            ..text = value.toString()
+            ..selection = TextSelection.collapsed(
+                offset: _phoneNumberController.text.length);
+        },
         controller: _phoneNumberController,
         textInputAction: TextInputAction.next,
         validator: (value) {
@@ -257,6 +273,12 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
       );
   TextFormField buildNameTextField() => TextFormField(
         controller: _nameController,
+        onChanged: (value) {
+          _nameController
+            ..text = value.toString()
+            ..selection =
+                TextSelection.collapsed(offset: _nameController.text.length);
+        },
         onSaved: (value) {
           _nameController.text = value.toString();
         },
@@ -273,6 +295,7 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
       );
   TextFormField buildLocationTextField() => TextFormField(
         controller: _locationController,
+        enabled: false,
         onSaved: (value) {
           _nameController.text = value.toString();
         },
@@ -311,10 +334,9 @@ class _BodyCheckOutState extends State<BodyCheckOut> {
         billModel.name = _nameController.text.toString();
         billModel.phoneNumber = _phoneNumberController.text.toString();
         billModel.comment = _commentController.text.toString();
-        billModel.latitude =
-            _locationController.text.toString().trim().split(', ')[0];
-        billModel.longitude =
-            _locationController.text.toString().trim().split(', ')[1];
+        billModel.address = _locationController.text.toString();
+        billModel.longitude = this.longitude;
+        billModel.latitude = this.latitude;
         billModel.status = 'on-going';
         billModel.itemCount = cartNotifier.countItems();
 

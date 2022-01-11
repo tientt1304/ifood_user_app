@@ -12,6 +12,7 @@ class BillModel {
   String? name;
   String? phoneNumber;
   String? comment;
+  String? address;
   String? latitude;
   String? longitude;
   String? status;
@@ -31,6 +32,7 @@ class BillModel {
       this.name,
       this.phoneNumber,
       this.comment,
+      this.address,
       this.latitude,
       this.longitude,
       this.status,
@@ -59,6 +61,8 @@ class BillModel {
       comment: doc.data().toString().contains('comment')
           ? doc.get('comment')
           : 15000,
+      address:
+          doc.data().toString().contains('address') ? doc.get('address') : '',
       latitude:
           doc.data().toString().contains('latitude') ? doc.get('latitude') : '',
       longitude: doc.data().toString().contains('longitude')

@@ -9,6 +9,7 @@ class UserModel {
   String? avatar;
   String? latitude;
   String? longitude;
+  String? address;
 
   UserModel(
       {this.uid,
@@ -18,7 +19,8 @@ class UserModel {
       this.phoneNumber,
       this.avatar,
       this.latitude,
-      this.longitude});
+      this.longitude,
+      this.address});
 
   //receiving data from server
   factory UserModel.fromDocument(DocumentSnapshot doc) {
@@ -36,17 +38,9 @@ class UserModel {
       longitude: doc.data().toString().contains('longitude')
           ? doc.get('longitude')
           : '',
+      address:
+          doc.data().toString().contains('address') ? doc.get('address') : '',
     );
-  }
-  UserModel.fromSnapshot(DocumentSnapshot snapshot) {
-    uid = snapshot['uid'];
-    phoneNumber = snapshot['phoneNumber'];
-    email = snapshot['email'];
-    fName = snapshot['fName'];
-    lName = snapshot['lName'];
-    avatar = snapshot['avatar'];
-    latitude = snapshot['latitude'];
-    longitude = snapshot['longitude'];
   }
   //Convert to JSON
   Map<String, dynamic> toJSON() {
@@ -58,7 +52,8 @@ class UserModel {
       'phoneNumber': phoneNumber,
       'avatar': avatar,
       'latitude': latitude,
-      'longitude': longitude
+      'longitude': longitude,
+      'address': address
     };
   }
 
@@ -67,6 +62,7 @@ class UserModel {
       'fName': fName,
       'lName': lName,
       'phoneNumber': phoneNumber,
+      'address': address
     };
   }
 
@@ -75,6 +71,6 @@ class UserModel {
   }
 
   Map<String, dynamic> locationToJSON() {
-    return {'latitude': latitude, 'longitude': longitude};
+    return {'latitude': latitude, 'longitude': longitude, 'address': address};
   }
 }

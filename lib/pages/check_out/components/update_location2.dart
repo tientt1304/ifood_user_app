@@ -4,16 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:ifood_user_app/constants.dart';
-import 'package:ifood_user_app/pages/success_screens/register_success_screen.dart';
+import 'package:ifood_user_app/pages/check_out/check_out_screen.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/contents/title_content.dart';
 
-class BodyUpdateLocation extends StatefulWidget {
+class UpdateLocation2 extends StatefulWidget {
+  static String routeName = '/updateaddress2';
+  const UpdateLocation2({Key? key}) : super(key: key);
   @override
-  State<BodyUpdateLocation> createState() => _BodyUpdateLocationState();
+  State<UpdateLocation2> createState() => _UpdateLocation2State();
 }
 
-class _BodyUpdateLocationState extends State<BodyUpdateLocation> {
+class _UpdateLocation2State extends State<UpdateLocation2> {
   String? latitude;
   String? longitude;
   String? address;
@@ -83,56 +85,58 @@ class _BodyUpdateLocationState extends State<BodyUpdateLocation> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Container(
-      padding: EdgeInsets.only(left: 32, right: 32, bottom: 32, top: 16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TitleContent(
-              title: 'Set Your Location',
-              content:
-                  'This data will be displayed \nin your account profile for security'),
-          _isload == true
-              ? Center(
-                  child: Container(
-                    height: size.height / 20,
-                    width: size.height / 20,
-                    child: CircularProgressIndicator(color: primaryColor),
-                  ),
-                )
-              : Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        address!,
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextButton(
-                        onPressed: load,
-                        child: Text(
-                          "Update Location",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.only(left: 32, right: 32, bottom: 32, top: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TitleContent(
+                title: 'Set Your Location',
+                content:
+                    'This data will be displayed \nin your account profile for security'),
+            _isload == true
+                ? Center(
+                    child: Container(
+                      height: size.height / 20,
+                      width: size.height / 20,
+                      child: CircularProgressIndicator(color: primaryColor),
+                    ),
+                  )
+                : Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          address!,
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
                         ),
-                        style: TextButton.styleFrom(primary: Colors.black),
-                      )
-                    ],
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextButton(
+                          onPressed: load,
+                          child: Text(
+                            "Update Location",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          style: TextButton.styleFrom(primary: Colors.black),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-          SizedBox(
-            height: 10,
-          ),
-          MainButton(
-              title: "Save",
-              onPress: () {
-                onClick();
-              })
-        ],
+            SizedBox(
+              height: 10,
+            ),
+            MainButton(
+                title: "Save",
+                onPress: () {
+                  onClick();
+                })
+          ],
+        ),
       ),
     );
   }
@@ -150,7 +154,8 @@ class _BodyUpdateLocationState extends State<BodyUpdateLocation> {
       "address": address,
       "longitude": longitude,
       "latitude": latitude,
-    }).then((value) => {});
-    Navigator.pushNamed(context, RegisterSuccessScreen.routeName);
+    }).then((value) => {
+              Navigator.pushReplacementNamed(context, CheckOutScreen.routeName),
+            });
   }
 }
