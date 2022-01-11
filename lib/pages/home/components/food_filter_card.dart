@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:ifood_user_app/pages/category/category2_screen.dart';
 
 import '../../../SizeConfig.dart';
 import '../../../constants.dart';
 
 class FoodFilterCard extends StatefulWidget {
-  FoodFilterCard(
-      {Key? key,
-      required this.filterName,
-      required this.filterImg,
-      this.onPress})
-      : super(key: key);
-  final Function()? onPress;
+  FoodFilterCard({
+    Key? key,
+    required this.filterName,
+    required this.filterImg,
+  }) : super(key: key);
   final String? filterName;
   final String? filterImg;
 
@@ -19,18 +18,13 @@ class FoodFilterCard extends StatefulWidget {
 }
 
 class _FoodFilterCardState extends State<FoodFilterCard> {
-  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
-    int count = 0;
     return GestureDetector(
       onTap: () {
-        setState(() {
-          count++;
-          (count % 2 == 1) ? isSelected = true : isSelected = false;
-          print('$count $isSelected');
-          printText(isSelected);
-        });
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                Category2Screen(category: widget.filterName!.toLowerCase())));
       },
       child: Container(
         padding: EdgeInsets.all(4.0),
@@ -48,19 +42,10 @@ class _FoodFilterCardState extends State<FoodFilterCard> {
                 widget.filterImg!,
               ),
             ),
-            printText(isSelected)
+            Text(widget.filterName!)
           ],
         ),
       ),
-    );
-  }
-
-  Widget printText(bool isSelected) {
-    return Text(
-      widget.filterName!,
-      style: isSelected == true
-          ? TextStyle(color: primaryColor, fontWeight: FontWeight.bold)
-          : TextStyle(color: secondaryColor),
     );
   }
 }

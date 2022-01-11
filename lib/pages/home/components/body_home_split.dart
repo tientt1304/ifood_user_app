@@ -28,8 +28,7 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
     {'name': 'Food', 'img': 'assets/images/food.png'},
     {'name': 'Drink', 'img': 'assets/images/drinks.png'},
     {'name': 'Vege', 'img': 'assets/images/vege.png'},
-    {'name': 'Cakes', 'img': 'assets/images/cake.png'},
-    {'name': 'Dessert', 'img': 'assets/images/dessert.png'},
+    {'name': 'Cake', 'img': 'assets/images/cake.png'},
   ];
   String displayName = '';
   final _auth = FirebaseAuth.instance;
@@ -63,7 +62,6 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
   @override
   Widget build(BuildContext context) {
     FoodNotifier foodNotifier = Provider.of<FoodNotifier>(context);
-    getFoods(foodNotifier);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(children: [
@@ -84,12 +82,9 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
             height: SizeConfig.screenWidth! * 0.12,
             child: TypeAheadField<FoodModel>(
               suggestionsCallback: (String query) async {
-                print(query);
-
                 return foodNotifier.foodList.where((food) {
                   final nameLower = food.name.toLowerCase();
                   final queryLower = query.toLowerCase();
-
                   return nameLower.contains(queryLower);
                 }).toList();
               },
@@ -146,12 +141,12 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
                   foodImg: 'assets/images/snack.png',
                 ),
                 FoodGroup(
-                  foodName: 'Noodle',
+                  foodName: 'Noodles',
                   foodImg: 'assets/images/noodle.png',
                 ),
                 FoodGroup(
-                  foodName: 'Milktea',
-                  foodImg: 'assets/images/pizza.png',
+                  foodName: 'Milk Tea',
+                  foodImg: 'assets/images/milktea.png',
                 ),
               ],
             ),
@@ -160,19 +155,19 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
               children: [
                 FoodGroup(
                   foodName: 'Cake',
-                  foodImg: 'assets/images/hamburger.png',
+                  foodImg: 'assets/images/cake.png',
                 ),
                 FoodGroup(
                   foodName: 'Vegetable',
-                  foodImg: 'assets/images/sushi.png',
+                  foodImg: 'assets/images/vege.png',
                 ),
                 FoodGroup(
                   foodName: 'Soft Drink',
-                  foodImg: 'assets/images/chicken.png',
+                  foodImg: 'assets/images/softdrink.png',
                 ),
                 FoodGroup(
-                  foodName: 'Sea Food',
-                  foodImg: 'assets/images/beer.png',
+                  foodName: 'Seafood',
+                  foodImg: 'assets/images/seafood.png',
                 ),
               ],
             ),

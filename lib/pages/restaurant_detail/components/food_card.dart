@@ -41,8 +41,8 @@ class _FoodCardState extends State<FoodCard> {
             .snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
-            return Center(
-              child: Text('No Data'),
+            return CircularProgressIndicator(
+              color: primaryColor,
             );
           } else {
             return ListView.builder(

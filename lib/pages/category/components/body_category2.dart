@@ -9,20 +9,20 @@ import 'package:ifood_user_app/notifier/cart_notifier.dart';
 import 'package:ifood_user_app/notifier/food_notifier.dart';
 import 'package:provider/provider.dart';
 
-class BodyCategory extends StatefulWidget {
-  BodyCategory({Key? key, required this.category}) : super(key: key);
+class BodyCategory2 extends StatefulWidget {
+  BodyCategory2({Key? key, required this.category}) : super(key: key);
   final String category;
   @override
-  _BodyCategoryState createState() => _BodyCategoryState();
+  _BodyCategory2State createState() => _BodyCategory2State();
 }
 
-class _BodyCategoryState extends State<BodyCategory> {
+class _BodyCategory2State extends State<BodyCategory2> {
   @override
   void initState() {
     super.initState();
     FoodNotifier foodNotifier =
         Provider.of<FoodNotifier>(context, listen: false);
-    getCategoryFoods(foodNotifier, widget.category);
+    getCategory2Foods(foodNotifier, widget.category);
   }
 
   @override

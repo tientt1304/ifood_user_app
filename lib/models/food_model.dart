@@ -3,22 +3,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FoodModel {
   String idFood;
   String name;
+  String category;
   String desc;
   String images;
   num price;
   String idRestaurant;
   num? ratingFood;
-  String category;
 
-  FoodModel(
-      {this.idRestaurant = '',
-      this.idFood = '',
-      this.images = '',
-      this.name = '',
-      this.price = 0,
-      this.desc = '',
-      this.ratingFood,
-      this.category = ''});
+  FoodModel({
+    this.idRestaurant = '',
+    this.idFood = '',
+    this.category = '',
+    this.images = '',
+    this.name = '',
+    this.price = 0,
+    this.desc = '',
+    this.ratingFood,
+  });
 
   //receiving data from server
   factory FoodModel.fromDocument(DocumentSnapshot doc) {
@@ -33,13 +34,13 @@ class FoodModel {
       price: doc.data().toString().contains('price') ? doc.get('price') : 0,
       ratingFood: doc.data().toString().contains('ratingFood')
           ? doc.get('ratingFood')
-          : '',
+          : 0,
       category:
           doc.data().toString().contains('category') ? doc.get('category') : '',
     );
   }
   //Convert to JSON
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'idFood': idFood,
       'name': name,
@@ -48,7 +49,6 @@ class FoodModel {
       'price': price,
       'idRestaurant': idRestaurant,
       'ratingFood': ratingFood,
-      'category': category
     };
   }
 }

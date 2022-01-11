@@ -1,6 +1,4 @@
 import 'dart:collection';
-
-//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ifood_user_app/models/cart_model.dart';
 

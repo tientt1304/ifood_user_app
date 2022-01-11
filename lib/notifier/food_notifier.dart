@@ -6,6 +6,7 @@ import 'package:ifood_user_app/models/food_model.dart';
 class FoodNotifier with ChangeNotifier {
   List<FoodModel> _foodList = [];
   List<FoodModel> _categoryFoodList = [];
+
   FoodModel? _currentFood;
   UnmodifiableListView<FoodModel> get foodList =>
       UnmodifiableListView(_foodList);
