@@ -11,19 +11,21 @@ class RestaurantModel {
   String? address;
   String? latitude;
   String? longitude;
+  double? distance;
+  int? time;
 
-  RestaurantModel({
-    required this.idRestaurant,
-    required this.name,
-    this.rating,
-    required this.logo,
-    required this.coverPicture,
-    this.phoneNumber,
-    this.description,
-    this.address,
-    this.latitude,
-    this.longitude,
-  });
+  RestaurantModel(
+      {required this.idRestaurant,
+      required this.name,
+      this.rating,
+      required this.logo,
+      required this.coverPicture,
+      this.phoneNumber,
+      this.description,
+      this.address,
+      this.latitude,
+      this.longitude,
+      this.distance});
 
   //receiving data from server
   factory RestaurantModel.fromDocument(DocumentSnapshot doc) {
@@ -80,15 +82,3 @@ class RestaurantModel {
     return {'latitude': latitude, 'longitude': longitude};
   }
 }
-
-List<RestaurantModel> demoRestaurants = [
-  RestaurantModel(
-    logo: '',
-    idRestaurant: '1',
-    name: 'Tra sua Toocha - Binh Tho, Thu Duc',
-    rating: 4.7,
-    description:
-        'Most whole Alaskan Red King Crabs get broken down into legs, claws, and lump meat. We offer all of these options as well in our online shop, but there is nothing like getting the whole . . . .',
-    coverPicture: 'assets/images/bgRestaurant.png',
-  ),
-];

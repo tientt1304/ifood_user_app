@@ -104,15 +104,6 @@ class _BodyFoodDetailState extends State<BodyFoodDetail> {
                                   '${foodModel.ratingFood} rating',
                                   style: TextStyle(color: blurTextColor),
                                 ),
-                                SizedBox(width: SizeConfig.screenWidth! * 0.15),
-                                Icon(
-                                  Icons.location_on_outlined,
-                                  color: primaryColor,
-                                ),
-                                Text(
-                                  '8 km',
-                                  style: TextStyle(color: blurTextColor),
-                                ),
                               ],
                             ),
                             SizedBox(

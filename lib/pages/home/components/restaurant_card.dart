@@ -9,11 +9,15 @@ class RestaurantCard extends StatelessWidget {
     required this.img,
     this.rating,
     required this.onPress,
+    this.distance,
+    this.time,
   }) : super(key: key);
 
   final String name;
   final String img;
   final double? rating;
+  final double? distance;
+  final int? time;
   final Function() onPress;
 
   @override
@@ -58,7 +62,7 @@ class RestaurantCard extends StatelessWidget {
                         color: splitColor,
                       ),
                       Icon(Icons.location_on_outlined),
-                      Text('1.7 km'),
+                      Text('$distance km'),
                       Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: SizeConfig.screenWidth! * 0.05),
@@ -67,7 +71,7 @@ class RestaurantCard extends StatelessWidget {
                         color: splitColor,
                       ),
                       Icon(Icons.timer),
-                      Text('15 minutes')
+                      Text('$time minutes')
                     ],
                   )
                 ],

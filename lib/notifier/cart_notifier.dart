@@ -44,7 +44,6 @@ class CartNotifier with ChangeNotifier {
     _carts.forEach((cart) {
       count += cart.quantity;
     });
-    // notifyListeners();
     return count;
   }
 
@@ -53,7 +52,6 @@ class CartNotifier with ChangeNotifier {
     _carts.forEach((cart) {
       total += cart.quantity * cart.price;
     });
-    // notifyListeners();
     return total;
   }
 }

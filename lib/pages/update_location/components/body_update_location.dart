@@ -105,6 +105,7 @@ class _BodyUpdateLocationState extends State<BodyUpdateLocation> {
                     children: [
                       Text(
                         address!,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: primaryColor,
                             fontWeight: FontWeight.bold,

@@ -108,10 +108,12 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
               ),
             ),
           ),
-          CheckOutBar(
-            numOfItems: countItem,
-            total: total,
-          ),
+          countItem > 0
+              ? CheckOutBar(
+                  numOfItems: countItem,
+                  total: total,
+                )
+              : Container(),
         ],
       ),
     );

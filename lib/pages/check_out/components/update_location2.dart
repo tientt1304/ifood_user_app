@@ -108,6 +108,7 @@ class _UpdateLocation2State extends State<UpdateLocation2> {
                       children: [
                         Text(
                           address!,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               color: primaryColor,
                               fontWeight: FontWeight.bold,

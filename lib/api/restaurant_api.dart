@@ -5,6 +5,7 @@ import 'package:ifood_user_app/notifier/restaurant_notifier.dart';
 getRestaurants(RestaurantNotifier restaurantNotifier) async {
   QuerySnapshot querySnapshot =
       await FirebaseFirestore.instance.collection('restaurants').get();
+
   List<RestaurantModel> _restaurantList = [];
 
   querySnapshot.docs.forEach((doc) {

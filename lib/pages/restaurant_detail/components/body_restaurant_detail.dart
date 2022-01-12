@@ -10,9 +10,11 @@ import 'package:ifood_user_app/pages/restaurant_detail/components/food_card.dart
 import 'package:ifood_user_app/widgets/custom_app_bar.dart';
 
 class BodyRestaurantDetail extends StatefulWidget {
-  const BodyRestaurantDetail({Key? key, required this.id}) : super(key: key);
+  const BodyRestaurantDetail({Key? key, required this.id, this.distance})
+      : super(key: key);
 
   final String id;
+  final double? distance;
 
   @override
   State<BodyRestaurantDetail> createState() => _BodyRestaurantDetailState();
@@ -102,7 +104,7 @@ class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
                                   color: primaryColor,
                                 ),
                                 Text(
-                                  '8 km',
+                                  '${widget.distance} km',
                                   style: TextStyle(color: blurTextColor),
                                 ),
                               ],
@@ -111,9 +113,12 @@ class _BodyRestaurantDetailState extends State<BodyRestaurantDetail> {
                               height: 15,
                             ),
                             Text(
-                              restaurantModel.description!,
+                              '\t\t\t\t' + restaurantModel.description!,
                               textAlign: TextAlign.justify,
                               style: TextStyle(height: 2, wordSpacing: 2),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.screenHeight! * 0.02,
                             ),
                             Text(
                               'MENU',
