@@ -13,7 +13,6 @@ getRestaurants(RestaurantNotifier restaurantNotifier) async {
 
     _restaurantList.add(restaurantModel);
   });
-
   restaurantNotifier.restaurantList = _restaurantList;
 }
 

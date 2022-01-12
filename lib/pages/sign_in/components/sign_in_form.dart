@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:ifood_user_app/SizeConfig.dart';
 import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/firebase/fb_cart.dart';
@@ -18,6 +20,7 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
+  late Box box1;
   CartFB cartFB = new CartFB();
   final _formKey = GlobalKey<FormState>();
   bool remember = false;
@@ -25,6 +28,30 @@ class _SignInFormState extends State<SignInForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   String? err;
+
+  @override
+  void initState() {
+    super.initState();
+    createOpenBox();
+  }
+
+  void createOpenBox() async {
+    box1 = await Hive.openBox('logindata');
+    getData();
+  }
+
+  void getData() async {
+    if (box1.get('email') != null) {
+      _emailController.text = box1.get('email');
+      remember = true;
+      setState(() {});
+    }
+    if (box1.get('password') != null) {
+      _passwordController.text = box1.get('password');
+      remember = true;
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,29 +158,15 @@ class _SignInFormState extends State<SignInForm> {
   void _onSignIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
+        if (remember) {
+          box1.put('email', _emailController.text);
+          box1.put('password', _passwordController.text);
+        }
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
                   //Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName),
-                  // Provider.of<CartProvider>(context, listen: false)
-                  //     .listCartModel
-                  //     .clear(),
-                  // StreamBuilder(
-                  //   stream: cartFB.collectionReference
-                  //       .doc(FirebaseAuth.instance.currentUser!.email)
-                  //       .collection('items')
-                  //       .snapshots(),
-                  //   builder: (BuildContext context, snapshot) {
-                  //     if (snapshot.hasData) {
-                  //       final cartDB = snapshot.data.;
-                  //       CartModel cartModel = CartModel.fromDocument(x);
-                  //       Provider.of<CartProvider>(context)
-                  //           .listCartModel
-                  //           .add(cartModel);
-                  //     }
-                  //   },
-                  // ),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
