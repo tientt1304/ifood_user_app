@@ -44,7 +44,7 @@ class _BodyWalkthroughState extends State<BodyWalkthrough> {
           child: Column(
             children: <Widget>[
               Expanded(
-                flex: 9,
+                flex: 4,
                 child: PageView.builder(
                   controller: _pageController,
                   onPageChanged: (index) {
@@ -61,7 +61,7 @@ class _BodyWalkthroughState extends State<BodyWalkthrough> {
                 ),
               ),
               Expanded(
-                flex: 3,
+                flex: 1,
                 child: Column(
                   children: [
                     Row(
@@ -72,7 +72,7 @@ class _BodyWalkthroughState extends State<BodyWalkthrough> {
                       ),
                     ),
                     SizedBox(
-                      height: getProportionateScreenHeight(90),
+                      height: SizeConfig.screenHeight! * 0.02,
                     ),
                     MainButton(
                         title: currentPage == 2 ? 'Get Started' : 'Next',

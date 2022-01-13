@@ -12,7 +12,11 @@ class WalkthroughContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        SvgPicture.asset(image),
+        SvgPicture.asset(
+          image,
+          height: SizeConfig.screenHeight! * 0.6,
+          fit: BoxFit.fitHeight,
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(

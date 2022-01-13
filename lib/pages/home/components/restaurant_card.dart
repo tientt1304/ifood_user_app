@@ -71,7 +71,7 @@ class RestaurantCard extends StatelessWidget {
                         color: splitColor,
                       ),
                       Icon(Icons.timer),
-                      Text('$time minutes')
+                      Text('$time min')
                     ],
                   )
                 ],

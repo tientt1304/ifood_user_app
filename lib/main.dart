@@ -5,7 +5,7 @@ import 'package:ifood_user_app/notifier/cart_notifier.dart';
 import 'package:ifood_user_app/notifier/food_notifier.dart';
 import 'package:ifood_user_app/notifier/notification_notifier.dart';
 import 'package:ifood_user_app/notifier/restaurant_notifier.dart';
-import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
+import 'package:ifood_user_app/pages/walkthrough/components/splash_screen.dart';
 import 'package:ifood_user_app/routes.dart';
 import 'package:ifood_user_app/theme.dart';
 import 'package:provider/provider.dart';
@@ -52,8 +52,8 @@ class _IFoodState extends State<IFood> {
           title: 'iFood',
           theme: theme(),
           routes: routes,
-          initialRoute: GetStartedScreen.routeName,
-          //initialRoute: WalkthroughScreen.routeName,
+          //initialRoute: GetStartedScreen.routeName,
+          initialRoute: SplashScreen.routeName,
         ));
   }
 }

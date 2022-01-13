@@ -22,6 +22,7 @@ import 'package:ifood_user_app/pages/success_screens/register_success_screen.dar
 import 'package:ifood_user_app/pages/update_avt/update_avt_screen.dart';
 import 'package:ifood_user_app/pages/update_location/update_location_screen.dart';
 import 'package:ifood_user_app/pages/walkthrough/components/body_walkthrough.dart';
+import 'package:ifood_user_app/pages/walkthrough/components/splash_screen2.dart';
 import 'package:ifood_user_app/pages/walkthrough/walkthrough_screen.dart';
 import 'package:ifood_user_app/widgets/bottom_bar/bottom_bar.dart';
 import 'pages/walkthrough/components/splash_screen.dart';
@@ -54,4 +55,5 @@ final routes = <String, WidgetBuilder>{
   UpdateLocationScreen.routeName: (context) => UpdateLocationScreen(),
   UpdateLocation.routeName: (context) => UpdateLocation(),
   UpdateLocation2.routeName: (context) => UpdateLocation2(),
+  SplashScreen2.routeName: (context) => SplashScreen2()
 };

@@ -94,7 +94,7 @@ class _BodyHomeSplitState extends State<BodyHomeSplit> {
                   leading: Image.network('${food.images}',
                       width: 35, fit: BoxFit.fitWidth),
                   title: Text(food.name),
-                  subtitle: Text('${food.price}'),
+                  subtitle: Text('${food.price} VND'),
                 );
               },
               noItemsFoundBuilder: (context) => Container(

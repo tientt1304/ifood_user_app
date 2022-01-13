@@ -43,7 +43,6 @@ class _BodyShoppingCartState extends State<BodyShoppingCart> {
       getCarts(cartNotifier);
       countItem = cartNotifier.countItems();
       total = cartNotifier.total();
-      print("count after refresh: " + countItem.toString());
     }
 
     _onCartDeleted(CartModel cartModel) {
