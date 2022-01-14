@@ -30,9 +30,7 @@ class _BodyBillDetailState extends State<BodyBillDetail> {
     _idOrderController.text = widget.billModel.idBill.toString();
     _nameController.text = widget.billModel.name.toString();
     _phoneNumberController.text = widget.billModel.phoneNumber.toString();
-    _locationController.text = widget.billModel.latitude.toString() +
-        ', ' +
-        widget.billModel.longitude.toString();
+    _locationController.text = widget.billModel.address.toString();
     _commentController.text = widget.billModel.comment.toString();
   }
 
@@ -154,7 +152,10 @@ class _BodyBillDetailState extends State<BodyBillDetail> {
                             builder: (context) => RatingScreen(
                                 idBill: billNotifier.currentBill.idBill)));
                       }))
-              : Container()
+              : Container(),
+          SizedBox(
+            height: 20,
+          )
         ],
       ),
     );

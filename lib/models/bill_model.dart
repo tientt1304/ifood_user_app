@@ -48,7 +48,7 @@ class BillModel {
       //carts: doc['carts'],
       total: doc.data().toString().contains('total') ? doc.get('total') : 0,
       subTotal:
-          doc.data().toString().contains('idFood') ? doc.get('subTotal') : 0,
+          doc.data().toString().contains('subTotal') ? doc.get('subTotal') : 0,
       shippingFee: doc.data().toString().contains('shippingFee')
           ? doc.get('shippingFee')
           : 15000,
