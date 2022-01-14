@@ -7,6 +7,7 @@ import 'package:ifood_user_app/constants.dart';
 import 'package:ifood_user_app/models/cart_model.dart';
 import 'package:ifood_user_app/notifier/cart_notifier.dart';
 import 'package:ifood_user_app/notifier/food_notifier.dart';
+import 'package:ifood_user_app/pages/food_detail/food_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class BodyCategory extends StatefulWidget {
@@ -40,40 +41,48 @@ class _BodyCategoryState extends State<BodyCategory> {
         ? ListView.builder(
             itemCount: foodNotifier.categoryFoodList.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                leading: Image.network(
-                    '${foodNotifier.categoryFoodList[index].images}',
-                    width: 70,
-                    fit: BoxFit.fitWidth),
-                title: Text(foodNotifier.categoryFoodList[index].name),
-                subtitle:
-                    Text(foodNotifier.categoryFoodList[index].price.toString()),
-                trailing: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: primaryColor,
-                      padding: EdgeInsets.symmetric(horizontal: 5)),
-                  onPressed: () {
-                    _currentCart.idFood =
-                        foodNotifier.categoryFoodList[index].idFood;
-                    _currentCart.idRestaurant =
-                        foodNotifier.categoryFoodList[index].idRestaurant;
-                    _currentCart.images =
-                        foodNotifier.categoryFoodList[index].images;
-                    _currentCart.name =
-                        foodNotifier.categoryFoodList[index].name;
-                    _currentCart.price =
-                        foodNotifier.categoryFoodList[index].price;
-                    cartNotifier.currentCart = _currentCart;
-                    addToCart(
-                        cartNotifier.currentCart, _onCartAdded, cartNotifier);
-                  },
-                  child: Text(
-                    '+',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => FoodDetailScreen(
+                          idFood:
+                              foodNotifier.categoryFoodList[index].idFood)));
+                },
+                child: ListTile(
+                  leading: Image.network(
+                      '${foodNotifier.categoryFoodList[index].images}',
+                      width: 70,
+                      fit: BoxFit.fitWidth),
+                  title: Text(foodNotifier.categoryFoodList[index].name),
+                  subtitle: Text(
+                      foodNotifier.categoryFoodList[index].price.toString()),
+                  trailing: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: primaryColor,
+                        padding: EdgeInsets.symmetric(horizontal: 5)),
+                    onPressed: () {
+                      _currentCart.idFood =
+                          foodNotifier.categoryFoodList[index].idFood;
+                      _currentCart.idRestaurant =
+                          foodNotifier.categoryFoodList[index].idRestaurant;
+                      _currentCart.images =
+                          foodNotifier.categoryFoodList[index].images;
+                      _currentCart.name =
+                          foodNotifier.categoryFoodList[index].name;
+                      _currentCart.price =
+                          foodNotifier.categoryFoodList[index].price;
+                      cartNotifier.currentCart = _currentCart;
+                      addToCart(
+                          cartNotifier.currentCart, _onCartAdded, cartNotifier);
+                    },
+                    child: Text(
+                      '+',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               );
