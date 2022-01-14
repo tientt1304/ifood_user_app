@@ -32,15 +32,19 @@ class ContactUsItem extends StatelessWidget {
               Column(
                 children: [
                   SizedBox(
-                    width: getProportionateScreenHeight(48),
-                    height: getProportionateScreenHeight(48),
                     child: Container(
-                      padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+                      width: getProportionateScreenHeight(48),
+                      height: getProportionateScreenHeight(48),
+                      padding: EdgeInsets.all(getProportionateScreenWidth(8)),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFFECDF),
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: SvgPicture.asset(icon),
+                      child: SvgPicture.asset(
+                        icon,
+                        width: 40,
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
                   ),
                 ],

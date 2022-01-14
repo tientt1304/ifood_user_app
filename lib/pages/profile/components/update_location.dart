@@ -156,8 +156,7 @@ class _UpdateLocationState extends State<UpdateLocation> {
       "longitude": longitude,
       "latitude": latitude,
     }).then((value) => {
-              Navigator.pushReplacementNamed(
-                  context, MyAccountScreen.routeName),
+              Navigator.pop(context),
             });
   }
 }

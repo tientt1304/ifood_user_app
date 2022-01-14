@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ifood_user_app/models/user_model.dart';
-import 'package:ifood_user_app/pages/my_account/components/update_location.dart';
 import 'package:ifood_user_app/validators/sign_in_validator.dart';
 import 'package:ifood_user_app/widgets/buttons/main_button.dart';
 import 'package:ifood_user_app/widgets/custom_suffix_icon.dart';
@@ -21,7 +20,6 @@ class _MyAccountFormState extends State<MyAccountForm> {
   TextEditingController _fNameController = TextEditingController();
   TextEditingController _lNameController = TextEditingController();
   TextEditingController _phoneNumberController = TextEditingController();
-  TextEditingController _locationController = TextEditingController();
 
   @override
   void initState() {
@@ -33,7 +31,6 @@ class _MyAccountFormState extends State<MyAccountForm> {
     _fNameController.text = this.widget.userModel.fName.toString();
     _lNameController.text = this.widget.userModel.lName.toString();
     _phoneNumberController.text = this.widget.userModel.phoneNumber.toString();
-    _locationController.text = this.widget.userModel.address.toString();
   }
 
   @override
@@ -58,16 +55,6 @@ class _MyAccountFormState extends State<MyAccountForm> {
             padding:
                 EdgeInsets.symmetric(vertical: SizeConfig.screenHeight! * 0.01),
             child: buildPhoneNumberTextField(),
-          ),
-          Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: SizeConfig.screenHeight! * 0.01),
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacementNamed(
-                      context, UpdateLocation.routeName);
-                },
-                child: buildLocationTextField()),
           ),
           SizedBox(
             height: SizeConfig.screenHeight! * 0.02,
@@ -144,20 +131,7 @@ class _MyAccountFormState extends State<MyAccountForm> {
           suffixIcon: CustomSuffixIcon(svgIconSrc: 'assets/icons/person.svg'),
         ),
       );
-  TextFormField buildLocationTextField() => TextFormField(
-        controller: _locationController,
-        enabled: false,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return kNamelNullError;
-          }
-          return null;
-        },
-        textInputAction: TextInputAction.done,
-        decoration: const InputDecoration(
-          labelText: 'Address',
-        ),
-      );
+
   updateDetailsToFireStore() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
@@ -165,7 +139,6 @@ class _MyAccountFormState extends State<MyAccountForm> {
     userModel.phoneNumber = _phoneNumberController.text;
     userModel.fName = _fNameController.text;
     userModel.lName = _lNameController.text;
-    userModel.address = _locationController.text;
     await firebaseFirestore
         .collection('users')
         .doc(user!.uid)

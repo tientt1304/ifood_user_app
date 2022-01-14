@@ -18,7 +18,11 @@ class ProfileCard extends StatelessWidget {
       child: GestureDetector(
           onTap: onPress,
           child: ListTile(
-            leading: Image.network(prefixIcon),
+            leading: Image.network(
+              prefixIcon,
+              width: 30,
+              fit: BoxFit.fitWidth,
+            ),
             title: Text(
               title,
               style: TextStyle(fontSize: 18),

@@ -10,6 +10,7 @@ import 'package:ifood_user_app/models/user_model.dart';
 import 'package:ifood_user_app/pages/about/about_screen.dart';
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
 import 'package:ifood_user_app/pages/help_center/helpcenter_screen.dart';
+import 'package:ifood_user_app/pages/profile/components/update_location.dart';
 import 'package:ifood_user_app/pages/my_account/myaccount_screen.dart';
 import 'package:ifood_user_app/pages/notification/notification_screen.dart';
 import 'package:ifood_user_app/pages/profile/components/avatar_card.dart';
@@ -100,12 +101,26 @@ class _BodyProfileState extends State<BodyProfile> {
         }
       },
       {
+        'title': 'Location',
+        'prefixIcon':
+            'https://firebasestorage.googleapis.com/v0/b/ifood-6cabb.appspot.com/o/source_images%2Ficons%2Fmap.png?alt=media&token=8517701c-3921-4d7f-ac5a-16ea2b111b70',
+        'onPress': () {
+          Navigator.pushNamed(context, UpdateLocation.routeName);
+        }
+      },
+      {
         'title': 'Notifications',
         'prefixIcon':
             'https://firebasestorage.googleapis.com/v0/b/ifood-6cabb.appspot.com/o/source_images%2Ficons%2Fnoti.png?alt=media&token=528f96b6-057b-495b-8a8b-13eef9c702d8',
         'onPress': () {
           Navigator.pushNamed(context, NotificationScreen.routeName);
         }
+      },
+      {
+        'title': 'Open Store (comming soon)',
+        'prefixIcon':
+            'https://firebasestorage.googleapis.com/v0/b/ifood-6cabb.appspot.com/o/source_images%2Ficons%2Fstorefront.png?alt=media&token=cb70949a-0de1-4770-8f53-82223a8f327d',
+        'onPress': () {}
       },
       {
         'title': 'Help Center',
@@ -134,7 +149,6 @@ class _BodyProfileState extends State<BodyProfile> {
       }
     ];
     Future<void> _refreshList() async {
-      //getBills(billNotifier);
       getName(context).then((String name) {
         setState(() {
           displayName = name;
@@ -170,7 +184,7 @@ class _BodyProfileState extends State<BodyProfile> {
             height: SizeConfig.screenHeight! * 0.01,
           ),
           SizedBox(
-            height: SizeConfig.screenHeight! * 0.8,
+            height: SizeConfig.screenHeight! * 0.11 * content.length,
             child: ListView.builder(
                 itemCount: content.length,
                 itemBuilder: (context, index) {

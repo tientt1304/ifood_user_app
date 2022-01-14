@@ -10,7 +10,7 @@ import 'package:ifood_user_app/pages/forgot_password/forgot_password_screen.dart
 import 'package:ifood_user_app/pages/get_started/get_started_screen.dart';
 import 'package:ifood_user_app/pages/help_center/helpcenter_screen.dart';
 import 'package:ifood_user_app/pages/home/home_screen.dart';
-import 'package:ifood_user_app/pages/my_account/components/update_location.dart';
+import 'package:ifood_user_app/pages/profile/components/update_location.dart';
 import 'package:ifood_user_app/pages/my_account/myaccount_screen.dart';
 import 'package:ifood_user_app/pages/notification/notification_screen.dart';
 import 'package:ifood_user_app/pages/profile/profile_screen.dart';

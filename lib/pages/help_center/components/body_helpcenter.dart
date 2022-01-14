@@ -16,25 +16,24 @@ class HelpCenterBody extends StatelessWidget {
             buildTitle('FAQ'),
             SizedBox(height: getProportionateScreenWidth(10)),
             const FAQItem(content: 'How long is my order delivery time?'),
-            const FAQItem(content: 'How long is my order delivery time?'),
-            const FAQItem(content: 'How to become a tokoto seller?'),
-            const FAQItem(content: 'How does warranty work on tokoto?'),
+            const FAQItem(content: 'How to become a iFood seller?'),
+            const FAQItem(content: 'How does warranty work on iFood?'),
             const FAQItem(content: "Why I don't accept otp on my phone?"),
             const FAQItem(content: 'How to rate my order products?'),
             SizedBox(height: getProportionateScreenWidth(20)),
             buildTitle('Contact Us'),
             SizedBox(height: getProportionateScreenWidth(10)),
-            const ContactUsItem(
+            ContactUsItem(
               icon: 'assets/icons/Conversation.svg',
               description: 'You can chat with us here',
               title: 'Chat iFood now',
             ),
-            const ContactUsItem(
+            ContactUsItem(
               icon: 'assets/icons/Mail.svg',
               description: 'Send your question or problem',
               title: 'Send Email',
             ),
-            const ContactUsItem(
+            ContactUsItem(
               icon: 'assets/icons/Call.svg',
               description: '0345450642',
               title: 'Costumer Service',
@@ -42,7 +41,7 @@ class HelpCenterBody extends StatelessWidget {
             SizedBox(height: getProportionateScreenWidth(30)),
             const Center(
               child: Text(
-                '© Copyright 2021 - Stay at Home',
+                '© Copyright 2021 - iFood Team',
                 textAlign: TextAlign.center,
               ),
             ),

@@ -62,7 +62,6 @@ class UserModel {
       'fName': fName,
       'lName': lName,
       'phoneNumber': phoneNumber,
-      'address': address
     };
   }
 

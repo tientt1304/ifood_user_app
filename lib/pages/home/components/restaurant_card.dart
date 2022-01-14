@@ -62,7 +62,7 @@ class RestaurantCard extends StatelessWidget {
                         color: splitColor,
                       ),
                       Icon(Icons.location_on_outlined),
-                      Text('$distance km'),
+                      distance! < 500 ? Text('$distance km') : Text('>500 km'),
                       Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: SizeConfig.screenWidth! * 0.05),
@@ -71,7 +71,7 @@ class RestaurantCard extends StatelessWidget {
                         color: splitColor,
                       ),
                       Icon(Icons.timer),
-                      Text('$time min')
+                      time! < 1000 ? Text('$time min') : Text('>999 min')
                     ],
                   )
                 ],
